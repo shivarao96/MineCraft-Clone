@@ -1,4 +1,5 @@
 #include "application.h"
+#include "../states/playerState/playState.h"
 
 Application::Application(const std::string& name) {
 	sf::ContextSettings setting;
@@ -7,25 +8,48 @@ Application::Application(const std::string& name) {
 	setting.minorVersion = 4;
 	setting.depthBits = 24;
 	setting.stencilBits = 8;
-	m_window.create({ 1280, 768 }, "MineCraft", sf::Style::Close, setting);
-	glViewport(0, 0, 1280, 768);
+	m_window.create(
+		{ 1280, 768 }, 
+		"MineCraft", 
+		sf::Style::Close, 
+		setting
+	);
+	glViewport(
+		0, 
+		0, 
+		1280, 
+		768
+	);
 	m_window.setFramerateLimit(90);
+	pushState<PlayState>(*this);
 }
 void Application::runApp() {
 	sf::Clock dtTimer;
-	while (m_window.isOpen())
+	while (m_window.isOpen() && !m_states.empty())
 	{
-		glClearColor(0.1, 0.5, 1.0, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		m_window.display();
+		auto deltaTime = dtTimer.restart();
+		auto& state = *m_states.back();
+		state.handleInputs();
+		state.update(deltaTime.asSeconds());
+		state.render(m_mainRenderer);
+		m_camera.update();
+		m_mainRenderer.finishRenderer(m_window);
+
 		handleEvents();
+		if (m_shouldPopState) {
+			m_states.pop_back();
+			m_shouldPopState = false;
+		}
 	}
 }
-void Application::pushState() {
-
+template<typename T, typename... Args>
+void Application::pushState(Args&&... args) {
+	m_states.push_back(
+		std::make_unique<T>(std::forward<Args>(args)...)
+	);
 }
 void Application::popState() {
-
+	m_shouldPopState = true;
 }
 Camera& Application::getCamera() {
 	return m_camera;

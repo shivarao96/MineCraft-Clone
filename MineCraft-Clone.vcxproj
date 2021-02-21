@@ -145,6 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\shaders\basicShader\BasicShader.cpp" />
+    <ClCompile Include="src\shaders\Shader.cpp" />
+    <ClCompile Include="src\states\playerState\playState.cpp" />
+    <ClCompile Include="src\renderer\mainRenderer.cpp" />
     <ClCompile Include="src\application\application.cpp" />
     <ClCompile Include="src\entity\entity.cpp" />
     <ClCompile Include="src\entity\camera\camera.cpp" />
@@ -152,10 +156,22 @@
     <ClCompile Include="src\entity\player\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\shaders\basicShader\basicShader.h" />
+    <ClInclude Include="src\shaders\shader.h" />
+    <ClInclude Include="src\states\playerState\playState.h" />
+    <ClInclude Include="src\renderer\mainRenderer.h" />
     <ClInclude Include="src\application\application.h" />
     <ClInclude Include="src\entity\entity.h" />
     <ClInclude Include="src\entity\camera\camera.h" />
     <ClInclude Include="src\entity\player\player.h" />
+    <ClInclude Include="src\states\baseState.h" />
+    <ClInclude Include="src\utility\FileUtil.h" />
+    <ClInclude Include="src\utility\nonCopyable.h" />
+    <ClInclude Include="src\utility\singleton.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\glsl\basicShader.frag" />
+    <None Include="src\shaders\glsl\basicShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
