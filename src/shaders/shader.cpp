@@ -1,7 +1,6 @@
 #include "shader.h"
 #include "../utility/fileUtil.h"
-#include <iostream>
-
+#include <GL/glew.h>
 Shader::Shader(
 	const std::string& vertexShader,
 	const std::string& fragmentShader
@@ -186,11 +185,11 @@ void Shader::loadShader(
 	const std::string& fragmentShader
 ) {
 	unsigned int vertexShaderId = compileShader(
-		getFileContent("./" + vertexShader + ".vert").c_str(),
+		getFileContent("src/shaders/glsl/" + vertexShader + ".vert").c_str(),
 		GL_VERTEX_SHADER
 	);
 	unsigned int fragmentShaderId = compileShader(
-		getFileContent("./" + fragmentShader + ".frag").c_str(),
+		getFileContent("src/shaders/glsl/" + fragmentShader + ".frag").c_str(),
 		GL_FRAGMENT_SHADER
 	);
 	m_shaderId = linkShader(

@@ -1,5 +1,6 @@
 #include "application.h"
 #include "../states/playerState/playState.h"
+#include "../shaders/basicShader/basicShader.h"
 
 Application::Application(const std::string& name) {
 	sf::ContextSettings setting;
@@ -14,6 +15,8 @@ Application::Application(const std::string& name) {
 		sf::Style::Close, 
 		setting
 	);
+	glewInit();
+	glewExperimental = GL_TRUE;
 	glViewport(
 		0, 
 		0, 
@@ -22,6 +25,7 @@ Application::Application(const std::string& name) {
 	);
 	m_window.setFramerateLimit(90);
 	pushState<PlayState>(*this);
+	BasicShader basicShader;
 }
 void Application::runApp() {
 	sf::Clock dtTimer;

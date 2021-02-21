@@ -4,11 +4,12 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-
+#include <iostream>
 std::string getFileContent(const std::string& filePath) {
 	std::ifstream inputFile(filePath);
 	if (!inputFile.is_open()) {
-		throw std::runtime_error("Error opening file:: " + filePath);
+		std::cout << "Error opening file:: " + filePath << std::endl;
+		throw std::runtime_error(filePath);
 	}
 
 	std::stringstream fileStream;
