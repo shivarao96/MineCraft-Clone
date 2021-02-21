@@ -6,6 +6,7 @@
 #include "../entity/camera/camera.h"
 #include "../states/baseState.h"
 #include "../renderer/mainRenderer.h"
+#include "./context/context.h"
 
 class Application
 {
@@ -19,10 +20,10 @@ public:
 	const sf::RenderWindow& getWindow() const;
 private:
 	void handleEvents();
-	sf::RenderWindow m_window;
-	Camera m_camera;
 	std::vector<std::unique_ptr<BaseState>> m_states;
-	bool m_shouldPopState = false;
+	Context m_context;
+	Camera m_camera;
 	MainRenderer m_mainRenderer;
+	bool m_shouldPopState = false;
 };
 

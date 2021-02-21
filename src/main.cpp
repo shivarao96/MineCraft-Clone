@@ -1,7 +1,6 @@
 #include <iostream>
 #include "application/application.h"
-#include <glm/glm.hpp>
-
+#include <GL/glew.h>
 
 int main() {
 

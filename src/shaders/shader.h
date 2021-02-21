@@ -55,8 +55,8 @@ public:
 		const std::string& uniformPropName,
 		const glm::mat4& val
 	);
-protected:
 	void useShader();
+protected:
 	virtual void getUniform() = 0;
 private:
 	unsigned int compileShader(
