@@ -17,5 +17,6 @@ void PlayState::update(float deltaTime) {
 	m_player.update(deltaTime);
 }
 void PlayState::render(MainRenderer& mainRenderer) {
-	mainRenderer.drawQuads({ 0,0,0 });
+	//mainRenderer.drawQuads({ 0,0,0 });
+	mainRenderer.drawCubes({ 0,0,0 });
 }

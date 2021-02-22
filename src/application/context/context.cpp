@@ -22,5 +22,6 @@ Context::Context() {
 		1280,
 		768
 	);
+	glCullFace(GL_BACK);
 	m_window.setFramerateLimit(90);
 }

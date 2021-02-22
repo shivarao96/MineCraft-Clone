@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\math\matrix.cpp" />
+    <ClCompile Include="src\renderer\cubeRenderer\cubeRenderer.cpp" />
     <ClCompile Include="src\application\context\context.cpp" />
     <ClCompile Include="src\renderer\quadRenderer\quadRenderer.cpp" />
     <ClCompile Include="src\model\model.cpp" />
@@ -160,7 +162,9 @@
     <ClCompile Include="src\texture\textureHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\cubeRenderer\cubeRenderer.h" />
     <ClInclude Include="src\application\context\context.h" />
+    <ClInclude Include="src\math\Matrix.h" />
     <ClInclude Include="src\renderer\quadRenderer\quadRenderer.h" />
     <ClInclude Include="src\model\model.h" />
     <ClInclude Include="src\shaders\basicShader\basicShader.h" />

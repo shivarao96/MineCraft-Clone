@@ -7,14 +7,15 @@
 #include "../../shaders/basicShader/basicShader.h"
 
 class Camera;
-class QuadRenderer
+
+class CubeRenderer
 {
 public:
-	QuadRenderer();
+	CubeRenderer();
 	void addAt(const glm::vec3& pos);
-	void renderQuads(const Camera& cam);
+	void renderCubes(const Camera& cam);
 private:
-	std::vector<glm::vec3> m_quads;
+	std::vector<glm::vec3> m_cubes;
 	Model m_model;
 	BasicShader m_basicShader;
 	TextureHandler m_textureHandler;
