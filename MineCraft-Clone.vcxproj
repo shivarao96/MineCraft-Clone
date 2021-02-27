@@ -145,6 +145,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\renderer\chunkRenderer\chunkRenderer.cpp" />
+    <ClCompile Include="src\shaders\chunkShader\chunkShader.cpp" />
+    <ClCompile Include="src\mesh\mesh.cpp" />
+    <ClCompile Include="src\world\chunk\chunkMeshBuilder\chunkMeshBuillder.cpp" />
+    <ClCompile Include="src\world\chunk\chunkMesh\chunkMesh.cpp" />
+    <ClCompile Include="src\world\chunk\chunkSection\chunkSection.cpp" />
+    <ClCompile Include="src\world\Block\chunkBlock\chunkBlock.cpp" />
+    <ClCompile Include="src\world\Block\blockDataBase\blockDataBase.cpp" />
+    <ClCompile Include="src\world\Block\blockType\blockType.cpp" />
+    <ClCompile Include="src\world\Block\blockData\blockData.cpp" />
+    <ClCompile Include="src\math\matrix.cpp" />
+    <ClCompile Include="src\renderer\cubeRenderer\cubeRenderer.cpp" />
     <ClCompile Include="src\application\context\context.cpp" />
     <ClCompile Include="src\renderer\quadRenderer\quadRenderer.cpp" />
     <ClCompile Include="src\model\model.cpp" />
@@ -158,9 +170,22 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\entity\player\player.cpp" />
     <ClCompile Include="src\texture\textureHandler.cpp" />
+    <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\renderer\chunkRenderer\chunkRenderer.h" />
+    <ClInclude Include="src\shaders\chunkShader\chunkShader.h" />
+    <ClInclude Include="src\world\chunk\chunkMeshBuilder\chunkMeshBuillder.h" />
+    <ClInclude Include="src\world\chunk\chunkMesh\chunkMesh.h" />
+    <ClInclude Include="src\mesh\mesh.h" />
+    <ClInclude Include="src\world\chunk\chunkSection\chunkSection.h" />
+    <ClInclude Include="src\world\Block\chunkBlock\chunkBlock.h" />
+    <ClInclude Include="src\world\Block\blockDataBase\blockDataBase.h" />
+    <ClInclude Include="src\world\Block\blockType\blockType.h" />
+    <ClInclude Include="src\world\Block\blockData\blockData.h" />
+    <ClInclude Include="src\renderer\cubeRenderer\cubeRenderer.h" />
     <ClInclude Include="src\application\context\context.h" />
+    <ClInclude Include="src\math\Matrix.h" />
     <ClInclude Include="src\renderer\quadRenderer\quadRenderer.h" />
     <ClInclude Include="src\model\model.h" />
     <ClInclude Include="src\shaders\basicShader\basicShader.h" />
@@ -176,10 +201,19 @@
     <ClInclude Include="src\utility\nonCopyable.h" />
     <ClInclude Include="src\utility\singleton.h" />
     <ClInclude Include="src\texture\textureHandler.h" />
+    <ClInclude Include="src\world\Block\BlockId.h" />
+    <ClInclude Include="src\world\worldConstant.h" />
+    <ClInclude Include="src\texture\textureAtlas\textureAtlas.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\blocks\air.block" />
+    <None Include="assets\blocks\dirt.block" />
+    <None Include="assets\blocks\grass.block" />
+    <None Include="assets\blocks\stone.block" />
     <None Include="src\shaders\glsl\basicShader.frag" />
     <None Include="src\shaders\glsl\basicShader.vert" />
+    <None Include="src\shaders\glsl\chunkShader.frag" />
+    <None Include="src\shaders\glsl\chunkShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

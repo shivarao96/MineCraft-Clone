@@ -2,6 +2,7 @@
 
 #include"../baseState.h"
 #include "../../entity/player/player.h"
+#include "../../world/chunk/chunkSection/chunkSection.h"
 
 class PlayState: public BaseState
 {
@@ -13,5 +14,6 @@ public:
 	void render(MainRenderer& mainRenderer);
 private:
 	Player m_player;
+	ChunkSection m_chunkSection;
 };
 

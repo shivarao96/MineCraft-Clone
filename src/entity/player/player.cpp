@@ -1,7 +1,8 @@
 #include "player.h"
+#include <GL/glew.h>
 
 Player::Player() {
-	m_position = glm::vec3(0, 0, -5);
+	m_position = glm::vec3(1, 0, -15);
 }
 void Player::handleInput(const sf::RenderWindow& window) {
 	keyboardInput();
@@ -13,34 +14,39 @@ void Player::update(float deltaTime) {
 }
 void Player::keyboardInput() {
 	glm::vec3 change = glm::vec3(0);
+	static bool fillModeLine = false;
 	float speed = 0.5;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		change.x += glm::cos(glm::radians(m_rotation.y + 90)) * speed;
 		change.z += glm::sin(glm::radians(m_rotation.y + 90)) * speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		change.x -= glm::cos(glm::radians(m_rotation.y + 90)) * speed;
-		change.z -= glm::sin(glm::radians(m_rotation.y + 90)) * speed;
+		change.x += -glm::cos(glm::radians(m_rotation.y + 90)) * speed;
+		change.z += -glm::sin(glm::radians(m_rotation.y + 90)) * speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		change.x += glm::cos(glm::radians(m_rotation.y)) * speed;
 		change.z += glm::sin(glm::radians(m_rotation.y)) * speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		change.x -= glm::cos(glm::radians(m_rotation.y)) * speed;
-		change.z -= glm::sin(glm::radians(m_rotation.y)) * speed;
+		change.x += -glm::cos(glm::radians(m_rotation.y)) * speed;
+		change.z += -glm::sin(glm::radians(m_rotation.y)) * speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-		change.y += speed;
+		change.y -= speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-		change.y -= speed;
+		change.y += speed;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+		glPolygonMode(GL_FRONT_AND_BACK, fillModeLine ? GL_FILL : GL_LINE);
+		fillModeLine = !fillModeLine;
 	}
 	
 	m_velocity   += change;
 }
 void Player::mouseInput(const sf::RenderWindow& window) {
-	const int xViewBound     = 90;
+	const int xViewBound     = 80;
 	static auto lastMousePos = sf::Mouse::getPosition(window);
 	auto change              = sf::Mouse::getPosition() - lastMousePos;
 
