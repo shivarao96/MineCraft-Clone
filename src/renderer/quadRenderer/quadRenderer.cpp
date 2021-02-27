@@ -5,7 +5,7 @@
 
 QuadRenderer::QuadRenderer() {
 	m_textureHandler.loadFromFile("test");
-    m_model.addData(
+    m_model.addData({
         {
            -0.5,  0.5, 0,
             0.5,  0.5, 0,
@@ -22,7 +22,7 @@ QuadRenderer::QuadRenderer() {
             0, 2, 1,
             2, 0, 3,
         }
-    );
+    });
 }
 void QuadRenderer::addAt(const glm::vec3& pos) {
     m_quads.push_back(pos);

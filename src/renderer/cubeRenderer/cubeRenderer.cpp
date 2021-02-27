@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../../math/Matrix.h"
 
-CubeRenderer::CubeRenderer() {
+CubeRenderer::CubeRenderer():m_texAtlas("DefaultPack"){
 	m_textureHandler.loadFromFile("test");
 	std::vector<float> vertices = {
 		//Back
@@ -42,7 +42,17 @@ CubeRenderer::CubeRenderer() {
 		 1, 0, 1,
 		 0, 0, 1
 	};
-	std::vector<float> texCoords = {
+	std::vector<float> texTopCoords = m_texAtlas.getTextureCoords({ 0,0 }); // air
+	std::vector<float> texSideCoords = m_texAtlas.getTextureCoords({ 1,0 }); // grass
+	std::vector<float> texBottomCoords = m_texAtlas.getTextureCoords({ 2,0 }); // dirt
+	std::vector<float> texCoords;
+	texCoords.insert(texCoords.end(), texSideCoords.begin(), texSideCoords.end());
+	texCoords.insert(texCoords.end(), texSideCoords.begin(), texSideCoords.end());
+	texCoords.insert(texCoords.end(), texSideCoords.begin(), texSideCoords.end());
+	texCoords.insert(texCoords.end(), texSideCoords.begin(), texSideCoords.end());
+	texCoords.insert(texCoords.end(), texTopCoords.begin(), texTopCoords.end());
+	texCoords.insert(texCoords.end(), texBottomCoords.begin(), texBottomCoords.end());
+	/*{
 		0, 1,
 		1, 1,
 		1, 0,
@@ -72,7 +82,7 @@ CubeRenderer::CubeRenderer() {
 		1, 1,
 		1, 0,
 		0, 0
-	};
+	};*/
 	std::vector<unsigned int> indices = {
 		0, 1, 2,
 		2, 3, 0,
@@ -92,21 +102,22 @@ CubeRenderer::CubeRenderer() {
 		20, 21, 22,
 		22, 23, 20
 	};
-	m_model.addData(
+	m_model.addData({
 		vertices,
 		texCoords,
 		indices
-	);
+	});
 }
 void CubeRenderer::addAt(const glm::vec3& pos) {
 	m_cubes.push_back(pos);
 }
 void CubeRenderer::renderCubes(const Camera& cam) {
 	m_basicShader.useShader();
-	m_textureHandler.bindTexture();
+	m_texAtlas.bindTexture();
+	//m_textureHandler.bindTexture();
 	m_model.bindVAO();
-	m_basicShader.setInt("texSampler", 0);
-	glActiveTexture(GL_TEXTURE0);
+	//m_basicShader.setInt("texSampler", 0);
+	//glActiveTexture(GL_TEXTURE0);
 	m_basicShader.loadProjectionMatrix(cam.getProjectionMatrix());
 	m_basicShader.loadViewMatrix(cam.getViewMatrix());
 

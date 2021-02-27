@@ -1,7 +1,8 @@
 #include "player.h"
+#include <GL/glew.h>
 
 Player::Player() {
-	m_position = glm::vec3(0, 0, -5);
+	m_position = glm::vec3(1, 0, -15);
 }
 void Player::handleInput(const sf::RenderWindow& window) {
 	keyboardInput();
@@ -13,6 +14,7 @@ void Player::update(float deltaTime) {
 }
 void Player::keyboardInput() {
 	glm::vec3 change = glm::vec3(0);
+	static bool fillModeLine = false;
 	float speed = 0.5;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		change.x += glm::cos(glm::radians(m_rotation.y + 90)) * speed;
@@ -35,6 +37,10 @@ void Player::keyboardInput() {
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 		change.y += speed;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+		glPolygonMode(GL_FRONT_AND_BACK, fillModeLine ? GL_FILL : GL_LINE);
+		fillModeLine = !fillModeLine;
 	}
 	
 	m_velocity   += change;

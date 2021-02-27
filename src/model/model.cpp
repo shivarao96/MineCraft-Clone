@@ -1,37 +1,27 @@
 #include "model.h"
 #include <GL/glew.h>
 
-Model::Model(
-	const std::vector<float>& vertexPositions,
-	const std::vector<float>& texCoords,
-	const std::vector<unsigned int>& indices
-) {
+Model::Model(const Mesh& mesh) {
 	addData(
-		vertexPositions,
-		texCoords,
-		indices
+		mesh
 	);
 }	
 Model::~Model() {
 	deleteData();
 }
-void Model::addData(
-	const std::vector<float>& vertexPositions,
-	const std::vector<float>& texCoords,
-	const std::vector<unsigned int>& indices
-) {
+void Model::addData(const Mesh& mesh) {
 	if (m_vao != 0)
 		deleteData();
-	m_indicesCount = indices.size();
+	m_indicesCount = mesh.indices.size();
 	glGenVertexArrays(
 		1, 
 		&m_vao
 	);
 	glBindVertexArray(m_vao);
 	
-	addVBO(3, vertexPositions);
-	addVBO(2, texCoords);
-	addEBO(indices);
+	addVBO(3, mesh.vertexPositions);
+	addVBO(2, mesh.textureCoordinates);
+	addEBO(mesh.indices);
 }
 void Model::addVBO(
 	int dimension, 
@@ -96,7 +86,7 @@ void Model::deleteData() {
 	m_indicesCount = 0;
 	m_vboBuffers.clear();
 }
-void Model::bindVAO() {
+void Model::bindVAO() const{
 	glBindVertexArray(m_vao);
 }
 int Model::getIndicesCount() const {

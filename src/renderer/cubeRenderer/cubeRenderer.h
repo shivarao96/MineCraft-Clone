@@ -5,6 +5,7 @@
 #include "../../model/model.h"
 #include "../../texture/textureHandler.h"
 #include "../../shaders/basicShader/basicShader.h"
+#include "../../texture/textureAtlas/textureAtlas.h"
 
 class Camera;
 
@@ -19,5 +20,6 @@ private:
 	Model m_model;
 	BasicShader m_basicShader;
 	TextureHandler m_textureHandler;
+	TextureAtlas m_texAtlas;
 };
 

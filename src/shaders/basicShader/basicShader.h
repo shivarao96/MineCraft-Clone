@@ -12,7 +12,7 @@ public:
 	void loadProjectionMatrix (const glm::mat4& projectionMatrix);
 	void loadViewMatrix       (const glm::mat4& viewMatrix);
 	void loadModelMatrix      (const glm::mat4& modelMatrix);
-private:
+protected:
 	virtual void getUniform() override;
 };
 
