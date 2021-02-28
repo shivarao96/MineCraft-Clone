@@ -18,6 +18,8 @@ public:
 	void addEBO(const std::vector<unsigned int>& data);
 	void bindVAO() const;
 	int getIndicesCount() const;
+	Model(Model&& other);
+	Model& operator=(Model&& other);
 private:
 	unsigned int m_vao = 0;
 	int m_vboCount     = 0;

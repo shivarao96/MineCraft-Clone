@@ -14,7 +14,11 @@ public:
 	Application(const std::string& name);
 	void runApp();
 	template<typename T, typename... Args>
-	void pushState(Args&&... args);
+	void pushState(Args&&... args) {
+		m_states.push_back(
+			std::make_unique<T>(std::forward<Args>(args)...)
+		);
+	}
 	void popState();
 	Camera& getCamera();
 	const sf::RenderWindow& getWindow() const;

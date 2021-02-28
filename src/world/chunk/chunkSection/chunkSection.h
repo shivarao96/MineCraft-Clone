@@ -5,24 +5,29 @@
 #include "../../worldConstant.h"
 #include "../chunkMesh/chunkMesh.h"
 #include "../../Block/chunkBlock/chunkBlock.h"
+#include "../iChunk/iChunk.h"
 
-class ChunkSection
+class World;
+
+class ChunkSection: public IChunk
 {
+	friend class Chunk;
 public:
-	ChunkSection();
-
-	void setBlock(int x, int y, int z, ChunkBlock block);
-	ChunkBlock getBlock(int x, int y, int z);
+	ChunkSection(const sf::Vector3i location, World& world);
+	void setBlock(int x, int y, int z, ChunkBlock block) override;
+	ChunkBlock getBlock(int x, int y, int z) const override;
 	const sf::Vector3i getLocation() const;
-	ChunkMesh m_chunkMesh;
 private:
-	bool outOfIndex(int value);
-	int getBlockIndex(int x, int y, int z);
+	sf::Vector3i toWorldPosition(int x, int y, int z) const noexcept;
+	static bool outOfIndex(int value);
+	static int getBlockIndex(int x, int y, int z);
 
 	std::array<
 		ChunkBlock,
 		CHUNK_VOLUME
-	> m_chunks;
+	> m_chunkBlocks;
+	ChunkMesh m_chunkMesh;
 	sf::Vector3i m_location;
+	World* m_pWorld;
 };
 

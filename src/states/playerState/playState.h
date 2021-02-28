@@ -3,6 +3,8 @@
 #include"../baseState.h"
 #include "../../entity/player/player.h"
 #include "../../world/chunk/chunkSection/chunkSection.h"
+#include "../../world/world.h"
+
 
 class PlayState: public BaseState
 {
@@ -12,8 +14,10 @@ public:
 	void handleInputs();
 	void update(float deltaTime);
 	void render(MainRenderer& mainRenderer);
+	bool isStateInitialized() const;
 private:
 	Player m_player;
-	ChunkSection m_chunkSection;
+	World m_world;
+	bool isStateInit = false;
 };
 

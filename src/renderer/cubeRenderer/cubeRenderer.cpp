@@ -2,6 +2,7 @@
 #include "../../entity/camera/camera.h"
 #include <iostream>
 #include "../../math/Matrix.h"
+#include "../../glActions/glFunctions.h"
 
 CubeRenderer::CubeRenderer():m_texAtlas("DefaultPack"){
 	m_textureHandler.loadFromFile("test");
@@ -125,12 +126,7 @@ void CubeRenderer::renderCubes(const Camera& cam) {
 		m_basicShader.loadModelMatrix(
 			makeModelMatrix({ cube, glm::vec3(0,0,0) })
 		);
-		glDrawElements(
-			GL_TRIANGLES,
-			m_model.getIndicesCount(),
-			GL_UNSIGNED_INT,
-			nullptr
-		);
+		GlFunctions::drawElements(m_model.getIndicesCount());
 	}
 	m_cubes.clear();
 }

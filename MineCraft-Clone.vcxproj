@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\world\chunk\chunk.cpp" />
+    <ClCompile Include="src\glActions\glFunctions.cpp" />
     <ClCompile Include="src\renderer\chunkRenderer\chunkRenderer.cpp" />
     <ClCompile Include="src\shaders\chunkShader\chunkShader.cpp" />
     <ClCompile Include="src\mesh\mesh.cpp" />
@@ -171,8 +173,11 @@
     <ClCompile Include="src\entity\player\player.cpp" />
     <ClCompile Include="src\texture\textureHandler.cpp" />
     <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
+    <ClCompile Include="src\world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\world\chunk\chunk.h" />
+    <ClInclude Include="src\glActions\glFunctions.h" />
     <ClInclude Include="src\renderer\chunkRenderer\chunkRenderer.h" />
     <ClInclude Include="src\shaders\chunkShader\chunkShader.h" />
     <ClInclude Include="src\world\chunk\chunkMeshBuilder\chunkMeshBuillder.h" />
@@ -202,8 +207,10 @@
     <ClInclude Include="src\utility\singleton.h" />
     <ClInclude Include="src\texture\textureHandler.h" />
     <ClInclude Include="src\world\Block\BlockId.h" />
+    <ClInclude Include="src\world\chunk\iChunk\iChunk.h" />
     <ClInclude Include="src\world\worldConstant.h" />
     <ClInclude Include="src\texture\textureAtlas\textureAtlas.h" />
+    <ClInclude Include="src\world\world.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blocks\air.block" />

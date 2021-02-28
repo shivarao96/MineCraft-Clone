@@ -74,12 +74,13 @@ ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection)
 {}
 
 void ChunkMeshBuillder::buildMesh(ChunkMesh& chunkMesh) {
+	sf::Clock c;
 	m_pChunkMesh = &chunkMesh;
 	Direction direction;
 
-	for (int x = 0; x < CHUNK_SIZE; x++) {
-		for (int y = 0; y < CHUNK_SIZE; y++) {
-			for (int z = 0; z < CHUNK_SIZE; z++) {
+	for (int8_t y = 0; y < CHUNK_SIZE; ++y) {
+		for (int8_t x = 0; x < CHUNK_SIZE; ++x) {
+			for (int8_t z = 0; z < CHUNK_SIZE; ++z) {
 				sf::Vector3i positions(x,y,z);
 				ChunkBlock block = m_pChunkSection->getBlock(x, y, z);
 				if (block == BlockId::AIR) {

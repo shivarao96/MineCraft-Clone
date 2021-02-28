@@ -1,6 +1,7 @@
 #include "chunkRenderer.h"
 
 #include "../../entity/camera/camera.h"
+#include "../../glActions/glFunctions.h"
 #include "../../world/chunk/chunkMesh/chunkMesh.h"
 #include "../../world/Block/blockDataBase/blockDataBase.h"
 
@@ -15,14 +16,10 @@ void ChunkRenderer::render(const Camera& camera) {
 	m_chunkShader.loadProjectionMatrix(camera.getProjectionMatrix());
 
 	for (const ChunkMesh* mesh : m_chunkMeshes) {
+		m_chunkShader.loadModelMatrix(glm::mat4(1.0f));
 		const ChunkMesh& m = *mesh;
-		m.getModel().bindVAO();
-		glDrawElements(
-			GL_TRIANGLES,
-			m.getModel().getIndicesCount(),
-			GL_UNSIGNED_INT,
-			nullptr
-		);
+		m.getModel().bindVAO();		
+		GlFunctions::drawElements(m.getModel().getIndicesCount());
 	}
 	m_chunkMeshes.clear();
 

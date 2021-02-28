@@ -48,7 +48,14 @@ void ChunkMesh::addFace(
 }
 void ChunkMesh::bufferMesh() {
 	m_model.addData(m_mesh);
-	m_mesh.clearData();
+	
+	m_mesh.vertexPositions.clear();
+	m_mesh.textureCoordinates.clear();
+	m_mesh.indices.clear();
+
+	m_mesh.vertexPositions.shrink_to_fit();
+	m_mesh.textureCoordinates.shrink_to_fit();
+	m_mesh.indices.shrink_to_fit();
 	m_index = 0;
 }
 const Model& ChunkMesh::getModel() const {

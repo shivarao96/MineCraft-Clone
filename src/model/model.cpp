@@ -92,3 +92,26 @@ void Model::bindVAO() const{
 int Model::getIndicesCount() const {
 	return m_indicesCount;
 }
+
+Model::Model(Model&& other)
+	:m_vao(other.m_vao),
+	 m_vboCount(other.m_vboCount),
+	 m_indicesCount(other.m_indicesCount),
+	 m_vboBuffers(std::move(other.m_vboBuffers))
+{
+	other.m_indicesCount = 0;
+	other.m_vao = 0;
+	other.m_vboCount = 0;
+}
+Model& Model::operator=(Model&& other) {
+	m_vao = other.m_vao;
+	m_vboCount = other.m_vboCount;
+	m_indicesCount = other.m_indicesCount;
+	m_vboBuffers = std::move(other.m_vboBuffers);
+
+	other.m_indicesCount = 0;
+	other.m_vao = 0;
+	other.m_vboCount = 0;
+
+	return *this;
+}
