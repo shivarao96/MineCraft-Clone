@@ -1,5 +1,6 @@
 #include "application.h"
 #include "../states/playerState/playState.h"
+#include <iostream>
 
 Application::Application(const std::string& name) {
 	pushState<PlayState>(*this);
@@ -14,7 +15,9 @@ void Application::runApp() {
 		state.update(deltaTime.asSeconds());
 		m_camera.update();
 
-		state.render(m_mainRenderer);
+		if (state.isStateInitialized()) {
+			state.render(m_mainRenderer);
+		}
 		m_mainRenderer.finishRenderer(m_context.m_window, m_camera);
 
 		handleEvents();
@@ -24,12 +27,8 @@ void Application::runApp() {
 		}
 	}
 }
-template<typename T, typename... Args>
-void Application::pushState(Args&&... args) {
-	m_states.push_back(
-		std::make_unique<T>(std::forward<Args>(args)...)
-	);
-}
+//template<typename T, typename... Args>
+//void Application::pushState(Args&&... args) 
 void Application::popState() {
 	m_shouldPopState = true;
 }
