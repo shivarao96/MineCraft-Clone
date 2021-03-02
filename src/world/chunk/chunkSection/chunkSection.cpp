@@ -42,3 +42,6 @@ sf::Vector3i ChunkSection::toWorldPosition(int x, int y, int z) const noexcept {
 		m_location.z * CHUNK_SIZE + z
 	};
 }
+bool ChunkSection::hasMesh() const {
+	return m_hasMesh;
+}

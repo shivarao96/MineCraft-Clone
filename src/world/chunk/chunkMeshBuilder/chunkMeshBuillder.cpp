@@ -69,13 +69,13 @@ struct Direction
 	sf::Vector3i back;
 };
 
-ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection)
+ChunkMeshBuillder::ChunkMeshBuillder(const ChunkSection& chunkSection, ChunkMesh& chunkMesh)
 	:m_pChunkSection(&chunkSection)
+	,m_pChunkMesh(&chunkMesh)
 {}
 
-void ChunkMeshBuillder::buildMesh(ChunkMesh& chunkMesh) {
+void ChunkMeshBuillder::buildMesh() {
 	sf::Clock c;
-	m_pChunkMesh = &chunkMesh;
 	Direction direction;
 
 	for (int8_t y = 0; y < CHUNK_SIZE; ++y) {

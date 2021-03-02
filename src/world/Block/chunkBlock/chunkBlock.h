@@ -24,6 +24,10 @@ public:
 		return m_id == b.m_id;
 	}
 
-	block_t m_id = 1;
+	bool operator!=(ChunkBlock b) {
+		return m_id != b.m_id;
+	}
+
+	block_t m_id = 0;
 };
 

@@ -11,8 +11,8 @@ public:
 	ChunkMeshBuillder()  = default;
 	~ChunkMeshBuillder();
 
-	ChunkMeshBuillder(ChunkSection& chunkSection);
-	void buildMesh(ChunkMesh& chunkMesh);
+	ChunkMeshBuillder(const ChunkSection& chunkSection, ChunkMesh& chunkMesh);
+	void buildMesh();
 private:
 	void tryAddFaceToMesh(
 		const std::vector<float>& blockFace,
@@ -28,7 +28,7 @@ private:
 	);
 
 	ChunkMesh*    m_pChunkMesh                = nullptr;
-	ChunkSection* m_pChunkSection             = nullptr;
+	const ChunkSection* m_pChunkSection       = nullptr;
 	const BlockDataHolder* m_pBlockDataHolder = nullptr;
 };
 

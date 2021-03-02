@@ -1,8 +1,10 @@
 #include "player.h"
 #include <GL/glew.h>
+#include "../../world/worldConstant.h"
 
 Player::Player() {
-	m_position = glm::vec3(1, 0, -15);
+	m_position = { -1, 3 * CHUNK_SIZE + 2, -20 };
+	m_rotation = { 0, 120, 0 };
 }
 void Player::handleInput(const sf::RenderWindow& window) {
 	keyboardInput();
@@ -16,27 +18,33 @@ void Player::keyboardInput() {
 	glm::vec3 change = glm::vec3(0);
 	static bool fillModeLine = false;
 	float speed = 0.5;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		change.x += glm::cos(glm::radians(m_rotation.y + 90)) * speed;
-		change.z += glm::sin(glm::radians(m_rotation.y + 90)) * speed;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+	{
+		speed *= 3;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		change.x += -glm::cos(glm::radians(m_rotation.y + 90)) * speed;
 		change.z += -glm::sin(glm::radians(m_rotation.y + 90)) * speed;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		change.x += glm::cos(glm::radians(m_rotation.y)) * speed;
-		change.z += glm::sin(glm::radians(m_rotation.y)) * speed;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		change.x += glm::cos(glm::radians(m_rotation.y + 90)) * speed;
+		change.z += glm::sin(glm::radians(m_rotation.y + 90)) * speed;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		change.x += -glm::cos(glm::radians(m_rotation.y)) * speed;
 		change.z += -glm::sin(glm::radians(m_rotation.y)) * speed;
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		change.x += glm::cos(glm::radians(m_rotation.y)) * speed;
+		change.z += glm::sin(glm::radians(m_rotation.y)) * speed;
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-		change.y -= speed;
+		change.y += speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-		change.y += speed;
+		change.y -= speed;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
 		glPolygonMode(GL_FRONT_AND_BACK, fillModeLine ? GL_FILL : GL_LINE);
@@ -67,8 +75,8 @@ void Player::mouseInput(const sf::RenderWindow& window) {
 		m_rotation.y = 360;
 	}
 
-	auto cx = static_cast<int>(window.getSize().x / 4);
-	auto cy = static_cast<int>(window.getSize().y / 4);
+	auto cx = static_cast<int>(window.getSize().x / 2);
+	auto cy = static_cast<int>(window.getSize().y / 2);
 	sf::Mouse::setPosition({ cx, cy }, window);
 	lastMousePos = sf::Mouse::getPosition();
 
