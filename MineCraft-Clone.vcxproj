@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\math\ray\ray.cpp" />
     <ClCompile Include="src\world\chunk\chunk.cpp" />
     <ClCompile Include="src\glActions\glFunctions.cpp" />
     <ClCompile Include="src\renderer\chunkRenderer\chunkRenderer.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\world\world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\math\ray\ray.h" />
     <ClInclude Include="src\world\chunk\chunk.h" />
     <ClInclude Include="src\glActions\glFunctions.h" />
     <ClInclude Include="src\renderer\chunkRenderer\chunkRenderer.h" />

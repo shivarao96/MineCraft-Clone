@@ -21,6 +21,7 @@ private:
 	sf::Vector3i toWorldPosition(int x, int y, int z) const noexcept;
 	static bool outOfIndex(int value);
 	static int getBlockIndex(int x, int y, int z);
+	bool hasMesh() const;
 
 	std::array<
 		ChunkBlock,
@@ -29,5 +30,6 @@ private:
 	ChunkMesh m_chunkMesh;
 	sf::Vector3i m_location;
 	World* m_pWorld;
+	bool m_hasMesh = false;
 };
 

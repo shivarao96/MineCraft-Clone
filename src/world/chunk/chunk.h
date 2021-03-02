@@ -15,7 +15,7 @@ public:
 	void setBlock(int x, int y, int z, ChunkBlock block) override;
 	ChunkBlock getBlock(int x, int y, int z) const override;
 	void drawChunks(MainRenderer& renderer);
-	void makeAllMesh();
+	void makeMesh();
 private:
 	bool outOfBound(int x, int y, int z) const;
 	std::vector<ChunkSection> m_chunksSections;
