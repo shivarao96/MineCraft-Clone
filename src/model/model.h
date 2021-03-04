@@ -11,6 +11,7 @@ public:
 	~Model();
 	void addData(const Mesh& mesh);
 	void deleteData();
+	void genVAO();
 	void addVBO(
 		int dimension,
 		const std::vector<float>& data

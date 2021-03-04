@@ -105,6 +105,15 @@
     <ClCompile Include="src\math\ray\ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\shaders\skyboxShader\skyboxShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\skyboxRenderer\skyboxRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture\cubeTexture\cubeTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -215,6 +224,15 @@
     <ClInclude Include="src\math\ray\ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\shaders\skyboxShader\skyboxShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\skyboxRenderer\skyboxRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture\cubeTexture\cubeTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\glsl\basicShader.vert" />
@@ -225,5 +243,6 @@
     <None Include="assets\blocks\stone.block" />
     <None Include="src\shaders\glsl\chunkShader.vert" />
     <None Include="src\shaders\glsl\chunkShader.frag" />
+    <None Include="src\shaders\glsl\skyboxShader.frag" />
   </ItemGroup>
 </Project>

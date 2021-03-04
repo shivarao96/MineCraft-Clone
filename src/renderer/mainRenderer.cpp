@@ -11,6 +11,9 @@ void MainRenderer::drawCubes(glm::vec3 pos) {
 void MainRenderer::drawChunk(const ChunkMesh& mesh) {
 	m_chunkRenderer.add(mesh);
 }
+void MainRenderer::drawSky() {
+	m_drawbox = true;
+}
 void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera) {
 	glClearColor(
 		0.1,
@@ -27,5 +30,12 @@ void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera
 	//m_quadRenderer.renderQuads(camera);
 	//m_cubeRenderer.renderCubes(camera);
 	m_chunkRenderer.render(camera);
+
+	if (m_drawbox) {
+		glDisable(GL_CULL_FACE);
+		m_skyboxRenderer.renderSkyBox(camera);
+		m_drawbox = false;
+	}
+
 	window.display();
 }

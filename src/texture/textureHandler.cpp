@@ -14,6 +14,7 @@ void TextureHandler::loadFromImage(const sf::Image& img) {
 		1,
 		&m_textureId
 	);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(
 		GL_TEXTURE_2D,
 		m_textureId

@@ -2,8 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "../utility/nonCopyable.h"
 
-class TextureHandler
+class TextureHandler: public NonCopyable
 {
 public:
 	TextureHandler() = default;
