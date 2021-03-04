@@ -49,6 +49,7 @@ void PlayState::render(MainRenderer& mainRenderer) {
 	//mainRenderer.drawQuads({ 0,0,0 });
 	//mainRenderer.drawCubes({ 0,0,0 });
 	m_world.renderWorld(mainRenderer);
+	mainRenderer.drawSky();
 }
 bool PlayState::isStateInitialized() const {
 	return isStateInit;

@@ -9,16 +9,17 @@ Model::Model(const Mesh& mesh) {
 Model::~Model() {
 	deleteData();
 }
-void Model::addData(const Mesh& mesh) {
+void Model::genVAO() {
 	if (m_vao != 0)
 		deleteData();
-	m_indicesCount = mesh.indices.size();
 	glGenVertexArrays(
-		1, 
+		1,
 		&m_vao
 	);
 	glBindVertexArray(m_vao);
-	
+}
+void Model::addData(const Mesh& mesh) {
+	genVAO();
 	addVBO(3, mesh.vertexPositions);
 	addVBO(2, mesh.textureCoordinates);
 	addEBO(mesh.indices);
@@ -55,6 +56,7 @@ void Model::addVBO(
 	m_vboBuffers.push_back(vbo);
 }
 void Model::addEBO(const std::vector<unsigned int>& data) {
+	m_indicesCount = data.size();
 	unsigned int ebo;
 	glGenBuffers(
 		1, 

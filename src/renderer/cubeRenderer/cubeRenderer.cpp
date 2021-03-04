@@ -53,37 +53,6 @@ CubeRenderer::CubeRenderer():m_texAtlas("DefaultPack"){
 	texCoords.insert(texCoords.end(), texSideCoords.begin(), texSideCoords.end());
 	texCoords.insert(texCoords.end(), texTopCoords.begin(), texTopCoords.end());
 	texCoords.insert(texCoords.end(), texBottomCoords.begin(), texBottomCoords.end());
-	/*{
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0,
-
-		0, 1,
-		1, 1,
-		1, 0,
-		0, 0
-	};*/
 	std::vector<unsigned int> indices = {
 		0, 1, 2,
 		2, 3, 0,
