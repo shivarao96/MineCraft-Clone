@@ -1,11 +1,14 @@
 #include "chunkSection.h"
 #include "../../world.h"
+#include "../chunkMeshBuilder/chunkMeshBuillder.h"
+
 
 ChunkSection::ChunkSection(const sf::Vector3i location, World& world)
 	:m_location(location), m_pWorld(&world)
 {
 }
 void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
+	m_hasMesh = false;
 	if (outOfIndex(x) ||
 		outOfIndex(y) ||
 		outOfIndex(z)) {
@@ -15,6 +18,15 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 	}
 	m_chunkBlocks[getBlockIndex(x, y, z)] = block;
 }
+
+void ChunkSection::makeMesh() {
+	if (!m_hasMesh) {
+		ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
+		m_chunkMesh.bufferMesh();
+		m_hasMesh = true;
+	}
+}
+
 ChunkBlock ChunkSection::getBlock(int x, int y, int z) const {
 	if (outOfIndex(x) ||
 		outOfIndex(y) ||

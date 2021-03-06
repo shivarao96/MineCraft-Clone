@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\world\chunk\chunkManager\chunkManager.cpp" />
     <ClCompile Include="src\renderer\skyboxRenderer\skyboxRenderer.cpp" />
     <ClCompile Include="src\texture\cubeTexture\cubeTexture.cpp" />
     <ClCompile Include="src\shaders\skyboxShader\skyboxShader.cpp" />
@@ -178,8 +179,10 @@
     <ClCompile Include="src\texture\textureHandler.cpp" />
     <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
     <ClCompile Include="src\world\world.cpp" />
+    <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\world\chunk\chunkManager\chunkManager.h" />
     <ClInclude Include="src\renderer\skyboxRenderer\skyboxRenderer.h" />
     <ClInclude Include="src\texture\cubeTexture\cubeTexture.h" />
     <ClInclude Include="src\shaders\skyboxShader\skyboxShader.h" />
@@ -219,6 +222,7 @@
     <ClInclude Include="src\world\worldConstant.h" />
     <ClInclude Include="src\texture\textureAtlas\textureAtlas.h" />
     <ClInclude Include="src\world\world.h" />
+    <ClInclude Include="src\math\vector2XZ\vector2XZ.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blocks\air.block" />

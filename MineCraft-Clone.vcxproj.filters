@@ -114,6 +114,12 @@
     <ClCompile Include="src\texture\cubeTexture\cubeTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\chunk\chunkManager\chunkManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -231,6 +237,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\texture\cubeTexture\cubeTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vector2XZ\vector2XZ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\chunk\chunkManager\chunkManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

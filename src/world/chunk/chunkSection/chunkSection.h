@@ -17,6 +17,7 @@ public:
 	void setBlock(int x, int y, int z, ChunkBlock block) override;
 	ChunkBlock getBlock(int x, int y, int z) const override;
 	const sf::Vector3i getLocation() const;
+	void makeMesh();
 private:
 	sf::Vector3i toWorldPosition(int x, int y, int z) const noexcept;
 	static bool outOfIndex(int value);
