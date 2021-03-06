@@ -2,15 +2,10 @@
 #include "Block/chunkBlock/chunkBlock.h"
 #include "worldConstant.h"
 #include <iostream>
+#include "../math/vector2XZ/vector2XZ.h"
 
 namespace WorldSpace{
 	constexpr int world_size = 8;
-
-	struct VectorXZ
-	{
-		int x;
-		int z;
-	};
 
 	VectorXZ getBlock(int x, int z) {
 		return { x % CHUNK_SIZE, z % CHUNK_SIZE };
@@ -20,7 +15,7 @@ namespace WorldSpace{
 		return { x / CHUNK_SIZE, z / CHUNK_SIZE };
 	}
 
-	bool isWorldOutOfBound(VectorXZ vecXZ) {
+	bool isWorldOutOfBound(const VectorXZ& vecXZ) {
 		if (vecXZ.x < 0) return true;
 		if (vecXZ.z < 0) return true;
 		if (vecXZ.x >= WorldSpace::world_size) return true;
@@ -29,70 +24,53 @@ namespace WorldSpace{
 		return false;
 	}
 }
-World::World() {
+World::World():m_chunkManager(*this) {
 	for (int x = 0; x < WorldSpace::world_size; x++) {
 		for (int z = 0; z < WorldSpace::world_size; z++) {
-			m_chunks.emplace_back(*this, sf::Vector2i(x, z));
+			m_chunkManager.getChunk(x, z).load();
 		}
 	}
-	for (auto& chunk : m_chunks) {
-		chunk.makeMesh();
+	for (int x = 0; x < WorldSpace::world_size; x++) {
+		for (int z = 0; z < WorldSpace::world_size; z++) {
+			m_chunkManager.makeMesh(x, z);
+		}
 	}
 }
 void World::renderWorld(MainRenderer& renderer) {
 	
-	for (auto& changedChunk : m_changedChunks) {
-		changedChunk->makeMesh();
+	for (auto& location : m_rebuildChunks) {
+		ChunkSection& section = m_chunkManager.getChunk(location.x, location.z).getSection(location.y);
+		section.makeMesh();
 	}
-	m_changedChunks.clear();
-	
-	for (auto& chunk : m_chunks) {
-		chunk.drawChunks(renderer);
+	m_rebuildChunks.clear();
+	const auto& chunks = m_chunkManager.getChunks();
+	for (auto& chunk: chunks) {
+		chunk.second.drawChunks(renderer);
 	}
 }
 void World::setBlock(int x, int y, int z, ChunkBlock block) {
-	WorldSpace::VectorXZ bP = WorldSpace::getBlock(x, z);
-	WorldSpace::VectorXZ cP = WorldSpace::getChunk(x, z);
+	if (y == 0)
+		return;
+
+	auto bP = WorldSpace::getBlock(x, z);
+	auto cP = WorldSpace::getChunk(x, z);
 
 	if (WorldSpace::isWorldOutOfBound(cP)) {
 		return;
 	}
 
-	m_chunks.at(cP.x * WorldSpace::world_size + cP.z).setBlock(bP.x, y, bP.z, block);
+	auto& c = m_chunkManager.getChunk(cP.x, cP.z);
+	c.setBlock(bP.x, y, bP.z, block);
+	if (c.hasLoaded()) {
+		m_rebuildChunks.emplace(cP.x, y / CHUNK_SIZE, cP.z);
+	}
 }
-ChunkBlock World::getBlock(int x, int y, int z) const {
-	WorldSpace::VectorXZ bP = WorldSpace::getBlock(x, z);
-	WorldSpace::VectorXZ cP = WorldSpace::getChunk(x, z);
+ChunkBlock World::getBlock(int x, int y, int z) {
+	auto bP = WorldSpace::getBlock(x, z);
+	auto cP = WorldSpace::getChunk(x, z);
 	
 	if (WorldSpace::isWorldOutOfBound(cP)) {
 		return BlockId::AIR;
 	}
-	return m_chunks.at(cP.x * WorldSpace::world_size + cP.z).getBlock(bP.x, y, bP.z);
-}
-void World::editBlock(int x, int y, int z, ChunkBlock block) {
-	WorldSpace::VectorXZ cP = WorldSpace::getChunk(x, z);
-
-	if (WorldSpace::isWorldOutOfBound(cP)) {
-		return;
-	}
-
-	setBlock(x, y, z, block);
-	m_changedChunks.push_back(&m_chunks.at(cP.x * WorldSpace::world_size + cP.z));
-	
-	if (((x + 1) % CHUNK_SIZE) == 0) {
-		int xSize = (x + 1) / CHUNK_SIZE;
-		if (xSize < WorldSpace::world_size ) {
-			m_changedChunks.push_back(&m_chunks.at(xSize * WorldSpace::world_size + cP.z));
-		}
-	}
-	if (((z + 1) % CHUNK_SIZE) == 0) {
-		int zSize = (z + 1) / CHUNK_SIZE;
-		if (zSize < WorldSpace::world_size) {
-			m_changedChunks.push_back(&m_chunks.at(cP.x * WorldSpace::world_size + zSize));
-		}
-	}
-	
-}
-void World::addBlock(const sf::Vector2i& newPos) {
-	m_chunks.emplace_back(*this, newPos);
+	return m_chunkManager.getChunk(cP.x, cP.z).getBlock(bP.x, y, bP.z);
 }

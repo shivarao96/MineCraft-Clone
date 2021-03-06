@@ -6,8 +6,12 @@
 #include <iostream>
 
 Chunk::Chunk(World& world, sf::Vector2i location):m_location(location),m_pWorld(&world) {
+	//load();
+}
+
+void Chunk::load() {
 	for (int y = 0; y < 3; y++) {
-		m_chunksSections.emplace_back(sf::Vector3i(location.x,y,location.y), world);
+		m_chunksSections.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
 	}
 	int height = m_chunksSections.size() * CHUNK_SIZE;
 	for (int y = 0; y < height; y++) {
@@ -16,7 +20,7 @@ Chunk::Chunk(World& world, sf::Vector2i location):m_location(location),m_pWorld(
 				if (y == height - 1) {
 					setBlock(x, y, z, BlockId::GRASS);
 				}
-				else if (y > height/3 && y < height - 1) {
+				else if (y > height / 3 && y < height - 1) {
 					setBlock(x, y, z, BlockId::DIRT);
 				}
 				else {
@@ -26,16 +30,18 @@ Chunk::Chunk(World& world, sf::Vector2i location):m_location(location),m_pWorld(
 		}
 
 	}
+	m_chunkLoaded = true;
 }
 
-void Chunk::makeMesh() {
+bool Chunk::hasLoaded() {
+	return m_chunkLoaded;
+}
+
+bool Chunk::makeMesh() {
 	for (auto& chunkSection: m_chunksSections) {
-		if (!chunkSection.hasMesh()) {
-		}
-		ChunkMeshBuillder(chunkSection, chunkSection.m_chunkMesh).buildMesh();
-		chunkSection.m_chunkMesh.bufferMesh();
-		chunkSection.m_hasMesh = true;
+		chunkSection.makeMesh();
 	}
+	return 1;
 }
 void Chunk::setBlock(int x, int y, int z, ChunkBlock block) {
 	if (outOfBound(x, y, z)) return;
@@ -49,8 +55,8 @@ ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	int bY = y % CHUNK_SIZE;
 	return m_chunksSections.at(y / CHUNK_SIZE).getBlock(x, bY, z);
 }
-void Chunk::drawChunks(MainRenderer& renderer) {
-	for (auto& chunkSection : m_chunksSections) {
+void Chunk::drawChunks(MainRenderer& renderer) const {
+	for (const auto& chunkSection : m_chunksSections) {
 		if (chunkSection.hasMesh()) {
 			renderer.drawChunk(chunkSection.m_chunkMesh);
 		}
@@ -75,4 +81,12 @@ bool Chunk::outOfBound(int x, int y, int z) const {
 	}
 	
 	return false;
+}
+
+ChunkSection& Chunk::getSection(int index) {
+	while (index >= m_chunksSections.size()) {
+		// create new section
+		m_chunksSections.emplace_back(sf::Vector3i(m_location.x, m_chunksSections.size(), m_location.y), *m_pWorld);
+	}
+	return m_chunksSections.at(index);
 }

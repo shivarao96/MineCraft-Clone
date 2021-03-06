@@ -28,13 +28,13 @@ void PlayState::handleInputs() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 					timer.restart();
 					std::cout << "x: " << x << " z: " << z << std::endl;
-					m_world.editBlock(x, y, z, BlockId::AIR);
+					m_world.setBlock(x, y, z, BlockId::AIR);
 					break;
 				}
 				else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 					std::cout << "restore" << std::endl;
 					timer.restart();
-					m_world.editBlock(lastPosition.x, lastPosition.y, lastPosition.z, BlockId::GRASS);
+					m_world.setBlock(lastPosition.x, lastPosition.y, lastPosition.z, BlockId::GRASS);
 					break;
 				}
 			}

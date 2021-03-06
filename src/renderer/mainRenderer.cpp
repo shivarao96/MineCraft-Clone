@@ -31,10 +31,10 @@ void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera
 	//m_cubeRenderer.renderCubes(camera);
 	m_chunkRenderer.render(camera);
 
+	glDisable(GL_CULL_FACE);
+	m_skyboxRenderer.renderSkyBox(camera);
+	m_drawbox = false;
 	if (m_drawbox) {
-		glDisable(GL_CULL_FACE);
-		m_skyboxRenderer.renderSkyBox(camera);
-		m_drawbox = false;
 	}
 
 	window.display();
