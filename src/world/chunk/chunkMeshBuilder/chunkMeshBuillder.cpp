@@ -100,13 +100,15 @@ void ChunkMeshBuillder::buildMesh() {
 					direction.up,
 					"up"
 				);
-				tryAddFaceToMesh(
-					FaceVal::bottomFace,
-					texData.texBottomCoords,
-					positions,
-					direction.down,
-					"down"
-				);
+				if (y == 0 && m_pChunkSection->getLocation().y > 0) { // following condition more based on optimization
+					tryAddFaceToMesh(
+						FaceVal::bottomFace,
+						texData.texBottomCoords,
+						positions,
+						direction.down,
+						"down"
+					);
+				}
 				tryAddFaceToMesh(
 					FaceVal::leftFace,
 					texData.texSideCoords,

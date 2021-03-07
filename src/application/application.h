@@ -18,10 +18,14 @@ public:
 		m_states.push_back(
 			std::make_unique<T>(std::forward<Args>(args)...)
 		);
+		auto& s = m_states.back();
+		s->onOpen();
 	}
 	void popState();
 	Camera& getCamera();
 	const sf::RenderWindow& getWindow() const;
+	void turnOffMouse();
+	void turnOnMouse();
 private:
 	void handleEvents();
 	std::vector<std::unique_ptr<BaseState>> m_states;

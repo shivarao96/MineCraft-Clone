@@ -13,6 +13,7 @@ public:
 	virtual void update(float deltaTime)            = 0;
 	virtual void render(MainRenderer& mainRenderer) = 0;
 	virtual bool isStateInitialized() const         = 0;
+	virtual void onOpen()                           = 0;
 protected:
 	Application* m_pApplication;
 	bool isStateInit = false;

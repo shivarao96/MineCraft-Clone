@@ -61,3 +61,10 @@ void Application::handleEvents() {
 		}
 	}
 }
+
+void Application::turnOffMouse() {
+	m_context.m_window.setMouseCursorVisible(false);
+}
+void Application::turnOnMouse() {
+	m_context.m_window.setMouseCursorVisible(true);
+}

@@ -10,6 +10,7 @@ void ChunkMesh::addFace(
 	const sf::Vector3i&       chunkPosition,
 	const sf::Vector3i&       blockPosition
 ) {
+	m_faceCount++;
 	auto& vertices           = m_mesh.vertexPositions;
 	auto& textureCoordinates = m_mesh.textureCoordinates;
 	auto& indices            = m_mesh.indices;
@@ -60,4 +61,8 @@ void ChunkMesh::bufferMesh() {
 }
 const Model& ChunkMesh::getModel() const {
 	return m_model;
+}
+
+int ChunkMesh::getFaceCount() const {
+	return m_faceCount;
 }
