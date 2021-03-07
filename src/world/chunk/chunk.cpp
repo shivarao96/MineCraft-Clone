@@ -39,9 +39,12 @@ bool Chunk::hasLoaded() {
 
 bool Chunk::makeMesh() {
 	for (auto& chunkSection: m_chunksSections) {
-		chunkSection.makeMesh();
+		if (!chunkSection.hasMesh()) { //if mesh don't exist then make the mesh
+			chunkSection.makeMesh(); 
+			return true;
+		}
 	}
-	return 1;
+	return false;
 }
 void Chunk::setBlock(int x, int y, int z, ChunkBlock block) {
 	if (outOfBound(x, y, z)) return;

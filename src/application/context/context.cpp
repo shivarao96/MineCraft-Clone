@@ -4,8 +4,8 @@
 Context::Context() {
 	sf::ContextSettings setting;
 	setting.antialiasingLevel = 4;
-	setting.majorVersion = 4;
-	setting.minorVersion = 4;
+	setting.majorVersion = 3;
+	setting.minorVersion = 3;
 	setting.depthBits = 24;
 	setting.stencilBits = 8;
 	m_window.create(

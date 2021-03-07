@@ -8,7 +8,7 @@ ChunkSection::ChunkSection(const sf::Vector3i location, World& world)
 {
 }
 void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
-	m_hasMesh = false;
+	//m_hasMesh = false;
 	if (outOfIndex(x) ||
 		outOfIndex(y) ||
 		outOfIndex(z)) {
@@ -20,11 +20,11 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 }
 
 void ChunkSection::makeMesh() {
-	if (!m_hasMesh) {
-		ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
-		m_chunkMesh.bufferMesh();
-		m_hasMesh = true;
-	}
+	//if (!m_hasMesh) {
+	//}
+	ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
+	m_chunkMesh.bufferMesh();
+	m_hasMesh = true;
 }
 
 ChunkBlock ChunkSection::getBlock(int x, int y, int z) const {
