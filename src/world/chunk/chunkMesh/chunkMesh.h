@@ -16,7 +16,9 @@ public:
 	);
 	void bufferMesh();
 	const Model& getModel() const;
+	int getFaceCount() const;
 private:
+	int m_faceCount = 0;
 	Model m_model;
 	Mesh  m_mesh;
 	unsigned int m_index = 0;

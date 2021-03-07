@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\utility\fpsCounter\fpsCounter.cpp" />
+    <ClCompile Include="src\renderer\sfmlRenderer\sfmlRenderer.cpp" />
     <ClCompile Include="src\world\chunk\chunkManager\chunkManager.cpp" />
     <ClCompile Include="src\renderer\skyboxRenderer\skyboxRenderer.cpp" />
     <ClCompile Include="src\texture\cubeTexture\cubeTexture.cpp" />
@@ -182,6 +184,8 @@
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utility\fpsCounter\fpsCounter.h" />
+    <ClInclude Include="src\renderer\sfmlRenderer\sfmlRenderer.h" />
     <ClInclude Include="src\world\chunk\chunkManager\chunkManager.h" />
     <ClInclude Include="src\renderer\skyboxRenderer\skyboxRenderer.h" />
     <ClInclude Include="src\texture\cubeTexture\cubeTexture.h" />

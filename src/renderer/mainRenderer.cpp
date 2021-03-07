@@ -9,10 +9,15 @@ void MainRenderer::drawCubes(glm::vec3 pos) {
 	m_cubeRenderer.addAt({ 0,0,0 });
 }
 void MainRenderer::drawChunk(const ChunkMesh& mesh) {
-	m_chunkRenderer.add(mesh);
+	if (mesh.getFaceCount() > 0) {
+		m_chunkRenderer.add(mesh);
+	}
 }
 void MainRenderer::drawSky() {
 	m_drawbox = true;
+}
+void MainRenderer::drawFps(const sf::Drawable& drawable) {
+	m_sfmlRenderer.add(drawable);
 }
 void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera) {
 	glClearColor(
@@ -31,11 +36,13 @@ void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera
 	//m_cubeRenderer.renderCubes(camera);
 	m_chunkRenderer.render(camera);
 
-	glDisable(GL_CULL_FACE);
-	m_skyboxRenderer.renderSkyBox(camera);
-	m_drawbox = false;
 	if (m_drawbox) {
+		glDisable(GL_CULL_FACE);
+		m_skyboxRenderer.renderSkyBox(camera);
+		m_drawbox = false;
 	}
+
+	m_sfmlRenderer.render(window);
 
 	window.display();
 }

@@ -7,6 +7,7 @@
 #include <unordered_set>
 
 class MainRenderer;
+class Camera;
 
 class World
 {
@@ -15,11 +16,9 @@ public:
 	void renderWorld(MainRenderer& renderer);
 	void setBlock(int x, int y, int z, ChunkBlock block);
 	ChunkBlock getBlock(int x, int y, int z);
-	//void editBlock(int x, int y, int z, ChunkBlock block);
-	//void addBlock(const sf::Vector2i& newPos);
+	void update(const Camera& cam);
 private:
-	//std::vector<Chunk> m_chunks;
-	//std::vector<Chunk*> m_changedChunks;
+
 	ChunkManager m_chunkManager;
 	std::unordered_set<sf::Vector3i> m_rebuildChunks;
 };

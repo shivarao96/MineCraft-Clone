@@ -1,7 +1,6 @@
 #include "world.h"
 #include "Block/chunkBlock/chunkBlock.h"
 #include "worldConstant.h"
-#include <iostream>
 #include "../math/vector2XZ/vector2XZ.h"
 
 namespace WorldSpace{
@@ -30,12 +29,18 @@ World::World():m_chunkManager(*this) {
 			m_chunkManager.getChunk(x, z).load();
 		}
 	}
+}
+
+void World::update(const Camera& cam) {
 	for (int x = 0; x < WorldSpace::world_size; x++) {
 		for (int z = 0; z < WorldSpace::world_size; z++) {
-			m_chunkManager.makeMesh(x, z);
+			if (m_chunkManager.makeMesh(x, z)) {
+				return;
+			}
 		}
 	}
 }
+
 void World::renderWorld(MainRenderer& renderer) {
 	
 	for (auto& location : m_rebuildChunks) {

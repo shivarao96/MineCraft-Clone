@@ -6,6 +6,7 @@
 #include "./cubeRenderer/cubeRenderer.h"
 #include "./chunkRenderer/chunkRenderer.h"
 #include "./skyboxRenderer/skyboxRenderer.h"
+#include "./sfmlRenderer/sfmlRenderer.h"
 
 class ChunkMesh;
 class Camera;
@@ -17,12 +18,14 @@ public:
 	void drawCubes(glm::vec3 pos);
 	void drawChunk(const ChunkMesh& mesh);
 	void drawSky();
+	void drawFps(const sf::Drawable& drawable);
 	void finishRenderer(sf::RenderWindow& window, const Camera& camera);
 private:
 	QuadRenderer   m_quadRenderer;
 	CubeRenderer   m_cubeRenderer;
 	ChunkRenderer  m_chunkRenderer;
 	SkyboxRenderer m_skyboxRenderer;
+	SFMLRenderer   m_sfmlRenderer;
 	bool m_drawbox = false;
 };
 

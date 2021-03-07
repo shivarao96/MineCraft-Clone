@@ -1,6 +1,7 @@
 #include "textureAtlas.h"
 #include <iostream>
 
+
 TextureAtlas::TextureAtlas(const std::string& atlasFileName) {
 	sf::Image i;
 	if (!i.loadFromFile("assets/textures/" + atlasFileName + ".png")) {
