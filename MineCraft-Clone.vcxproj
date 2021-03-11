@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\utility\noiseGenerator\noiseGenerator.cpp" />
+    <ClCompile Include="src\utility\randomGenerator\random.cpp" />
     <ClCompile Include="src\utility\fpsCounter\fpsCounter.cpp" />
     <ClCompile Include="src\renderer\sfmlRenderer\sfmlRenderer.cpp" />
     <ClCompile Include="src\world\chunk\chunkManager\chunkManager.cpp" />
@@ -184,6 +186,8 @@
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utility\noiseGenerator\noiseGenerator.h" />
+    <ClInclude Include="src\utility\randomGenerator\random.h" />
     <ClInclude Include="src\utility\fpsCounter\fpsCounter.h" />
     <ClInclude Include="src\renderer\sfmlRenderer\sfmlRenderer.h" />
     <ClInclude Include="src\world\chunk\chunkManager\chunkManager.h" />

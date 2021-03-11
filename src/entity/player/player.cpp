@@ -3,7 +3,7 @@
 #include "../../world/worldConstant.h"
 
 Player::Player() {
-	m_position = { 50, 3 * CHUNK_SIZE + 2, 50 };
+	m_position = { 50, 200, 50 };
 	m_rotation = { 0, 120, 0 };
 }
 void Player::handleInput(const sf::RenderWindow& window) {
