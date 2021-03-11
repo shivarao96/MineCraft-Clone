@@ -54,7 +54,7 @@ void World::renderWorld(MainRenderer& renderer) {
 	}
 }
 void World::setBlock(int x, int y, int z, ChunkBlock block) {
-	if (y == 0)
+	if (y <= 0)
 		return;
 
 	auto bP = WorldSpace::getBlock(x, z);

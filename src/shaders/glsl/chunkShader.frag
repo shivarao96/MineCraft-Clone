@@ -7,4 +7,5 @@ uniform sampler2D sampler;
 
 void main() {
 	FragColor = texture(sampler, ChunkTexCoords);	
+	if(FragColor.a == 0) discard;
 }

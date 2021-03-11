@@ -236,6 +236,8 @@
     <None Include="assets\blocks\air.block" />
     <None Include="assets\blocks\dirt.block" />
     <None Include="assets\blocks\grass.block" />
+    <None Include="assets\blocks\oakBark.block" />
+    <None Include="assets\blocks\oakLeaf.block" />
     <None Include="assets\blocks\stone.block" />
     <None Include="src\shaders\glsl\basicShader.frag" />
     <None Include="src\shaders\glsl\basicShader.vert" />
