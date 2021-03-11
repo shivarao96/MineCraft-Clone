@@ -280,5 +280,7 @@
     <None Include="src\shaders\glsl\chunkShader.vert" />
     <None Include="src\shaders\glsl\chunkShader.frag" />
     <None Include="src\shaders\glsl\skyboxShader.frag" />
+    <None Include="assets\blocks\oakLeaf.block" />
+    <None Include="assets\blocks\oakBark.block" />
   </ItemGroup>
 </Project>

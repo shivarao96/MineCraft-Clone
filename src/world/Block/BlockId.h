@@ -14,6 +14,8 @@ enum class BlockId : block_t {
 	GRASS,
 	DIRT,
 	STONE,
+	OAKBARK,
+	OAKLEAF,
 
 	NUM_TYPES
 };

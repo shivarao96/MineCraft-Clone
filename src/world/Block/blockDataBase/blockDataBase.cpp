@@ -1,10 +1,12 @@
 #include "blockDataBase.h"
 
 BlockDataBase::BlockDataBase(): m_textureAtlas("DefaultPack"){
-	m_blocks[(int)BlockId::AIR]   = std::make_unique<DefaultBlock>("air");
-	m_blocks[(int)BlockId::GRASS] = std::make_unique<DefaultBlock>("grass");
-	m_blocks[(int)BlockId::DIRT]  = std::make_unique<DefaultBlock>("dirt");
-	m_blocks[(int)BlockId::STONE] = std::make_unique<DefaultBlock>("stone");
+	m_blocks[(int)BlockId::AIR]     = std::make_unique<DefaultBlock>("air");
+	m_blocks[(int)BlockId::GRASS]   = std::make_unique<DefaultBlock>("grass");
+	m_blocks[(int)BlockId::DIRT]    = std::make_unique<DefaultBlock>("dirt");
+	m_blocks[(int)BlockId::STONE]   = std::make_unique<DefaultBlock>("stone");
+	m_blocks[(int)BlockId::OAKBARK] = std::make_unique<DefaultBlock>("oakBark");
+	m_blocks[(int)BlockId::OAKLEAF] = std::make_unique<DefaultBlock>("oakLeaf");
 }
 
 BlockDataBase& BlockDataBase::get() {

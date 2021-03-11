@@ -14,7 +14,7 @@ Chunk::Chunk(World& world, sf::Vector2i location)
 
 void Chunk::load() {
 
-	static Random<std::minstd_rand> rand(500);
+	static Random<std::minstd_rand> rand((m_location.x ^ m_location.y) << 2);
 	NoiseGenerator temp_noise(6543);
 	std::array<int, CHUNK_AREA> heightMap;
 	std::vector<sf::Vector3i> treeLocations;
@@ -22,7 +22,7 @@ void Chunk::load() {
 	int maxValue = 0;
 	for (int x = 0; x < CHUNK_SIZE; x++) {
 		for (int z = 0; z < CHUNK_SIZE; z++) {
-			int h = temp_noise.getHeight(x, z, m_location.x, m_location.y);
+			int h = temp_noise.getHeight(x, z, m_location.x + 10, m_location.y + 10);
 			heightMap[x * CHUNK_SIZE + z] = h;
 			maxValue = std::max(maxValue, h);
 		}
@@ -31,14 +31,14 @@ void Chunk::load() {
 	for (int y = 0; y < maxValue / CHUNK_SIZE + 1; y++) {
 		m_chunksSections.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
 	}
-	//int height = m_chunksSections.size() * CHUNK_SIZE;
+
 	for (int y = 0; y < maxValue + 1; y++) {
 		for (int x = 0; x < CHUNK_SIZE; x++) {
 			for (int z = 0; z < CHUNK_SIZE; z++) {
 
 				int h = heightMap[x * CHUNK_SIZE + z];
 				if (y > h) {
-					setBlock(x, y, z, BlockId::AIR);
+					continue;
 				}
 				else if (y == h) {
 					setBlock(x, y, z, BlockId::GRASS);
@@ -56,7 +56,25 @@ void Chunk::load() {
 		}
 
 	}
+
+	for (auto& treeLoc : treeLocations) {
+		int h = rand.intInRange(5, 9);
+
+		for (int y = 0; y < h; y++) {
+			setBlock(treeLoc.x, treeLoc.y + y, treeLoc.z, BlockId::OAKBARK);
+		} // place the bark
+
+		for (int x = -4; x < 4; x++) {
+			for (int z = -4; z < 4; z++) {
+				for (int y = 0; y < 3; y++) {
+					setBlock(treeLoc.x + x, treeLoc.y + h + y, treeLoc.z + z, BlockId::OAKLEAF);
+				}
+			}
+		}
+	}
+
 	m_chunkLoaded = true;
+
 }
 
 bool Chunk::hasLoaded() {
@@ -93,11 +111,9 @@ void Chunk::drawChunks(MainRenderer& renderer) const {
 }
 bool Chunk::outOfBound(int x, int y, int z) const {
 	if (x >= CHUNK_SIZE) {
-		std::cout << "x size greater than chunk_size" << std::endl;
 		return true;
 	} 
 	if (z >= CHUNK_SIZE) {
-		std::cout << "z size greater than chunk_size" << std::endl;
 		return true;
 	}
 
