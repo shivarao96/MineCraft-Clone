@@ -7,10 +7,10 @@ NoiseGenerator::NoiseGenerator(int seed)
 	: m_seed(seed)
 {
 	m_noiseParameter.octaves      = 7;
-	m_noiseParameter.amplitude    = 85;
+	m_noiseParameter.amplitude    = 70;
 	m_noiseParameter.smoothness   = 235;
-	m_noiseParameter.heightOffset = -10;
-	m_noiseParameter.roughNess    = 0.51;
+	m_noiseParameter.heightOffset = -5;
+	m_noiseParameter.roughNess    = 0.53;
 }
 double NoiseGenerator::getNoise(double x, double z) const {
 	return getNoise(x + z * 57);

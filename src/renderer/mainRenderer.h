@@ -18,7 +18,7 @@ public:
 	void drawCubes(glm::vec3 pos);
 	void drawChunk(const ChunkMesh& mesh);
 	void drawSky();
-	void drawFps(const sf::Drawable& drawable);
+	void drawSFMLObj(const sf::Drawable& drawable);
 	void finishRenderer(sf::RenderWindow& window, const Camera& camera);
 private:
 	QuadRenderer   m_quadRenderer;

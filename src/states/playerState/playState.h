@@ -20,6 +20,9 @@ private:
 	FPSCounter m_fpsCounter;
 	Player m_player;
 	World m_world;
+	sf::RectangleShape m_crossHair;
+	sf::Texture m_chTexture;
+
 	bool isStateInit = false;
 };
 

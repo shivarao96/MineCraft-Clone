@@ -23,5 +23,5 @@ int FPSCounter::getFPS() const {
 
 void FPSCounter::renderFps(MainRenderer& mainRenderer) {
 	m_text.setString("FPS: " + std::to_string(m_fps));
-	mainRenderer.drawFps(m_text);
+	mainRenderer.drawSFMLObj(m_text);
 }
