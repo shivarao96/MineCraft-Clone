@@ -16,7 +16,7 @@ void MainRenderer::drawChunk(const ChunkMesh& mesh) {
 void MainRenderer::drawSky() {
 	m_drawbox = true;
 }
-void MainRenderer::drawFps(const sf::Drawable& drawable) {
+void MainRenderer::drawSFMLObj(const sf::Drawable& drawable) {
 	m_sfmlRenderer.add(drawable);
 }
 void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera) {

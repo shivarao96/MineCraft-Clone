@@ -5,10 +5,25 @@
 #include "../../world/chunk/chunkMeshBuilder/chunkMeshBuillder.h"
 #include "../../math/ray/ray.h"
 #include "../../world/Block/BlockId.h"
+#include "../../renderer/mainRenderer.h"
 #include <iostream>
 
 PlayState::PlayState(Application& app): BaseState(app) {
 	app.getCamera().hookEntity(m_player); // hooked the player into main camera entity in application
+	
+	// cross hair setup
+	m_chTexture.loadFromFile("assets/textures/cross-hair.png");
+	m_crossHair.setTexture(&m_chTexture);
+	m_crossHair.setSize({ 25 ,25 });
+	m_crossHair.setOrigin(
+		m_crossHair.getGlobalBounds().width / 2, 
+		m_crossHair.getGlobalBounds().height / 2
+	);
+	m_crossHair.setPosition(
+		app.getWindow().getSize().x / 2,
+		app.getWindow().getSize().y / 2
+	);
+
 	isStateInit = true;
 }
 void PlayState::handleEvents(sf::Event& e) {
@@ -48,8 +63,7 @@ void PlayState::update(float deltaTime) {
 	m_world.update(m_pApplication->getCamera());
 }
 void PlayState::render(MainRenderer& mainRenderer) {
-	//mainRenderer.drawQuads({ 0,0,0 });
-	//mainRenderer.drawCubes({ 0,0,0 });
+	mainRenderer.drawSFMLObj(m_crossHair);
 	m_world.renderWorld(mainRenderer);
 	mainRenderer.drawSky();
 	m_fpsCounter.renderFps(mainRenderer);
