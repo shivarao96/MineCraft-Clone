@@ -10,12 +10,14 @@ Every block will have unqiue id(can be used for extracing the data: texture data
 using block_t = uint8_t;
 
 enum class BlockId : block_t {
-	AIR,
-	GRASS,
-	DIRT,
-	STONE,
-	OAKBARK,
-	OAKLEAF,
+	AIR = 0,
+	GRASS = 1,
+	DIRT = 2,
+	STONE = 3,
+	OAKBARK = 4,
+	OAKLEAF = 5,
+	SAND = 6,
+	WATER = 7,
 
 	NUM_TYPES
 };

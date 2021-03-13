@@ -7,7 +7,7 @@
 
 #include "../BlockId.h"
 
-class BlockData;
+class BlockDataHolder;
 class BlockType;
 
 class ChunkBlock
@@ -17,7 +17,7 @@ public:
 	ChunkBlock(block_t id);
 	ChunkBlock(BlockId id);
 
-	const BlockData& getBlockData() const;
+	const BlockDataHolder& getBlockData() const;
 	const BlockType& getBlockType() const;
 
 	bool operator==(ChunkBlock b) {
