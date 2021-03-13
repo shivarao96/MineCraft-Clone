@@ -7,7 +7,6 @@ PlayerDigEvent::PlayerDigEvent(sf::Mouse::Button btn, const glm::vec3& location,
 	,m_digSpot(location)
 	,m_pPlayer(&player)
 {
-	std::cout << "X: " << location.x << " Z: " << location.z << std::endl;
 }
 
 void PlayerDigEvent::handleWorld(World& world)

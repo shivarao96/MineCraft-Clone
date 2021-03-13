@@ -68,6 +68,7 @@ void World::setBlock(int x, int y, int z, ChunkBlock block) {
 	m_chunkManager.getChunk(cP.x, cP.z).setBlock(bP.x, y, bP.z, block);
 	
 	if (m_chunkManager.getChunk(cP.x, cP.z).hasLoaded()) {
+		std::cout << "rebuild" << std::endl;
 		m_rebuildChunks.emplace(cP.x, y / CHUNK_SIZE, cP.z);
 	}
 	renderedUpdatedSections();
