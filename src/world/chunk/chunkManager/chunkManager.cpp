@@ -6,22 +6,45 @@ ChunkManager::ChunkManager(World& world):m_world(&world) {
 
 }
 Chunk& ChunkManager::getChunk(int x, int z) {
-	if (m_chunks.find({x,z}) == m_chunks.end()) {
+	if (!chunkExistAt(x,z)) {
 		VectorXZ key{ x,z };
 		Chunk chunk {*m_world, {x,z}};
-		m_chunks.emplace(key, std::move(chunk));
+		m_chunkMap.emplace(key, std::move(chunk));
 	}
-	return m_chunks.at({ x,z });
+	return m_chunkMap.at({ x,z });
 }
-const std::unordered_map<VectorXZ, Chunk>& ChunkManager::getChunks() const {
-	return m_chunks;
+
+ChunkMap& ChunkManager::getChunks() {
+	return m_chunkMap;
 }
+
 bool ChunkManager::makeMesh(int x, int z) {
+	for (int nx = -1; nx <= 1; nx++) {
+		for (int nz = -1; nz <= 1; nz++) {
+			getChunk(x + nx, z + nz).load();
+		}
+	}
 	return getChunk(x, z).makeMesh();
 }
-void ChunkManager::queueChunk(int x, int z) {
 
+bool ChunkManager::chunkLoadedAt(int x, int z) const
+{
+	if (!chunkExistAt(x, z))
+		return false;
+
+	return m_chunkMap.at({x, z}).hasLoaded();
 }
-void ChunkManager::update() {
+bool ChunkManager::chunkExistAt(int x, int z) const
+{
+	return m_chunkMap.find({x,z}) != m_chunkMap.end();
+}
 
+void ChunkManager::loadChunk(int x, int z)
+{
+	getChunk(x, z).load();
+}
+
+void ChunkManager::unLoadChunk(int x, int z)
+{
+	// @TODO saving chunks into the file.
 }

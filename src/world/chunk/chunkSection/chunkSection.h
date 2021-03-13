@@ -18,11 +18,13 @@ public:
 	ChunkBlock getBlock(int x, int y, int z) const override;
 	const sf::Vector3i getLocation() const;
 	void makeMesh();
+	bool hasMesh() const;
+	bool hasBuffered() const;
+	void bufferMesh();
 private:
 	sf::Vector3i toWorldPosition(int x, int y, int z) const noexcept;
 	static bool outOfIndex(int value);
 	static int getBlockIndex(int x, int y, int z);
-	bool hasMesh() const;
 
 	std::array<
 		ChunkBlock,
@@ -32,5 +34,6 @@ private:
 	sf::Vector3i m_location;
 	World* m_pWorld;
 	bool m_hasMesh = false;
+	bool m_hasMeshBuffered = false;
 };
 

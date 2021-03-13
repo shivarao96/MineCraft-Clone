@@ -1,7 +1,7 @@
 #include "chunkSection.h"
 #include "../../world.h"
 #include "../chunkMeshBuilder/chunkMeshBuillder.h"
-
+#include <iostream>
 
 ChunkSection::ChunkSection(const sf::Vector3i location, World& world)
 	:m_location(location), m_pWorld(&world)
@@ -20,11 +20,13 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 }
 
 void ChunkSection::makeMesh() {
-	//if (!m_hasMesh) {
-	//}
 	ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
-	m_chunkMesh.bufferMesh();
 	m_hasMesh = true;
+}
+
+void ChunkSection::bufferMesh() {
+	m_chunkMesh.bufferMesh();
+	m_hasMeshBuffered = true;
 }
 
 ChunkBlock ChunkSection::getBlock(int x, int y, int z) const {
@@ -56,4 +58,8 @@ sf::Vector3i ChunkSection::toWorldPosition(int x, int y, int z) const noexcept {
 }
 bool ChunkSection::hasMesh() const {
 	return m_hasMesh;
+}
+
+bool ChunkSection::hasBuffered() const {
+	return m_hasMeshBuffered;
 }
