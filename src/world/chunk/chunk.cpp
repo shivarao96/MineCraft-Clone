@@ -13,9 +13,10 @@ Chunk::Chunk(World& world, sf::Vector2i location)
 	,m_pWorld(&world) {}
 
 void Chunk::load() {
-
+	static int seed = RandomSingleton::get().intInRange(444, 444444);
+	if (hasLoaded()) return;
 	static Random<std::minstd_rand> rand((m_location.x ^ m_location.y) << 2);
-	NoiseGenerator temp_noise(6543);
+	NoiseGenerator temp_noise(seed);
 	std::array<int, CHUNK_AREA> heightMap;
 	std::vector<sf::Vector3i> treeLocations;
 
@@ -28,9 +29,9 @@ void Chunk::load() {
 		}
 	}
 
-	for (int y = 0; y < maxValue / CHUNK_SIZE + 1; y++) {
-		m_chunksSections.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
-	}
+	//for (int y = 0; y < maxValue / CHUNK_SIZE + 1; y++) {
+	//	m_chunksSections.emplace_back(sf::Vector3i(m_location.x, y, m_location.y), *m_pWorld);
+	//}
 
 	for (int y = 0; y < maxValue + 1; y++) {
 		for (int x = 0; x < CHUNK_SIZE; x++) {
@@ -53,9 +54,6 @@ void Chunk::load() {
 				}
 				else if (y > h / 3 + 4) {
 					setBlock(x, y, z, BlockId::DIRT);
-				}
-				else if (y > h / 3) {
-					setBlock(x, y, z, BlockId::WATER); // remove this later
 				}
 				else {
 					setBlock(x, y, z, BlockId::STONE);
@@ -85,20 +83,24 @@ void Chunk::load() {
 
 }
 
-bool Chunk::hasLoaded() {
+bool Chunk::hasLoaded() const {
 	return m_chunkLoaded;
 }
 
+/*
+	This class is called only once.
+*/
 bool Chunk::makeMesh() {
 	for (auto& chunkSection: m_chunksSections) {
 		if (!chunkSection.hasMesh()) { //if mesh don't exist then make the mesh
-			chunkSection.makeMesh(); 
+			chunkSection.makeMesh();
 			return true;
 		}
 	}
 	return false;
 }
 void Chunk::setBlock(int x, int y, int z, ChunkBlock block) {
+	addSectionsBlockTarget(y);
 	if (outOfBound(x, y, z)) return;
 	int bY = y % CHUNK_SIZE;
 	m_chunksSections.at(y / CHUNK_SIZE).setBlock(x, bY, z, block);
@@ -110,9 +112,12 @@ ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	int bY = y % CHUNK_SIZE;
 	return m_chunksSections.at(y / CHUNK_SIZE).getBlock(x, bY, z);
 }
-void Chunk::drawChunks(MainRenderer& renderer) const {
-	for (const auto& chunkSection : m_chunksSections) {
+void Chunk::drawChunks(MainRenderer& renderer) {
+	for (auto& chunkSection : m_chunksSections) {
 		if (chunkSection.hasMesh()) {
+			if (!chunkSection.hasBuffered()) {
+				chunkSection.bufferMesh();
+			}
 			renderer.drawChunk(chunkSection.m_chunkMesh);
 		}
 	}
@@ -136,9 +141,19 @@ bool Chunk::outOfBound(int x, int y, int z) const {
 	return false;
 }
 ChunkSection& Chunk::getSection(int index) {
-	while (index >= m_chunksSections.size()) {
-		// create new section
-		m_chunksSections.emplace_back(sf::Vector3i(m_location.x, m_chunksSections.size(), m_location.y), *m_pWorld);
-	}
 	return m_chunksSections.at(index);
+}
+
+void Chunk::addSection() {
+	int y = m_chunksSections.size();
+	m_chunksSections.emplace_back(sf::Vector3i( m_location.x, y , m_location.y ), *m_pWorld);
+}
+void Chunk::addSectionsBlockTarget(int blockY) {
+	int index = blockY / CHUNK_SIZE;
+	addSectionsIndexTarget(index);
+}
+void Chunk::addSectionsIndexTarget(int index) {
+	while (m_chunksSections.size() < index + 1) {
+		addSection();
+	}
 }

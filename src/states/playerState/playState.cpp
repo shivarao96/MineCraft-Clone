@@ -6,6 +6,7 @@
 #include "../../math/ray/ray.h"
 #include "../../world/Block/BlockId.h"
 #include "../../renderer/mainRenderer.h"
+#include "../../world/event/playerDigEvent/playerDigEvent.h"
 #include <iostream>
 
 PlayState::PlayState(Application& app): BaseState(app) {
@@ -43,13 +44,15 @@ void PlayState::handleInputs() {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 					timer.restart();
 					std::cout << "x: " << x << " z: " << z << std::endl;
-					m_world.setBlock(x, y, z, BlockId::AIR);
+					//m_world.setBlock(x, y, z, BlockId::AIR);
+					m_world.addEvent<PlayerDigEvent>(sf::Mouse::Left, ray.getEnd(), m_player);
 					break;
 				}
 				else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 					std::cout << "restore" << std::endl;
 					timer.restart();
-					m_world.setBlock(lastPosition.x, lastPosition.y, lastPosition.z, BlockId::GRASS);
+					//m_world.setBlock(lastPosition.x, lastPosition.y, lastPosition.z, BlockId::GRASS);
+					m_world.addEvent<PlayerDigEvent>(sf::Mouse::Right, lastPosition, m_player);
 					break;
 				}
 			}

@@ -132,6 +132,9 @@
     <ClCompile Include="src\utility\noiseGenerator\noiseGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\world\event\playerDigEvent\playerDigEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -267,6 +270,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utility\noiseGenerator\noiseGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\event\playerDigEvent\playerDigEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
