@@ -87,7 +87,7 @@ void ChunkMeshBuillder::buildMesh() {
 					continue;
 				}
 
-				m_pBlockDataHolder = &block.getBlockData().getBlockData();
+				m_pBlockDataHolder = &block.getBlockData();
 				auto& texData = *m_pBlockDataHolder;
 				direction.update(x, y, z);
 
@@ -168,7 +168,11 @@ bool ChunkMeshBuillder::shouldMakeFace(
 		adjPositions.y,
 		adjPositions.z
 	);
+	auto& data = block.getBlockData();
 	if (block == BlockId::AIR) {
+		return true;
+	}
+	else if (!(data.isOpaque) && (m_pBlockDataHolder->id != data.id)) {
 		return true;
 	}
 	else {

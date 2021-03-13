@@ -41,13 +41,21 @@ void Chunk::load() {
 					continue;
 				}
 				else if (y == h) {
-					setBlock(x, y, z, BlockId::GRASS);
-					if (rand.intInRange(0, 100) == 10) {
-						treeLocations.emplace_back(x, y, z);
+					if (y > WATER_LEVEL) {
+						setBlock(x, y, z, BlockId::GRASS);
+						if (rand.intInRange(0, 100) == 10) {
+							treeLocations.emplace_back(x, y, z);
+						}
+					}
+					else {
+						setBlock(x, y, z, BlockId::SAND);
 					}
 				}
-				else if (y > h / 3) {
+				else if (y > h / 3 + 4) {
 					setBlock(x, y, z, BlockId::DIRT);
+				}
+				else if (y > h / 3) {
+					setBlock(x, y, z, BlockId::WATER); // remove this later
 				}
 				else {
 					setBlock(x, y, z, BlockId::STONE);

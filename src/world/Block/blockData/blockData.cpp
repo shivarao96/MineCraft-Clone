@@ -34,6 +34,15 @@ BlockData::BlockData(const std::string& blockName) {
 			m_blockDataHolder.texSideCoords   = { x,y };
 			m_blockDataHolder.texBottomCoords = { x,y };
 		}
+		if (line == "Id") {
+			int i;
+			inFile >> i;
+			m_blockDataHolder.id = static_cast<BlockId>(i);
+		}
+		if (line == "Opaque") {
+			inFile >> m_blockDataHolder.isOpaque;
+		}
+		
 	}
 
 }
