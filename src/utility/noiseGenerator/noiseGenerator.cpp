@@ -48,6 +48,9 @@ double NoiseGenerator::noise(double x, double z) const {
 double NoiseGenerator::getHeight(int x, int z, int chunkX, int chunkZ) const {
 	auto newX = (x + (chunkX * CHUNK_SIZE));
 	auto newZ = (z + (chunkZ * CHUNK_SIZE));
+	if (newX < 0 || newZ < 0) {
+		return WATER_LEVEL - 1;
+	}
 	auto totalValue = 0.0;
 
 	for (auto a = 0; a < m_noiseParameter.octaves - 1; a++) {
