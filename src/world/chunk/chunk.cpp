@@ -99,12 +99,14 @@ bool Chunk::makeMesh() {
 	}
 	return false;
 }
+
 void Chunk::setBlock(int x, int y, int z, ChunkBlock block) {
 	addSectionsBlockTarget(y);
 	if (outOfBound(x, y, z)) return;
 	int bY = y % CHUNK_SIZE;
 	m_chunksSections.at(y / CHUNK_SIZE).setBlock(x, bY, z, block);
 }
+
 ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	if (outOfBound(x, y, z)) { 
 		return BlockId::AIR; 
@@ -112,16 +114,19 @@ ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	int bY = y % CHUNK_SIZE;
 	return m_chunksSections.at(y / CHUNK_SIZE).getBlock(x, bY, z);
 }
+
 void Chunk::drawChunks(MainRenderer& renderer) {
 	for (auto& chunkSection : m_chunksSections) {
 		if (chunkSection.hasMesh()) {
 			if (!chunkSection.hasBuffered()) {
 				chunkSection.bufferMesh();
+				continue;
 			}
 			renderer.drawChunk(chunkSection.m_chunkMesh);
 		}
 	}
 }
+
 bool Chunk::outOfBound(int x, int y, int z) const {
 	if (x >= CHUNK_SIZE) {
 		return true;
@@ -140,6 +145,7 @@ bool Chunk::outOfBound(int x, int y, int z) const {
 	
 	return false;
 }
+
 ChunkSection& Chunk::getSection(int index) {
 	return m_chunksSections.at(index);
 }
@@ -148,10 +154,12 @@ void Chunk::addSection() {
 	int y = m_chunksSections.size();
 	m_chunksSections.emplace_back(sf::Vector3i( m_location.x, y , m_location.y ), *m_pWorld);
 }
+
 void Chunk::addSectionsBlockTarget(int blockY) {
 	int index = blockY / CHUNK_SIZE;
 	addSectionsIndexTarget(index);
 }
+
 void Chunk::addSectionsIndexTarget(int index) {
 	while (m_chunksSections.size() < index + 1) {
 		addSection();

@@ -17,6 +17,7 @@ public:
 	ChunkMap& getChunks();
 	
 	bool makeMesh(int x, int z);
+
 	bool chunkLoadedAt(int x, int z) const;
 	bool chunkExistAt(int x, int z) const;
 

@@ -1,6 +1,7 @@
 #include "chunkManager.h"
 
 #include "../../world.h"
+#include <iostream>
 
 ChunkManager::ChunkManager(World& world):m_world(&world) {
 
@@ -19,7 +20,7 @@ ChunkMap& ChunkManager::getChunks() {
 }
 
 bool ChunkManager::makeMesh(int x, int z) {
-	for (int nx = -1; nx <= 1; nx++) {
+	for (int nx = -1; nx <= 1; nx++) {// need to remove
 		for (int nz = -1; nz <= 1; nz++) {
 			getChunk(x + nx, z + nz).load();
 		}
