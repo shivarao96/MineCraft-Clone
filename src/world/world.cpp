@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace WorldSpace{
-	constexpr int world_size = 16;
+	constexpr int world_size = 8;
 	constexpr int rendered_world_size = 8;
 
 	bool isWorldOutOfBound(const VectorXZ& vecXZ) {
@@ -28,23 +28,8 @@ void World::update(const Camera& cam) {
 	}
 	m_events.clear();
 
-	int cX = cam.m_position.x / CHUNK_SIZE;
-	int cZ = cam.m_position.z / CHUNK_SIZE;
-
-	int minX = cX - WorldSpace::rendered_world_size;
-	int maxX = cX + WorldSpace::rendered_world_size;
-
-	int minZ = cZ - WorldSpace::rendered_world_size;
-	int maxZ = cZ + WorldSpace::rendered_world_size;
-
-	if (minX < 0) minX = 0;
-	if (minZ < 0) minZ = 0;
-
-	for (int x = minX; x < maxX; x++) {
-		for (int z = minZ; z < maxZ; z++) {
-			if (!m_chunkManager.chunkExistAt(x, z)) {
-				m_chunkManager.loadChunk(x, z);
-			}
+	for (int x = 0; x < WorldSpace::world_size; x++) {
+		for (int z = 0; z < WorldSpace::world_size; z++) {
 			if (m_chunkManager.makeMesh(x, z)) {
 				return;
 			}
@@ -77,7 +62,7 @@ void World::setBlock(int x, int y, int z, ChunkBlock block) {
 	auto cP = getChunk(x, z);
 
 	if (WorldSpace::isWorldOutOfBound(cP)) {
-		//return;
+		return;
 	}
 
 	m_chunkManager.getChunk(cP.x, cP.z).setBlock(bP.x, y, bP.z, block);
@@ -95,7 +80,7 @@ ChunkBlock World::getBlock(int x, int y, int z) {
 	auto cP = getChunk(x, z);
 	
 	if (WorldSpace::isWorldOutOfBound(cP)) {
-		//return BlockId::AIR;
+		return BlockId::AIR;
 	}
 	return m_chunkManager.getChunk(cP.x, cP.z).getBlock(bP.x, y, bP.z);
 }
