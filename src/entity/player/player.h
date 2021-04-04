@@ -16,5 +16,5 @@ private:
 	void mouseInput(const sf::RenderWindow& window);
 	//glm::vec3 m_velocity = glm::vec3(0);
 
-	bool m_isOnGround = true; // @TODO need to make it as false while init
+	bool m_isOnGround = false; // @TODO need to make it as false while init
 };
