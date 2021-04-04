@@ -1,18 +1,30 @@
 #include "player.h"
 #include <GL/glew.h>
 #include "../../world/worldConstant.h"
+#include "../../world/world.h"
 
-Player::Player() {
-	m_position = { 50, 200, 50 };
-	m_rotation = { 0, 120, 0 };
+Player::Player() : Entity({ 25,125,25 }, { 0,0,0 }, {0.5, 1, 0.5}) {
 }
 void Player::handleInput(const sf::RenderWindow& window) {
 	keyboardInput();
 	mouseInput(window);
 }
-void Player::update(float deltaTime) {
-	m_position += m_velocity * deltaTime;
-	m_velocity *= 0.95;
+void Player::update(float deltaTime, World& world) {
+	
+	if (!m_isOnGround) { // if not on ground 
+		m_velocity.y -= 45 * deltaTime;
+	}
+	m_isOnGround = false;
+	
+	m_velocity.x *= 0.95;
+	m_velocity.z *= 0.95;
+	
+	m_position.x += m_velocity.x * deltaTime;
+	collide(world, { m_velocity.x, 0, 0 }, deltaTime);
+	m_position.y += m_velocity.y * deltaTime;
+	collide(world, { 0, m_velocity.y, 0 }, deltaTime);
+	m_position.z += m_velocity.z * deltaTime;
+	collide(world, { 0, 0, m_velocity.z }, deltaTime);
 }
 void Player::keyboardInput() {
 	glm::vec3 change = glm::vec3(0);
@@ -40,8 +52,8 @@ void Player::keyboardInput() {
 		change.x += glm::cos(glm::radians(m_rotation.y)) * speed;
 		change.z += glm::sin(glm::radians(m_rotation.y)) * speed;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-		change.y += speed;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_isOnGround) {
+		change.y += speed * 50;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 		change.y -= speed;
@@ -51,7 +63,7 @@ void Player::keyboardInput() {
 		fillModeLine = !fillModeLine;
 	}
 	
-	m_velocity   += change;
+	m_velocity += change;
 }
 void Player::mouseInput(const sf::RenderWindow& window) {
 	const int xViewBound     = 80;
@@ -80,4 +92,45 @@ void Player::mouseInput(const sf::RenderWindow& window) {
 	sf::Mouse::setPosition({ cx, cy }, window);
 	lastMousePos = sf::Mouse::getPosition();
 
+}
+
+void Player::collide(World& world, const glm::vec3& vel, float dt) {
+
+	auto& dimension = m_aabb.m_dimension;
+	auto& position  = m_position;
+	auto& velocity  = vel;
+
+	for (int x = position.x - dimension.x; x < position.x + dimension.x; x++) {
+		for (int y = position.y - dimension.y; y < position.y + 0.7; y++) {
+			for (int z = position.z + dimension.z; z < position.z + dimension.z; z++) {
+				auto block = world.getBlock(x, y, z);
+				if (block != BlockId::AIR) {
+					// @case for x
+					if (velocity.x > 0) {
+						position.x = x - dimension.x;
+					}
+					else if(velocity.x < 0) {
+						position.x = x + dimension.x + 1;
+					}
+					// @case for z
+					if (velocity.z > 0) {
+						position.z = z - dimension.z;
+					}
+					else if (velocity.z < 0) {
+						position.z = z + dimension.z + 1;
+					}
+					//@case for y
+					if (velocity.y > 0) {
+						position.y = y - dimension.y;
+						m_velocity.y = 0; // ???
+					}
+					else if (velocity.y < 0) {
+						position.y = y + dimension.y + 1;
+						m_velocity.y = 0;
+						m_isOnGround = true;
+					}
+				}
+			}
+		}
+	}
 }
