@@ -62,7 +62,7 @@ void PlayState::handleInputs() {
 }
 void PlayState::update(float deltaTime) {
 	m_fpsCounter.update();
-	m_player.update(deltaTime);
+	m_player.update(deltaTime, m_world);
 	m_world.update(m_pApplication->getCamera());
 }
 void PlayState::render(MainRenderer& mainRenderer) {
