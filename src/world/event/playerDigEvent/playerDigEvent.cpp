@@ -22,10 +22,12 @@ void PlayerDigEvent::dig(World& world)
 	switch (m_buttonPress)
 	{
 	case sf::Mouse::Button::Left: {
+		world.updateChunk(m_digSpot.x, m_digSpot.y, m_digSpot.z);
 		world.setBlock(m_digSpot.x, m_digSpot.y, m_digSpot.z, BlockId::AIR);
 		break;
 	}
 	case sf::Mouse::Button::Right: {
+		world.updateChunk(m_digSpot.x, m_digSpot.y, m_digSpot.z);
 		world.setBlock(m_digSpot.x, m_digSpot.y, m_digSpot.z, BlockId::STONE);
 		break;
 	}
