@@ -27,10 +27,17 @@ public:
 	void addEvent(Args&&... args) {
 		m_events.push_back(std::make_unique<T>(std::forward<Args>(args)...));
 	}
+
+	void updateChunk(int blockX, int blockY, int blockZ);
+
 private:
 	void renderedUpdatedSections();
 	std::vector<std::unique_ptr<IWorldEvent>> m_events;
 	ChunkManager m_chunkManager;
 	std::unordered_set<sf::Vector3i> m_rebuildChunks;
+
+
+	void updateChunks();
+	std::unordered_map<sf::Vector3i, ChunkSection*> m_chunkSectionUpdates;
 };
 

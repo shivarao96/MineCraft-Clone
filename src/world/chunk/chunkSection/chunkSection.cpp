@@ -22,7 +22,7 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 void ChunkSection::makeMesh() {
 	ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
 	m_hasMesh = true;
-	//m_hasMeshBuffered = false;
+	m_hasMeshBuffered = false;
 }
 
 void ChunkSection::bufferMesh() {
