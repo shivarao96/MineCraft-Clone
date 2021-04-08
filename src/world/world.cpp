@@ -114,30 +114,30 @@ void World::updateChunk(int blockX, int blockY, int blockZ) {
 	// for checking the chunksection in x-axis
 	if (sectionBlockXZ.x == 0) { // if it is 0th index then update the previous section
 		sf::Vector3i key(cp.x - 1, cy, cp.z);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 	else if (sectionBlockXZ.x == CHUNK_SIZE - 1) { // if last chunksection then update the next chunksection 
 		sf::Vector3i key(cp.x + 1, cy, cp.z);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 
 	// for checking the chunksection in y-axis
 	if (sectionBlockY == 0) { // if it is 0th index then update the previous section
 		sf::Vector3i key(cp.x, cy - 1, cp.z);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 	else if (sectionBlockY == CHUNK_SIZE - 1) { // if last chunksection then update the next chunksection 
 		sf::Vector3i key(cp.x, cy + 1, cp.z);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 
 	// for checking the chunksection in z-axis
 	if (sectionBlockXZ.z == 0) { // if it is 0th index then update the previous section
 		sf::Vector3i key(cp.x, cy, cp.z - 1);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 	else if (sectionBlockXZ.z == CHUNK_SIZE - 1) {// if last chunksection then update the next chunksection
 		sf::Vector3i key(cp.x, cy, cp.z + 1);
-		addChunkToUpdateBatch(key, m_chunkManager.getChunk(cp.x, cp.z).getSection(cy));
+		addChunkToUpdateBatch(key, m_chunkManager.getChunk(key.x, key.z).getSection(key.y));
 	}
 }
