@@ -102,7 +102,7 @@ void Player::collide(World& world, const glm::vec3& vel, float dt) {
 
 	for (int x = position.x - dimension.x; x < position.x + dimension.x; x++) {
 		for (int y = position.y - dimension.y; y < position.y + 0.7; y++) {
-			for (int z = position.z + dimension.z; z < position.z + dimension.z; z++) {
+			for (int z = position.z - dimension.z; z < position.z + dimension.z; z++) {
 				auto block = world.getBlock(x, y, z);
 				if (block != BlockId::AIR) {
 					// @case for x
