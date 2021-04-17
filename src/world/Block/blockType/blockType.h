@@ -6,6 +6,10 @@
 
 #include "../blockData/blockData.h"
 
+/*
+* Inherited Class: NonCopyable
+* Following class is wrapper over BlockData class
+*/
 class BlockType: public NonCopyable
 {
 public:

@@ -11,15 +11,17 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 	//m_hasMesh = false;
 	if (outOfIndex(x) ||
 		outOfIndex(y) ||
-		outOfIndex(z)) {
+		outOfIndex(z)) { //-- check if the coords are out of the section if 'yes' then set the block in the m_world
 		auto location = toWorldPosition(x, y, z);
 		m_pWorld->setBlock(location.x, location.y, location.z, block);
 		return;
 	}
+	//-- if above condition fails that means the coords are in between the current bounds
 	m_chunkBlocks[getBlockIndex(x, y, z)] = block;
 }
 
 void ChunkSection::makeMesh() {
+	//-- build the mesh based on the m_chunkBlocks and load that to m_chunkMesh.
 	ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
 	m_hasMesh = true;
 	m_hasMeshBuffered = false;
@@ -33,10 +35,11 @@ void ChunkSection::bufferMesh() {
 ChunkBlock ChunkSection::getBlock(int x, int y, int z) const {
 	if (outOfIndex(x) ||
 		outOfIndex(y) ||
-		outOfIndex(z)) {
+		outOfIndex(z)) {//-- check if the coords are out of the section if 'yes' then extract from m_world
 		auto location = toWorldPosition(x, y, z);
 		return m_pWorld->getBlock(location.x, location.y, location.z);
 	}
+	//-- if above condition fails that means the coords are in between the current bounds
 	return m_chunkBlocks[getBlockIndex(x, y, z)];
 }
 bool ChunkSection::outOfIndex(int value) {

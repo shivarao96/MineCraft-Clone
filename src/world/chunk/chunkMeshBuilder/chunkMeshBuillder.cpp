@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+// Data for the cube face coords
 namespace FaceVal {
 	
 	std::vector<float> frontFace{
@@ -50,6 +51,7 @@ namespace FaceVal {
 
 }
 
+// direction class for updating there x,y, and z position.
 struct Direction
 {
 	void update(int x, int y, int z) {
@@ -78,12 +80,12 @@ void ChunkMeshBuillder::buildMesh() {
 	sf::Clock c;
 	Direction direction;
 
-	for (int8_t y = 0; y < CHUNK_SIZE; ++y) {
-		for (int8_t x = 0; x < CHUNK_SIZE; ++x) {
-			for (int8_t z = 0; z < CHUNK_SIZE; ++z) {
+	for (int8_t y = 0; y < CHUNK_SIZE; ++y) { // go through the y-axis
+		for (int8_t x = 0; x < CHUNK_SIZE; ++x) { // go through the x-axis
+			for (int8_t z = 0; z < CHUNK_SIZE; ++z) { // go through the z-axis
 				sf::Vector3i positions(x,y,z);
-				ChunkBlock block = m_pChunkSection->getBlock(x, y, z);
-				if (block == BlockId::AIR) {
+				ChunkBlock block = m_pChunkSection->getBlock(x, y, z); // get the what kind of block is to be rendered at (x,y,z) position.
+				if (block == BlockId::AIR) { // if it is air then no need to render any face
 					continue;
 				}
 
@@ -91,7 +93,7 @@ void ChunkMeshBuillder::buildMesh() {
 				auto& texData = *m_pBlockDataHolder;
 				direction.update(x, y, z);
 
-				// now try adding all the faces
+				// now try adding all the faces with there texture coordinates
 				
 				tryAddFaceToMesh(
 					FaceVal::topFace,
@@ -152,7 +154,7 @@ void ChunkMeshBuillder::tryAddFaceToMesh(
 		m_pChunkMesh->addFace(
 			blockFace,
 			texCoordInfo,
-			m_pChunkSection->getLocation(),
+			m_pChunkSection->getLocation(), // this is chunklocation
 			chunkPosition
 		);
 	}
@@ -169,10 +171,12 @@ bool ChunkMeshBuillder::shouldMakeFace(
 		adjPositions.z
 	);
 	auto& data = block.getBlockData();
+	// if the adjacent block is AIR then create the block
 	if (block == BlockId::AIR) {
 		return true;
 	}
-	else if (!(data.isOpaque) && (m_pBlockDataHolder->id != data.id)) {
+	// guessing it checks for opaque object and also checks for id if both are same then no need to do anything(but still i find this condition of no use)
+	else if (!(data.isOpaque) && (m_pBlockDataHolder->id != data.id)) { // still need to understand how does this thing works
 		return true;
 	}
 	else {

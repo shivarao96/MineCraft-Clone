@@ -1,9 +1,8 @@
 #include "chunkMesh.h"
 #include "../../worldConstant.h"
 
-ChunkMesh::ChunkMesh() {
+ChunkMesh::ChunkMesh() {}
 
-}
 void ChunkMesh::addFace(
 	const std::vector<float>& blockFace,
 	const std::vector<float>& texCoords,
@@ -24,14 +23,16 @@ void ChunkMesh::addFace(
 
 	for (int i = 0, index = 0; i < 4; ++i) {
 		vertices.push_back(
-			blockFace[index++] + chunkPosition.x * CHUNK_SIZE + blockPosition.x
-		);
+			blockFace[index++] + // blockface: (front, back, top, bottom, left, right) 
+			chunkPosition.x * CHUNK_SIZE +  // chunkPosition: (chunksection position in world space)
+			blockPosition.x // blockPosition: (block position in world space) 
+		); // this is for x-axis
 		vertices.push_back(
 			blockFace[index++] + chunkPosition.y * CHUNK_SIZE + blockPosition.y
-		);
+		);// this is for y-axis
 		vertices.push_back(
 			blockFace[index++] + chunkPosition.z * CHUNK_SIZE + blockPosition.z
-		);
+		);// this is for z-axis
 	} // setting up the vertices
 
 	indices.insert(indices.end(),
