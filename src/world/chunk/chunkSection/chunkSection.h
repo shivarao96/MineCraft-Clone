@@ -11,29 +11,55 @@ class World;
 
 class ChunkSection: public IChunk
 {
-	friend class Chunk;
+	friend class Chunk; //allowing the access to Chunk class
 public:
 	ChunkSection(const sf::Vector3i location, World& world);
+	/*
+	* Method-Override(ChunkSection): Following method set the chunkblock at pos x,y,z
+	*	(based on world on the chunkblock array in chunksection)
+	*/
 	void setBlock(int x, int y, int z, ChunkBlock block) override;
+	/*
+	* Method-Override(ChunkSection): Following method returns the chunkblock at pos x,y,z
+	*	(based on world on the chunkblock array in chunksection)
+	*/
 	ChunkBlock getBlock(int x, int y, int z) const override;
+	/*
+	* Method(ChunkSection): get the current location of the chunksection in world.
+	*/
 	const sf::Vector3i getLocation() const;
+	/*
+	* Method(ChunkSection): build the mesh based on the m_chunkBlocks and load that to m_chunkMesh.
+	*/
 	void makeMesh();
 	bool hasMesh() const;
 	bool hasBuffered() const;
+	/*
+	* Method(ChunkSection): bufferMesh adds the m_mesh data into the mesh model later which can be called for rendering
+	*/
 	void bufferMesh();
 private:
+	/*
+	* Method(ChunkSection): convert the x,y,z to world position.
+	*/
 	sf::Vector3i toWorldPosition(int x, int y, int z) const noexcept;
+	/*
+	* Method(ChunkSection): Check the value is coming under the 0 to ChunkSize
+	*/
 	static bool outOfIndex(int value);
+	/*
+	* Method(ChunkSection): convert the x,y,z: 3D to 1D index value
+	*/
 	static int getBlockIndex(int x, int y, int z);
 
 	std::array<
 		ChunkBlock,
 		CHUNK_VOLUME
-	> m_chunkBlocks;
-	ChunkMesh m_chunkMesh;
-	sf::Vector3i m_location;
-	World* m_pWorld;
-	bool m_hasMesh = false;
-	bool m_hasMeshBuffered = false;
+	> m_chunkBlocks; // array of chunkblock represented in array(basically hold the info in M x N x L dimensions)
+	ChunkMesh m_chunkMesh; // chunkmesh
+	sf::Vector3i m_location; // current chunksection location
+	World* m_pWorld; // chunk world var for recieving the world reference.
+	bool m_hasMesh = false; // flag to check whether we intitiated the mesh building or not.
+	bool m_hasMeshBuffered = false; // flag to check whether we buffered the mesh or not
 };
 

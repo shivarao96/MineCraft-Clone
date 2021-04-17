@@ -1,29 +1,40 @@
 #pragma once
 
-/*
-Following class returns the data regarding the texture coordinates based on block info
-*/
 
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "../../../utility/nonCopyable.h"
 #include "../BlockId.h"
 
+/*
+* Inherited From: NonCopyable
+* Following class holds the texture coords(top, side & bottom) of any blockid
+*/
 
 class BlockDataHolder : public NonCopyable
 {
 public:
-	sf::Vector2i texTopCoords;
-	sf::Vector2i texSideCoords;
-	sf::Vector2i texBottomCoords;
-	BlockId id;
-	bool isOpaque;
+	sf::Vector2i texTopCoords; // top coords
+	sf::Vector2i texSideCoords; // side coords
+	sf::Vector2i texBottomCoords;// bottom coords
+	BlockId id;// id (BlockId)
+	bool isOpaque; // opaque param
 };
 
+/*
+* Inherited From: NonCopyable
+* Following class holds the texture coords info when a .block file is provided.
+*/
 class BlockData : public NonCopyable {
 public:
+	/*
+	* following constructor takes .block file and extract the texture coordinates
+	*/
 	BlockData(const std::string& blockName);
+	/*
+	* Method(BlockData): returns the BlockDataHolder DS
+	*/
 	const BlockDataHolder& getBlockData() const;
 private:
-	BlockDataHolder m_blockDataHolder;
+	BlockDataHolder m_blockDataHolder; // private var for storing the block info
 };

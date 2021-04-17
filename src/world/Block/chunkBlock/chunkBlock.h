@@ -1,23 +1,32 @@
 #pragma once
 
-/*
-	Following class return the texture based on id
-	extension or wrapper to the block data and block type
-*/
-
 #include "../BlockId.h"
 
 class BlockDataHolder;
 class BlockType;
 
+/*
+	Following class helps us to query the block type info based
+	on block id.
+*/
+
 class ChunkBlock
 {
 public:
-	ChunkBlock() = default;
-	ChunkBlock(block_t id);
-	ChunkBlock(BlockId id);
 
+	ChunkBlock() = default;
+	ChunkBlock(block_t id); // sets up the block id
+	ChunkBlock(BlockId id); // sets up the block id
+
+	/*
+	* Method(ChunkBlock): get the block BlockDataHolder 
+	*	info from the BlockDataBase(go through the def for more
+	*	info)
+	*/
 	const BlockDataHolder& getBlockData() const;
+	/*
+	* Method(ChunkBlock): get the block BlockType
+	*/
 	const BlockType& getBlockType() const;
 
 	bool operator==(ChunkBlock b) {

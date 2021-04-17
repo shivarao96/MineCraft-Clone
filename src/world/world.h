@@ -13,31 +13,63 @@ class Camera;
 class World
 {
 public:
+	/*
+	* Initialize the member var : chunkmanager
+	*/
 	World();
+	/*
+	* Method(World): following function gets the chunks from chunkmanager
+	* and loop through the chunks and draws them.
+	* arg(renderer): Mainrender class for drawing all the chunks
+	*/
 	void renderWorld(MainRenderer& renderer);
+	/*
+	* Method(World): set the required blocktype at certain pos of the block
+	*/
 	void setBlock(int x, int y, int z, ChunkBlock block);
+	/*
+	* Method(World): get the chunk block at certain location
+	*/
 	ChunkBlock getBlock(int x, int y, int z);
+	/*
+	* Method(World): Update the chunks
+	*/
 	void update(const Camera& cam);
 
+	/*
+	* Method(World): clear the event, update the chunks which got edited, and make mesh
+	*/
 	const ChunkManager& getChunkManager() const;
+	/*
+	* Method(World): get the Chunkblock position
+	*/
 	static VectorXZ getBlock(int x, int z);
+	/*
+	* Method(World):get the chunk position
+	*/
 	static VectorXZ getChunk(int x, int z);
 
+	/*
+	* Method(World): template based method to register the user event (ex: editing the blocks )
+	*/
 	template<typename T, typename ...Args>
 	void addEvent(Args&&... args) {
 		m_events.push_back(std::make_unique<T>(std::forward<Args>(args)...));
 	}
-
+	/*
+	* Method(World): update the chunkblock at certain pos
+	*/
 	void updateChunk(int blockX, int blockY, int blockZ);
 
 private:
-	void renderedUpdatedSections();
+	/*
+	* Method(World): Update the edited chunksections
+	*/
+	void updateChunks();
+
 	std::vector<std::unique_ptr<IWorldEvent>> m_events;
 	ChunkManager m_chunkManager;
 	std::unordered_set<sf::Vector3i> m_rebuildChunks;
-
-
-	void updateChunks();
-	std::unordered_map<sf::Vector3i, ChunkSection*> m_chunkSectionUpdates;
+	std::unordered_map<sf::Vector3i, ChunkSection*> m_chunkSectionUpdates; // these are the chunksection that got updated
 };
 

@@ -1,5 +1,4 @@
 #include "chunkRenderer.h"
-
 #include "../../entity/camera/camera.h"
 #include "../../glActions/glFunctions.h"
 #include "../../world/chunk/chunkMesh/chunkMesh.h"

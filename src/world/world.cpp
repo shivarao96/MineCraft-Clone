@@ -18,23 +18,14 @@ void World::update(const Camera& cam) {
 		event->handleWorld(*this);
 	}
 	m_events.clear();
-	updateChunks(); // updating the chunks which are updated.
-	for (int x = 0; x < WorldSpace::render_distance; x++) {
+	updateChunks(); // updating the chunks which are edited by user.
+	for (int x = 0; x < WorldSpace::render_distance; x++) { 
 		for (int z = 0; z < WorldSpace::render_distance; z++) {
 			if (m_chunkManager.makeMesh(x, z)) {
 				return;
 			}
 		}
 	}
-}
-
-void World::renderedUpdatedSections() {
-	for (auto& location : m_rebuildChunks) {
-		ChunkSection& section = m_chunkManager.getChunk(location.x, location.z).getSection(location.y);
-		section.makeMesh();
-		section.bufferMesh();
-	}
-	m_rebuildChunks.clear();
 }
 
 void World::renderWorld(MainRenderer& renderer) {
@@ -52,27 +43,13 @@ void World::setBlock(int x, int y, int z, ChunkBlock block) {
 	auto bP = getBlock(x, z);
 	auto cP = getChunk(x, z);
 
-	//if (WorldSpace::isWorldOutOfBound(cP)) {
-	//	return;
-	//}
-
 	m_chunkManager.getChunk(cP.x, cP.z).setBlock(bP.x, y, bP.z, block);
-	
-	//--Code is obsolite can be removed when proper chunks upadate function is implemented.
-	//if (m_chunkManager.getChunk(cP.x, cP.z).hasLoaded()) {
-	//	std::cout << "rebuild" << std::endl;
-	//	m_rebuildChunks.emplace(cP.x, y / CHUNK_SIZE, cP.z);
-	//}
-	//renderedUpdatedSections();
 }
 
 ChunkBlock World::getBlock(int x, int y, int z) {
 	auto bP = getBlock(x, z);
 	auto cP = getChunk(x, z);
 	
-	//if (WorldSpace::isWorldOutOfBound(cP)) {
-	//	return BlockId::AIR;
-	//}
 	return m_chunkManager.getChunk(cP.x, cP.z).getBlock(bP.x, y, bP.z);
 }
 
