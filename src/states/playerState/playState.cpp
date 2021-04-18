@@ -70,6 +70,7 @@ void PlayState::render(MainRenderer& mainRenderer) {
 	m_world.renderWorld(mainRenderer);
 	mainRenderer.drawSky();
 	m_fpsCounter.renderFps(mainRenderer);
+	m_player.renderPlayMode(mainRenderer);
 }
 bool PlayState::isStateInitialized() const {
 	return isStateInit;

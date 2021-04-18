@@ -4,6 +4,13 @@
 #include "../../world/world.h"
 
 Player::Player() : Entity({ 25,125,25 }, { 0,0,0 }, {0.5, 1, 0.5}) {
+	m_text.move(10, 45);
+	m_text.setOutlineColor(sf::Color::Black);
+	m_text.setOutlineThickness(2);
+
+	m_font.loadFromFile("assets/fonts/Minecrafter.Reg.ttf");
+	m_text.setFont(m_font);
+	m_text.setCharacterSize(24);
 }
 void Player::handleInput(const sf::RenderWindow& window) {
 	keyboardInput();
@@ -11,21 +18,30 @@ void Player::handleInput(const sf::RenderWindow& window) {
 }
 void Player::update(float deltaTime, World& world) {
 	
-	if (!m_isOnGround) { // if not on ground 
+	if (!m_isOnGround && !m_debugMode) { // if not on ground 
 		m_velocity.y -= 45 * deltaTime;
 	}
 	m_isOnGround = false;
 	
 	m_velocity.x *= 0.95;
 	m_velocity.z *= 0.95;
+	m_velocity.y *= 0.95;
 	
 	m_position.x += m_velocity.x * deltaTime;
-	collide(world, { m_velocity.x, 0, 0 }, deltaTime);
+	if(!m_debugMode) { collide(world, { m_velocity.x, 0, 0 }, deltaTime); }
 	m_position.y += m_velocity.y * deltaTime;
-	collide(world, { 0, m_velocity.y, 0 }, deltaTime);
+	if (!m_debugMode) { collide(world, { 0, m_velocity.y, 0 }, deltaTime); }
 	m_position.z += m_velocity.z * deltaTime;
-	collide(world, { 0, 0, m_velocity.z }, deltaTime);
+	if (!m_debugMode) { collide(world, { 0, 0, m_velocity.z }, deltaTime); }
+
+	std::string mode = m_debugMode ? "TRUE" : "FALSE";
+	m_text.setString("Flying Mode: " + mode);
 }
+
+void Player::renderPlayMode(MainRenderer& mainRenderer) {
+	mainRenderer.drawSFMLObj(m_text);
+}
+
 void Player::keyboardInput() {
 	glm::vec3 change = glm::vec3(0);
 	static bool fillModeLine = false;
@@ -55,6 +71,9 @@ void Player::keyboardInput() {
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_isOnGround) {
 		change.y += speed * 50;
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && m_debugMode) {
+		change.y += speed;
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
 		change.y -= speed;
 	}
@@ -62,6 +81,15 @@ void Player::keyboardInput() {
 		glPolygonMode(GL_FRONT_AND_BACK, fillModeLine ? GL_FILL : GL_LINE);
 		fillModeLine = !fillModeLine;
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G) && m_debugMode) {
+		m_debugMode = false;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && !m_debugMode) {
+		m_debugMode = true;
+		m_isOnGround = false;
+		change.y += speed * 50;
+	}
+
 	
 	m_velocity += change;
 }
