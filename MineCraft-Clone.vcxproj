@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\item\itemStack\ItemStack.cpp" />
+    <ClCompile Include="src\item\material\Material.cpp" />
     <ClCompile Include="src\world\event\playerDigEvent\playerDigEvent.cpp" />
     <ClCompile Include="src\utility\noiseGenerator\noiseGenerator.cpp" />
     <ClCompile Include="src\utility\randomGenerator\random.cpp" />
@@ -185,8 +187,11 @@
     <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
     <ClCompile Include="src\world\world.cpp" />
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
+    <ClCompile Include="src\InputHandler\ToggleKey.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\item\itemStack\ItemStack.h" />
+    <ClInclude Include="src\item\material\Material.h" />
     <ClInclude Include="src\world\event\playerDigEvent\playerDigEvent.h" />
     <ClInclude Include="src\utility\noiseGenerator\noiseGenerator.h" />
     <ClInclude Include="src\utility\randomGenerator\random.h" />
@@ -233,6 +238,7 @@
     <ClInclude Include="src\texture\textureAtlas\textureAtlas.h" />
     <ClInclude Include="src\world\world.h" />
     <ClInclude Include="src\math\vector2XZ\vector2XZ.h" />
+    <ClInclude Include="src\InputHandler\ToggleKey.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blocks\air.block" />

@@ -78,8 +78,8 @@ CubeRenderer::CubeRenderer():m_texAtlas("DefaultPack"){
 		indices
 	});
 }
-void CubeRenderer::addAt(const glm::vec3& pos) {
-	m_cubes.push_back(pos);
+void CubeRenderer::addAt(const Entity& entity) {
+	m_cubes.push_back(&entity);
 }
 void CubeRenderer::renderCubes(const Camera& cam) {
 	m_basicShader.useShader();
@@ -93,7 +93,7 @@ void CubeRenderer::renderCubes(const Camera& cam) {
 
 	for (auto& cube : m_cubes) {
 		m_basicShader.loadModelMatrix(
-			makeModelMatrix({ cube, glm::vec3(0,0,0) })
+			makeModelMatrix(*cube)
 		);
 		GlFunctions::drawElements(m_model.getIndicesCount());
 	}

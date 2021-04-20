@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "../../model/model.h"
+#include "../../entity/entity.h"
 #include "../../texture/textureHandler.h"
 #include "../../shaders/basicShader/basicShader.h"
 #include "../../texture/textureAtlas/textureAtlas.h"
@@ -13,10 +14,10 @@ class CubeRenderer
 {
 public:
 	CubeRenderer();
-	void addAt(const glm::vec3& pos);
+	void addAt(const Entity& entity);
 	void renderCubes(const Camera& cam);
 private:
-	std::vector<glm::vec3> m_cubes;
+	std::vector<const Entity*> m_cubes;
 	Model m_model;
 	BasicShader m_basicShader;
 	TextureHandler m_textureHandler;

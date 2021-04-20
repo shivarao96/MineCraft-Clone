@@ -135,6 +135,15 @@
     <ClCompile Include="src\world\event\playerDigEvent\playerDigEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\item\material\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\item\itemStack\ItemStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputHandler\ToggleKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -273,6 +282,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\world\event\playerDigEvent\playerDigEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item\material\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\item\itemStack\ItemStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputHandler\ToggleKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
