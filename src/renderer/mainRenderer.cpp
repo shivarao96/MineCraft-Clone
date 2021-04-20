@@ -5,8 +5,8 @@
 void MainRenderer::drawQuads(glm::vec3 pos) {
 	m_quadRenderer.addAt({ 0,0,0 });
 }
-void MainRenderer::drawCubes(glm::vec3 pos) {
-	m_cubeRenderer.addAt({ 0,0,0 });
+void MainRenderer::drawCubes(const Entity& entity) {
+	m_cubeRenderer.addAt(entity);
 }
 void MainRenderer::drawChunk(const ChunkMesh& mesh) {
 	if (mesh.getFaceCount() > 0) {

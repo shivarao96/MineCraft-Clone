@@ -15,7 +15,7 @@ class MainRenderer
 {
 public:
 	void drawQuads(glm::vec3 pos);
-	void drawCubes(glm::vec3 pos);
+	void drawCubes(const Entity& entity);
 	void drawChunk(const ChunkMesh& mesh);
 	void drawSky();
 	void drawSFMLObj(const sf::Drawable& drawable);

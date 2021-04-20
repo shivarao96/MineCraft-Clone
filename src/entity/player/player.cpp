@@ -2,24 +2,59 @@
 #include <GL/glew.h>
 #include "../../world/worldConstant.h"
 #include "../../world/world.h"
+#include <iostream>
 
-Player::Player() : Entity({ 25,125,25 }, { 0,0,0 }, {0.5, 1, 0.5}) {
-	m_text.move(10, 45);
-	m_text.setOutlineColor(sf::Color::Black);
-	m_text.setOutlineThickness(2);
-
+Player::Player()
+	: Entity({ 25,125,25 }, { 0,0,0 }, { 0.5, 1, 0.5 })
+	, m_keyDown(sf::Keyboard::Down)
+	,m_keyUp(sf::Keyboard::Up)
+{
 	m_font.loadFromFile("assets/fonts/Minecrafter.Reg.ttf");
-	m_text.setFont(m_font);
-	m_text.setCharacterSize(24);
+	
+	for (int i = 0; i < 5; i++) {
+		m_items.emplace_back(Material::NOTHING, 0);
+	}
+
+	for (int i = 0; i < 5; i++) {
+		//sfml text
+		sf::Text t;
+		t.setOutlineColor(sf::Color::Black);
+		t.setOutlineThickness(2);
+		t.setFont(m_font);
+		t.setCharacterSize(25);
+		t.setPosition({10, (float)(30 * i + 100)});
+		m_itemText.push_back(t);
+	}
+
+	m_playModetext.setOutlineColor(sf::Color::Black);
+	m_playModetext.setOutlineThickness(2);
+	m_playModetext.setFont(m_font);
+	m_playModetext.setCharacterSize(24);
+	m_playModetext.move(10, 40);
+
 }
 void Player::handleInput(const sf::RenderWindow& window) {
+
+	if (m_keyDown.isKeyPressed()) {
+		m_heldItem++;
+		if (m_heldItem == m_items.size()) {
+			m_heldItem = 0;
+		}
+	}
+	else if (m_keyUp.isKeyPressed()) {
+		m_heldItem--;
+		if (m_heldItem == -1) {
+			m_heldItem = m_items.size() - 1;
+		}
+	}
+
 	keyboardInput();
 	mouseInput(window);
 }
 void Player::update(float deltaTime, World& world) {
 	
 	if (!m_isOnGround && !m_debugMode) { // if not on ground 
-		m_velocity.y -= 45 * deltaTime;
+		m_velocity.y -= 100 * deltaTime;
 	}
 	m_isOnGround = false;
 	
@@ -35,11 +70,23 @@ void Player::update(float deltaTime, World& world) {
 	if (!m_debugMode) { collide(world, { 0, 0, m_velocity.z }, deltaTime); }
 
 	std::string mode = m_debugMode ? "TRUE" : "FALSE";
-	m_text.setString("Flying Mode: " + mode);
+	m_playModetext.setString("Flying Mode:: " + mode);
 }
 
-void Player::renderPlayMode(MainRenderer& mainRenderer) {
-	mainRenderer.drawSFMLObj(m_text);
+void Player::draw(MainRenderer& mainRenderer) {
+	for (int i = 0; i < m_items.size(); i++) {
+		sf::Text& t = m_itemText[i];
+		if (i == m_heldItem) {
+			t.setFillColor(sf::Color::Red);
+		}
+		else {
+			t.setFillColor(sf::Color::White);
+		}
+		t.setString(m_items[i].getMaterial().name + "::" + std::to_string(m_items[i].getNumInStack()));
+		mainRenderer.drawSFMLObj(t);
+	}
+
+	mainRenderer.drawSFMLObj(m_playModetext);
 }
 
 void Player::keyboardInput() {
@@ -124,36 +171,32 @@ void Player::mouseInput(const sf::RenderWindow& window) {
 
 void Player::collide(World& world, const glm::vec3& vel, float dt) {
 
-	auto& dimension = m_aabb.m_dimension;
-	auto& position  = m_position;
-	auto& velocity  = vel;
-
-	for (int x = position.x - dimension.x; x < position.x + dimension.x; x++) {
-		for (int y = position.y - dimension.y; y < position.y + 0.7; y++) {
-			for (int z = position.z - dimension.z; z < position.z + dimension.z; z++) {
+	for (int x = m_position.x - m_aabb.m_dimension.x; x < m_position.x + m_aabb.m_dimension.x; x++) {
+		for (int y = m_position.y - m_aabb.m_dimension.y; y < m_position.y + 0.7; y++) {
+			for (int z = m_position.z - m_aabb.m_dimension.z; z < m_position.z + m_aabb.m_dimension.z; z++) {
 				auto block = world.getBlock(x, y, z);
 				if (block != BlockId::AIR) {
 					// @case for x
-					if (velocity.x > 0) {
-						position.x = x - dimension.x;
+					if (vel.x > 0) {
+						m_position.x = x - m_aabb.m_dimension.x;
 					}
-					else if(velocity.x < 0) {
-						position.x = x + dimension.x + 1;
+					else if(vel.x < 0) {
+						m_position.x = x + m_aabb.m_dimension.x + 1;
 					}
 					// @case for z
-					if (velocity.z > 0) {
-						position.z = z - dimension.z;
+					if (vel.z > 0) {
+						m_position.z = z - m_aabb.m_dimension.z;
 					}
-					else if (velocity.z < 0) {
-						position.z = z + dimension.z + 1;
+					else if (vel.z < 0) {
+						m_position.z = z + m_aabb.m_dimension.z + 1;
 					}
 					//@case for y
-					if (velocity.y > 0) {
-						position.y = y - dimension.y;
+					if (vel.y > 0) {
+						m_position.y = y - m_aabb.m_dimension.y;
 						m_velocity.y = 0; // ???
 					}
-					else if (velocity.y < 0) {
-						position.y = y + dimension.y + 1;
+					else if (vel.y < 0) {
+						m_position.y = y + m_aabb.m_dimension.y + 1;
 						m_velocity.y = 0;
 						m_isOnGround = true;
 					}
@@ -161,4 +204,22 @@ void Player::collide(World& world, const glm::vec3& vel, float dt) {
 			}
 		}
 	}
+}
+
+void Player::addItem(const Material& material) {
+	Material::ID id = material.materialId;
+	for (int i = 0; i < m_items.size(); i++) {
+		if (m_items[i].getMaterial().materialId == id) {
+			const int leftOver = m_items[i].add(1);
+			return;
+		}
+		else if(m_items[i].getMaterial().materialId == Material::ID::Nothing) {
+			m_items[i] = { material, 1 };
+			return;
+		}
+	}
+}
+
+ItemStack& Player::getHeldItems() {
+	return m_items[m_heldItem];
 }
