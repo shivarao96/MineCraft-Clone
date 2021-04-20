@@ -6,6 +6,7 @@ const Material Material::DIRT_BLOCK		(ID::Dirt, 99, true, "Dirt Block");
 const Material Material::STONE_BLOCK	(ID::Stone, 99, true, "Stone Block");
 const Material Material::BARK_BLOCK		(ID::Bark, 99, true, "Bark");
 const Material Material::LEAF_BLOCK		(ID::Leaf, 99, true, "Leaf");
+const Material Material::SAND_BLOCK     (ID::Sand, 99, true, "Sand");
 
 Material::Material(
 	Material::ID materialId,
@@ -34,6 +35,8 @@ BlockId Material::toBlockId() const {
 			return BlockId::OAKBARK;
 		case Leaf:
 			return BlockId::OAKLEAF;
+		case Sand:
+			return BlockId::SAND;
 		default:
 			return BlockId::NUM_TYPES;
 	}
@@ -54,5 +57,7 @@ const Material& Material::toMaterial(BlockId block) {
 			return BARK_BLOCK;
 		case BlockId::OAKLEAF:
 			return LEAF_BLOCK;
+		case BlockId::SAND:
+			return SAND_BLOCK;
 	}
 }

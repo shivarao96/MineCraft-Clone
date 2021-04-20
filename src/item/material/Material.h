@@ -13,7 +13,8 @@ struct Material : public NonCopyable
 		Dirt,
 		Stone,
 		Bark,
-		Leaf
+		Leaf,
+		Sand
 	};
 
 	const static Material NOTHING,
@@ -21,7 +22,8 @@ struct Material : public NonCopyable
 		DIRT_BLOCK,
 		STONE_BLOCK,
 		BARK_BLOCK,
-		LEAF_BLOCK;	
+		LEAF_BLOCK,
+		SAND_BLOCK;
 
 	static const Material& toMaterial(BlockId block);
 
