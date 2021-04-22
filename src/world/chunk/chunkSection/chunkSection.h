@@ -13,6 +13,26 @@ class ChunkSection: public IChunk
 {
 	friend class Chunk; //allowing the access to Chunk class
 public:
+
+	class Layer {
+	public:
+		void update(ChunkBlock block) {
+			if (block == 0) {
+				m_solidBlockCount--;
+			}
+			else {
+				m_solidBlockCount++;
+			}
+		}
+
+		bool isLayerSolid() const {
+			return m_solidBlockCount == CHUNK_AREA;
+		}
+
+	private:
+		int m_solidBlockCount = 0;
+	};
+
 	ChunkSection(const sf::Vector3i location, World& world);
 	/*
 	* Method-Override(ChunkSection): Following method set the chunkblock at pos x,y,z
@@ -38,6 +58,10 @@ public:
 	* Method(ChunkSection): bufferMesh adds the m_mesh data into the mesh model later which can be called for rendering
 	*/
 	void bufferMesh();
+
+	const Layer& getLayer(int y) const;
+	ChunkSection& getAdjacent(int dx, int dz);
+
 private:
 	/*
 	* Method(ChunkSection): convert the x,y,z to world position.
@@ -61,5 +85,6 @@ private:
 	World* m_pWorld; // chunk world var for recieving the world reference.
 	bool m_hasMesh = false; // flag to check whether we intitiated the mesh building or not.
 	bool m_hasMeshBuffered = false; // flag to check whether we buffered the mesh or not
+	std::array<Layer, CHUNK_SIZE> m_layers;
 };
 

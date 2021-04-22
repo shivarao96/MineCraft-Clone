@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace WorldSpace{
-	constexpr int render_distance = 8;
+	constexpr int render_distance = 16;
 	constexpr int gravity = -3;
 }
 
@@ -53,7 +53,7 @@ ChunkBlock World::getBlock(int x, int y, int z) {
 	return m_chunkManager.getChunk(cP.x, cP.z).getBlock(bP.x, y, bP.z);
 }
 
-const ChunkManager& World::getChunkManager() const {
+ChunkManager& World::getChunkManager() {
 	return m_chunkManager;
 }
 

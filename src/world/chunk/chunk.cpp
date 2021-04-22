@@ -153,7 +153,13 @@ bool Chunk::outOfBound(int x, int y, int z) const {
 }
 
 ChunkSection& Chunk::getSection(int index) {
-	return m_chunksSections.at(index);
+	static ChunkSection errorSection({444,444,444}, *m_pWorld);
+	if (index >= m_chunksSections.size() || index < 0) {
+		return errorSection;
+	}
+	else {
+		return m_chunksSections.at(index);
+	}
 }
 
 void Chunk::addSection() {

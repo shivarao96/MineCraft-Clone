@@ -17,6 +17,7 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 		return;
 	}
 	//-- if above condition fails that means the coords are in between the current bounds
+	m_layers[y].update(block);
 	m_chunkBlocks[getBlockIndex(x, y, z)] = block;
 }
 
@@ -28,6 +29,7 @@ void ChunkSection::makeMesh() {
 }
 
 void ChunkSection::bufferMesh() {
+	//m_layers;
 	m_chunkMesh.bufferMesh();
 	m_hasMeshBuffered = true;
 }
@@ -66,4 +68,19 @@ bool ChunkSection::hasMesh() const {
 
 bool ChunkSection::hasBuffered() const {
 	return m_hasMeshBuffered;
+}
+
+const ChunkSection::Layer& ChunkSection::getLayer(int y) const {
+	if (y == -1) {
+		return m_pWorld->getChunkManager().getChunk(m_location.x, m_location.z).getSection(m_location.y - 1).getLayer(CHUNK_SIZE - 1);
+	}
+	else if(y == CHUNK_SIZE) {
+		return m_pWorld->getChunkManager().getChunk(m_location.x, m_location.z).getSection(m_location.y + 1).getLayer(0);
+	}
+	else {
+		return m_layers[y];
+	}
+}
+ChunkSection& ChunkSection::getAdjacent(int dx, int dz) {
+	return m_pWorld->getChunkManager().getChunk(m_location.x + dx, m_location.z + dz).getSection(m_location.y);
 }

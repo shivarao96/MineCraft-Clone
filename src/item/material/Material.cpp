@@ -37,8 +37,6 @@ BlockId Material::toBlockId() const {
 			return BlockId::OAKLEAF;
 		case Sand:
 			return BlockId::SAND;
-		default:
-			return BlockId::NUM_TYPES;
 	}
 }
 

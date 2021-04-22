@@ -37,9 +37,9 @@ public:
 	void update(const Camera& cam);
 
 	/*
-	* Method(World): clear the event, update the chunks which got edited, and make mesh
+	* Method(World): fetch the chunk manager
 	*/
-	const ChunkManager& getChunkManager() const;
+	ChunkManager& getChunkManager();
 	/*
 	* Method(World): get the Chunkblock position
 	*/
