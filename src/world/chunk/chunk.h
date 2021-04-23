@@ -4,6 +4,7 @@
 #include "iChunk/iChunk.h"
 #include "chunkSection/chunkSection.h"
 #include <SFML/Graphics.hpp>
+#include "../../entity/camera/camera.h"
 
 class World;
 class MainRenderer;
@@ -29,7 +30,7 @@ public:
 	/*
 	* Method(Chunk): draw chunksection chunks
 	*/
-	void drawChunks(MainRenderer& renderer);
+	void drawChunks(MainRenderer& renderer, const Camera& cam);
 	/*
 	* Method(Chunk): following function is responsible for creating the mesh based on chunksection data
 	* ! : This function is called only once.

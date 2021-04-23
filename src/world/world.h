@@ -6,6 +6,7 @@
 #include "./chunk/chunkManager/chunkManager.h"
 #include <unordered_set>
 #include "./event/IWorldEvent.h"
+#include "../entity/camera/camera.h"
 
 class MainRenderer;
 class Camera;
@@ -22,7 +23,7 @@ public:
 	* and loop through the chunks and draws them.
 	* arg(renderer): Mainrender class for drawing all the chunks
 	*/
-	void renderWorld(MainRenderer& renderer);
+	void renderWorld(MainRenderer& renderer, const Camera& cam);
 	/*
 	* Method(World): set the required blocktype at certain pos of the block
 	*/

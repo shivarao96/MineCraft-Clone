@@ -6,6 +6,7 @@
 #include "../chunkMesh/chunkMesh.h"
 #include "../../Block/chunkBlock/chunkBlock.h"
 #include "../iChunk/iChunk.h"
+#include "../../../physics/AABB/AABB.h"
 
 class World;
 
@@ -86,5 +87,6 @@ private:
 	bool m_hasMesh = false; // flag to check whether we intitiated the mesh building or not.
 	bool m_hasMeshBuffered = false; // flag to check whether we buffered the mesh or not
 	std::array<Layer, CHUNK_SIZE> m_layers;
+	AABB m_aabb;
 };
 

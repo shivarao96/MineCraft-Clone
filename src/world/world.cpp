@@ -28,11 +28,11 @@ void World::update(const Camera& cam) {
 	}
 }
 
-void World::renderWorld(MainRenderer& renderer) {
+void World::renderWorld(MainRenderer& renderer, const Camera& cam) {
 	
 	auto& chunks = m_chunkManager.getChunks();
 	for (auto& chunk: chunks) {
-		chunk.second.drawChunks(renderer);
+		chunk.second.drawChunks(renderer, cam);
 	}
 }
 

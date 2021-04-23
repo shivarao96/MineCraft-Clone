@@ -116,14 +116,16 @@ ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	return m_chunksSections.at(y / CHUNK_SIZE).getBlock(x, bY, z);
 }
 
-void Chunk::drawChunks(MainRenderer& renderer) {
+void Chunk::drawChunks(MainRenderer& renderer, const Camera& cam) {
 	for (auto& chunkSection : m_chunksSections) {
 		if (chunkSection.hasMesh()) { // check whether the mesh is initialized based chunksection data or not.
 			if (!chunkSection.hasBuffered()) { // check whether we binded the vertex array
 				chunkSection.bufferMesh(); // bind the vertex array
 				continue;
 			}
-			renderer.drawChunk(chunkSection.m_chunkMesh); // draw the current chunksection
+			if (cam.getFrustum().isBoxInFrustum(chunkSection.m_aabb)) {
+				renderer.drawChunk(chunkSection.m_chunkMesh); // draw the current chunksection
+			}
 		}
 	}
 }

@@ -61,13 +61,16 @@ void PlayState::handleInputs() {
 	}
 }
 void PlayState::update(float deltaTime) {
+	if (m_player.m_position.x < 0) m_player.m_position.x = 0;
+	if (m_player.m_position.z < 0) m_player.m_position.z = 0;
+
 	m_fpsCounter.update();
 	m_player.update(deltaTime, m_world);
 	m_world.update(m_pApplication->getCamera());
 }
 void PlayState::render(MainRenderer& mainRenderer) {
 	mainRenderer.drawSFMLObj(m_crossHair);
-	m_world.renderWorld(mainRenderer);
+	m_world.renderWorld(mainRenderer, m_pApplication->getCamera());
 	mainRenderer.drawSky();
 	m_fpsCounter.renderFps(mainRenderer);
 	m_player.draw(mainRenderer);

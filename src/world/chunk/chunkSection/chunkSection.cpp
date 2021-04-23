@@ -4,8 +4,9 @@
 #include <iostream>
 
 ChunkSection::ChunkSection(const sf::Vector3i location, World& world)
-	:m_location(location), m_pWorld(&world)
+	:m_location(location), m_pWorld(&world), m_aabb({ CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE })
 {
+	m_aabb.update({ m_location.x * CHUNK_SIZE, m_location.y * CHUNK_SIZE, m_location.z * CHUNK_SIZE });
 }
 void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 	//m_hasMesh = false;
