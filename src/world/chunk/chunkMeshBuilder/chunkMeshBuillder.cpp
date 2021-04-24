@@ -194,7 +194,7 @@ bool ChunkMeshBuillder::shouldMakeLayer(int y)
 
 	return	(!m_pChunkSection->getLayer(y).isLayerSolid()) ||
 		(!m_pChunkSection->getLayer(y + 1).isLayerSolid()) ||
-		//(!m_pChunkSection->getLayer(y - 1).isLayerSolid()) ||
+		(!m_pChunkSection->getLayer(y - 1).isLayerSolid()) ||
 		(!isAdjSolid(1, 0)) ||
 		(!isAdjSolid(0, 1)) ||
 		(!isAdjSolid(-1, 0)) ||
