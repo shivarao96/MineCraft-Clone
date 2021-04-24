@@ -1,23 +1,27 @@
 #include "TerrainGeneration.h"
 #include "../chunk/chunk.h"
 #include "./treeGeneration/TreeGeneration.h"
+#include "../../math/bilinear-interpolation/BilinearInterpolation.h"
 
 namespace Generation {
-	int seed = 50424;
+	int seed = RandomSingleton::get().intInRange(424, 325322);;
 };
 
-NoiseGenerator TerrainGeneration::m_heightNoiseGen(Generation::seed);
 NoiseGenerator TerrainGeneration::m_biomeNoiseGen(Generation::seed * 2);
 
-TerrainGeneration::TerrainGeneration() {
+TerrainGeneration::TerrainGeneration()
+	: m_grassLandBiome(Generation::seed)
+	,m_lightForestBiome(Generation::seed)
+	,m_desertForestBiome(Generation::seed)
+{
 	setUpNoise();
 }
 void TerrainGeneration::generateTerrainFor(Chunk& chunk) {
 	m_pChunk = &chunk;
-	auto location = chunk.getChunkLocation();
+	sf::Vector2i location = chunk.getChunkLocation();
+	m_random.setSeed((location.x + location.y) << 2);
 	getHeightMap();
 	getBiomeMap();
-	m_random.setSeed((location.x + location.y) << 2);
 	int maxHeight = *std::max_element(m_heightMap.begin(), m_heightMap.end());
 	maxHeight = std::max(maxHeight, WATER_LEVEL);
 	setBlocks(maxHeight);
@@ -31,6 +35,7 @@ void TerrainGeneration::setBlocks(int maxHeight)
 		for (int x = 0; x < CHUNK_SIZE; x++) {
 			for (int z = 0; z < CHUNK_SIZE; z++) {
 				int height = m_heightMap[x * CHUNK_SIZE + z];
+				const Biome& biome = getBiomeAt(x, z);
 				if (y > height) {
 					if (y <= WATER_LEVEL)
 					{
@@ -51,7 +56,7 @@ void TerrainGeneration::setBlocks(int maxHeight)
 						);
 					}
 				}
-				else if (y > height / 3 + 4) {
+				else if (y > height - 3) {
 					m_pChunk->setBlock(x, y, z, BlockId::DIRT);
 				}
 				else {
@@ -62,38 +67,82 @@ void TerrainGeneration::setBlocks(int maxHeight)
 	}
 
 	for (auto& tree: trees) {
-		makeOakTree(*m_pChunk, m_random, tree.x, tree.y, tree.z);
+		getBiomeAt(tree.x, tree.z).makeTrees(*m_pChunk, m_random, tree.x, tree.y, tree.z);
 	}
 }
 
 void TerrainGeneration::setTopBlock(int x, int y, int z)
 {
-	int biome = m_biomeMap[x * CHUNK_SIZE + z];
-	if (biome < 100) {
-		m_pChunk->setBlock(x, y, z, BlockId::GRASS);
-	}
-	else {
-		m_pChunk->setBlock(x, y, z, BlockId::SAND);
-	}
+	m_pChunk->setBlock(x, y, z, getBiomeAt(x, z).getTopBlock(m_random));
 }
 
 void TerrainGeneration::getHeightMap()
 {
-	auto location = m_pChunk->getChunkLocation();
-	for (int x = 0; x < CHUNK_SIZE; x++) {
-		for (int z = 0; z < CHUNK_SIZE; z++) {
-			m_heightMap[x * CHUNK_SIZE + z] = m_heightNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
-		}
-	}
+	constexpr static int HALF_CHUNK = CHUNK_SIZE / 2;
+	constexpr static int CHUNK = CHUNK_SIZE;
+
+	getHeightln(0, 0, HALF_CHUNK, HALF_CHUNK);
+	getHeightln(HALF_CHUNK, 0, CHUNK, HALF_CHUNK);
+	getHeightln(0, HALF_CHUNK, HALF_CHUNK, CHUNK);
+	getHeightln(HALF_CHUNK, HALF_CHUNK, CHUNK, CHUNK);
 }
 
 void TerrainGeneration::getBiomeMap()
 {
 	auto location = m_pChunk->getChunkLocation();
-	for (int x = 0; x < CHUNK_SIZE; x++) {
-		for (int z = 0; z < CHUNK_SIZE; z++) {
-			m_biomeMap[x * CHUNK_SIZE + z] = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
+	for (int x = 0; x < CHUNK_SIZE + 1; x++) {
+		for (int z = 0; z < CHUNK_SIZE + 1; z++) {
+			m_biomeMap[x * (CHUNK_SIZE+1) + z] = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
 		}
+	}
+}
+
+void TerrainGeneration::getHeightln(int xMin, int zMin, int xMax, int zMax)
+{
+	auto getHeightAt = [&](int x, int z, const std::string& pos) {
+		const Biome& biome = getBiomeAt(x, z);
+		return biome.getHeight(x, z,m_pChunk->getChunkLocation().x, m_pChunk->getChunkLocation().y);
+	};
+
+	float bottomLeft = getHeightAt(xMin, zMin, "BottomLeft");
+	float bottomRight = getHeightAt(xMax, zMin, "BottomRight");
+	float topLeft = getHeightAt(xMin, zMax, "TopLeft");
+	float topRight = getHeightAt(xMax, zMax, "TopRight");
+
+	for (int x = xMin; x < xMax; ++x) {
+		for (int z = zMin; z < zMax; ++z) {
+			if (x == CHUNK_SIZE) 
+				continue;
+			if (z == CHUNK_SIZE) 
+				continue;
+			int h = bilinearInterpolation(
+				bottomLeft,
+				bottomRight,
+				topLeft,
+				topRight,
+				xMax,
+				xMin,
+				zMax,
+				zMin,
+				x,
+				z
+			);
+			m_heightMap[x * CHUNK_SIZE + z] = h;
+		}
+	}
+}
+
+const Biome& TerrainGeneration::getBiomeAt(int x, int z) const
+{
+	int biomeValue = m_biomeMap[x * (CHUNK_SIZE + 1) + z];
+	if (biomeValue > 155) {
+		return m_desertForestBiome;
+	}
+	else if (biomeValue > 135) {
+		return m_lightForestBiome;
+	}
+	else {
+		return m_grassLandBiome;
 	}
 }
 
@@ -102,21 +151,14 @@ void TerrainGeneration::setUpNoise()
 	static bool noiseGen = false;
 	if (!noiseGen) {
 		noiseGen = true;
-		NoiseParameters heightParams;
-		heightParams.octaves = 7;
-		heightParams.amplitude = 70;
-		heightParams.smoothness = 235;
-		heightParams.heightOffset = -5;
-		heightParams.roughNess = 0.53;
 
 		NoiseParameters biomeParmams;
 		biomeParmams.octaves = 5;
-		biomeParmams.amplitude = 90;
+		biomeParmams.amplitude = 125;
 		biomeParmams.smoothness = 735;
 		biomeParmams.heightOffset = -5;
 		biomeParmams.roughNess = 0.6;
 
-		m_heightNoiseGen.setNoiseParameter(heightParams);
 		m_biomeNoiseGen.setNoiseParameter(biomeParmams);
 	}
 }

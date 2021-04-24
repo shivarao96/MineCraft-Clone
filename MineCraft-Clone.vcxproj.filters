@@ -156,6 +156,9 @@
     <ClCompile Include="src\world\generation\biome\Biome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\math\bilinear-interpolation\BilinearInterpolation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -315,6 +318,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\world\generation\biome\Biome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\bilinear-interpolation\BilinearInterpolation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
