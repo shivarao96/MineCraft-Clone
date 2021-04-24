@@ -72,5 +72,6 @@ private:
 	ChunkManager m_chunkManager;
 	std::unordered_set<sf::Vector3i> m_rebuildChunks;
 	std::unordered_map<sf::Vector3i, ChunkSection*> m_chunkSectionUpdates; // these are the chunksection that got updated
+	int m_loadDistance = 2;
 };
 

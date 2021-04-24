@@ -82,6 +82,7 @@ void CubeRenderer::addAt(const Entity& entity) {
 	m_cubes.push_back(&entity);
 }
 void CubeRenderer::renderCubes(const Camera& cam) {
+	if (m_cubes.empty()) return;
 	m_basicShader.useShader();
 	m_texAtlas.bindTexture();
 	//m_textureHandler.bindTexture();

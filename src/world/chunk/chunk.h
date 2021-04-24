@@ -49,6 +49,8 @@ public:
 	* Method(Chunk): get the chunksection
 	*/
 	ChunkSection& getSection(int index);
+
+	const sf::Vector2i getChunkLocation() const noexcept { return m_location; }
 private:
 	/*
 	* Method(Chunk): add the new chunksection
