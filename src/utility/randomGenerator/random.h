@@ -35,6 +35,10 @@ public:
 		std::uniform_int_distribution<T> dist(low, high);
 		return dist(m_randomEngine);
 	}
+
+	void setSeed(int seed) {
+		m_randomEngine.seed(seed);
+	}
 private:
 	REngine m_randomEngine;
 };

@@ -186,9 +186,12 @@
     <ClCompile Include="src\entity\player\player.cpp" />
     <ClCompile Include="src\texture\textureHandler.cpp" />
     <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
+    <ClCompile Include="src\world\generation\biome\Biome.cpp" />
+    <ClCompile Include="src\world\generation\TerrainGeneration.cpp" />
     <ClCompile Include="src\world\world.cpp" />
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
     <ClCompile Include="src\InputHandler\ToggleKey.cpp" />
+    <ClCompile Include="src\world\generation\treeGeneration\TreeGeneration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\item\itemStack\ItemStack.h" />
@@ -236,6 +239,9 @@
     <ClInclude Include="src\texture\textureHandler.h" />
     <ClInclude Include="src\world\Block\BlockId.h" />
     <ClInclude Include="src\world\chunk\iChunk\iChunk.h" />
+    <ClInclude Include="src\world\generation\biome\Biome.h" />
+    <ClInclude Include="src\world\generation\TerrainGeneration.h" />
+    <ClInclude Include="src\world\generation\treeGeneration\TreeGeneration.h" />
     <ClInclude Include="src\world\worldConstant.h" />
     <ClInclude Include="src\texture\textureAtlas\textureAtlas.h" />
     <ClInclude Include="src\world\world.h" />
@@ -244,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blocks\air.block" />
+    <None Include="assets\blocks\cactus.block" />
     <None Include="assets\blocks\dirt.block" />
     <None Include="assets\blocks\grass.block" />
     <None Include="assets\blocks\oakBark.block" />

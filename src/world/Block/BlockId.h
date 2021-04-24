@@ -18,6 +18,7 @@ enum class BlockId : block_t {
 	OAKLEAF = 5,
 	SAND = 6,
 	WATER = 7,
+	CACTUS = 8,
 
 	NUM_TYPES
 };

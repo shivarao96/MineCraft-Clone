@@ -7,6 +7,7 @@
 #include "../../Block/chunkBlock/chunkBlock.h"
 #include "../iChunk/iChunk.h"
 #include "../../../physics/AABB/AABB.h"
+#include "../../Block/blockData/blockData.h"
 
 class World;
 
@@ -18,7 +19,7 @@ public:
 	class Layer {
 	public:
 		void update(ChunkBlock block) {
-			if (block == 0) {
+			if (block.getBlockData().isOpaque) {
 				m_solidBlockCount--;
 			}
 			else {

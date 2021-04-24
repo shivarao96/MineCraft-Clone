@@ -7,12 +7,20 @@
 #include "../../utility/noiseGenerator/noiseGenerator.h"
 #include <iostream>
 #include <vector>
+#include "../generation/TerrainGeneration.h"
 
 Chunk::Chunk(World& world, sf::Vector2i location)
 	:m_location(location)
 	,m_pWorld(&world) {}
 
 void Chunk::load() {
+	if (hasLoaded()) return;
+	TerrainGeneration terGen;
+	terGen.generateTerrainFor(*this);
+	m_chunkLoaded = true;
+	return;
+	
+	
 	static int seed = RandomSingleton::get().intInRange(444, 444444); //seed val in given range
 	if (hasLoaded()) return; // ifchunk is already loaded then don't do any action
 	static Random<std::minstd_rand> rand((m_location.x ^ m_location.y) << 2);

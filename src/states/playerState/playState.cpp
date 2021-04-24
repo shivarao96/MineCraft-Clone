@@ -39,7 +39,7 @@ void PlayState::handleInputs() {
 		int y = ray.getEnd().y;
 		int z = ray.getEnd().z;
 		auto block = m_world.getBlock(x, y, z);
-		if (block != 0) {
+		if (block != BlockId::AIR && block != BlockId::WATER) {
 			if (timer.getElapsedTime().asSeconds() > 0.2) {
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 					timer.restart();

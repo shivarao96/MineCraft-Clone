@@ -13,6 +13,7 @@ class NoiseGenerator
 public:
 	NoiseGenerator(int seed);
 	double getHeight(int x, int z, int chunkX, int chunkZ) const;
+	void setNoiseParameter(const NoiseParameters& noiseParameters);
 private:
 	double getNoise(double x, double z) const;
 	double getNoise(int val) const;
