@@ -71,7 +71,7 @@ struct Direction
 	sf::Vector3i back;
 };
 
-ChunkMeshBuillder::ChunkMeshBuillder(const ChunkSection& chunkSection, ChunkMesh& chunkMesh)
+ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection, ChunkMesh& chunkMesh)
 	:m_pChunkSection(&chunkSection)
 	,m_pChunkMesh(&chunkMesh)
 {}
@@ -81,6 +81,7 @@ void ChunkMeshBuillder::buildMesh() {
 	Direction direction;
 
 	for (int8_t y = 0; y < CHUNK_SIZE; ++y) { // go through the y-axis
+		if (!shouldMakeLayer(y)) continue;
 		for (int8_t x = 0; x < CHUNK_SIZE; ++x) { // go through the x-axis
 			for (int8_t z = 0; z < CHUNK_SIZE; ++z) { // go through the z-axis
 				sf::Vector3i positions(x,y,z);
@@ -182,6 +183,23 @@ bool ChunkMeshBuillder::shouldMakeFace(
 	else {
 		return false;
 	}
+}
+
+bool ChunkMeshBuillder::shouldMakeLayer(int y)
+{
+	auto isAdjSolid = [&](int x, int z) {
+		const ChunkSection& cs = m_pChunkSection->getAdjacent(x, z);
+		return cs.getLayer(y).isLayerSolid();
+	};
+
+	return	(!m_pChunkSection->getLayer(y).isLayerSolid()) ||
+		(!m_pChunkSection->getLayer(y + 1).isLayerSolid()) ||
+		//(!m_pChunkSection->getLayer(y - 1).isLayerSolid()) ||
+		(!isAdjSolid(1, 0)) ||
+		(!isAdjSolid(0, 1)) ||
+		(!isAdjSolid(-1, 0)) ||
+		(!isAdjSolid(0, -1));
+	//return (!m_pChunkSection->getLayer(y).isLayerSolid()) || (!m_pChunkSection->getLayer(y + 1).isLayerSolid()) || (!m_pChunkSection->getLayer(y - 1).isLayerSolid());
 }
 
 ChunkMeshBuillder::~ChunkMeshBuillder() {

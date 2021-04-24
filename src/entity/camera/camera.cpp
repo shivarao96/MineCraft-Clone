@@ -18,10 +18,14 @@ void Camera::update() {
 	matrix = glm::rotate(matrix, glm::radians(m_rotation.z), glm::vec3(0, 0, 1));
 	matrix = glm::translate(matrix, -m_position);
 	m_viewMatrix = matrix;
+	m_frustum.update(m_projectionMatrix * m_viewMatrix);
 }
 const glm::mat4& Camera::getViewMatrix() const {
 	return m_viewMatrix;
 }
 const glm::mat4& Camera::getProjectionMatrix() const {
 	return m_projectionMatrix;
+}
+const Frustum Camera::getFrustum() const noexcept {
+	return m_frustum;
 }

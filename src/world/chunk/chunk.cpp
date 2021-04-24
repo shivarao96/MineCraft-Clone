@@ -7,12 +7,20 @@
 #include "../../utility/noiseGenerator/noiseGenerator.h"
 #include <iostream>
 #include <vector>
+#include "../generation/TerrainGeneration.h"
 
 Chunk::Chunk(World& world, sf::Vector2i location)
 	:m_location(location)
 	,m_pWorld(&world) {}
 
 void Chunk::load() {
+	if (hasLoaded()) return;
+	TerrainGeneration terGen;
+	terGen.generateTerrainFor(*this);
+	m_chunkLoaded = true;
+	return;
+	
+	
 	static int seed = RandomSingleton::get().intInRange(444, 444444); //seed val in given range
 	if (hasLoaded()) return; // ifchunk is already loaded then don't do any action
 	static Random<std::minstd_rand> rand((m_location.x ^ m_location.y) << 2);
@@ -116,14 +124,16 @@ ChunkBlock Chunk::getBlock(int x, int y, int z) const {
 	return m_chunksSections.at(y / CHUNK_SIZE).getBlock(x, bY, z);
 }
 
-void Chunk::drawChunks(MainRenderer& renderer) {
+void Chunk::drawChunks(MainRenderer& renderer, const Camera& cam) {
 	for (auto& chunkSection : m_chunksSections) {
 		if (chunkSection.hasMesh()) { // check whether the mesh is initialized based chunksection data or not.
 			if (!chunkSection.hasBuffered()) { // check whether we binded the vertex array
 				chunkSection.bufferMesh(); // bind the vertex array
 				continue;
 			}
-			renderer.drawChunk(chunkSection.m_chunkMesh); // draw the current chunksection
+			if (cam.getFrustum().isBoxInFrustum(chunkSection.m_aabb)) {
+				renderer.drawChunk(chunkSection.m_chunkMesh); // draw the current chunksection
+			}
 		}
 	}
 }
@@ -153,7 +163,13 @@ bool Chunk::outOfBound(int x, int y, int z) const {
 }
 
 ChunkSection& Chunk::getSection(int index) {
-	return m_chunksSections.at(index);
+	static ChunkSection errorSection({444,444,444}, *m_pWorld);
+	if (index >= m_chunksSections.size() || index < 0) {
+		return errorSection;
+	}
+	else {
+		return m_chunksSections.at(index);
+	}
 }
 
 void Chunk::addSection() {

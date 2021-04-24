@@ -8,6 +8,7 @@ void ChunkRenderer::add(const ChunkMesh& mesh) {
 	m_chunkMeshes.push_back(&mesh);
 }
 void ChunkRenderer::render(const Camera& camera) {
+	if (m_chunkMeshes.empty())return;
 	glEnable(GL_CULL_FACE);
 	m_chunkShader.useShader();
 	BlockDataBase::get().m_textureAtlas.bindTexture();

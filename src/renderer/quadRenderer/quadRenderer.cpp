@@ -29,6 +29,7 @@ void QuadRenderer::addAt(const glm::vec3& pos) {
     m_quads.push_back(pos);
 }
 void QuadRenderer::renderQuads(const Camera& cam) {
+    if (m_quads.empty()) return;
     m_basicShader.useShader();
     m_textureHandler.bindTexture();
     m_model.bindVAO();

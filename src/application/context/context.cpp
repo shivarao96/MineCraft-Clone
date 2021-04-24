@@ -24,5 +24,5 @@ Context::Context() {
 	);
 	glCullFace(GL_BACK);
 	//m_window.setFramerateLimit(144);
-	m_window.setVerticalSyncEnabled(true); //!!!: this vertical sync causing frame rate drop
+	//m_window.setVerticalSyncEnabled(true); //!!!: this vertical sync causing frame rate drop
 }

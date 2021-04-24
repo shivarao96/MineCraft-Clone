@@ -18,7 +18,7 @@ public:
 	* Following constructor loads the chunksection and chunkmesh with the reference provided as arguments(chunksection and chunkmesh)
 	* based on blockdata in [M][M][M] chunkBlocks chunkmesh is updated and it reflect the chunkmesh in chunksection class
 	*/
-	ChunkMeshBuillder(const ChunkSection& chunkSection, ChunkMesh& chunkMesh);
+	ChunkMeshBuillder(ChunkSection& chunkSection, ChunkMesh& chunkMesh);
 	/*
 	* Method(ChunkMeshBuillder): build the chunkmesh based chunksection chunkblock info
  	*/
@@ -47,8 +47,10 @@ private:
 		const char* faceType
 	);
 
+	bool shouldMakeLayer(int y);
+
 	ChunkMesh*    m_pChunkMesh                = nullptr;// will hold the chunkmesh reference of chunkSection
-	const ChunkSection* m_pChunkSection       = nullptr; //will have the chunksection reference for doing work FYI: it will add info in chunkMesh based on chunkSection blockdata info 
+	ChunkSection* m_pChunkSection       = nullptr; //will have the chunksection reference for doing work FYI: it will add info in chunkMesh based on chunkSection blockdata info 
 	const BlockDataHolder* m_pBlockDataHolder = nullptr; // will hold each block blockType info
 };
 

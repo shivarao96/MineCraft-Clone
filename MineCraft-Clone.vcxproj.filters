@@ -144,6 +144,18 @@
     <ClCompile Include="src\InputHandler\ToggleKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\math\frustum\frustum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\generation\TerrainGeneration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\generation\treeGeneration\TreeGeneration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\generation\biome\Biome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -293,6 +305,18 @@
     <ClInclude Include="src\InputHandler\ToggleKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\math\frustum\frustum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\generation\TerrainGeneration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\generation\treeGeneration\TreeGeneration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\generation\biome\Biome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\glsl\basicShader.vert" />
@@ -306,5 +330,6 @@
     <None Include="src\shaders\glsl\skyboxShader.frag" />
     <None Include="assets\blocks\oakLeaf.block" />
     <None Include="assets\blocks\oakBark.block" />
+    <None Include="assets\blocks\cactus.block" />
   </ItemGroup>
 </Project>

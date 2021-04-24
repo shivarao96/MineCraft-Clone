@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace WorldSpace{
-	constexpr int render_distance = 8;
+	constexpr int render_distance = 16;
 	constexpr int gravity = -3;
 }
 
@@ -18,7 +18,34 @@ void World::update(const Camera& cam) {
 		event->handleWorld(*this);
 	}
 	m_events.clear();
+
 	updateChunks(); // updating the chunks which are edited by user.
+	/* infinite terrain generation code uncomment this code when multithreading is implemented
+			bool isMeshLoaded = false;
+			int camX = cam.m_position.x / CHUNK_SIZE;
+			int camZ = cam.m_position.z / CHUNK_SIZE;
+			for (int i = 0; i < m_loadDistance; i++) {
+				int minX = std::max(camX - i, 0);
+				int minZ = std::max(camZ - i, 0);
+				int maxX = camX + i;
+				int maxZ = camZ + i;
+
+				for (int x = minX; x < maxX; ++x) {
+					for (int z = minZ; z < maxZ; ++z) {
+						if (m_chunkManager.makeMesh(x, z)) {
+							isMeshLoaded = true;
+							break;
+						}
+					}
+					if (isMeshLoaded) break;
+				}
+				if (isMeshLoaded) break;
+			}
+
+			if (!isMeshLoaded)m_loadDistance++;
+			if (m_loadDistance >= WorldSpace::render_distance) m_loadDistance = 2;
+	*/
+
 	for (int x = 0; x < WorldSpace::render_distance; x++) { 
 		for (int z = 0; z < WorldSpace::render_distance; z++) {
 			if (m_chunkManager.makeMesh(x, z)) {
@@ -28,11 +55,37 @@ void World::update(const Camera& cam) {
 	}
 }
 
-void World::renderWorld(MainRenderer& renderer) {
+void World::renderWorld(MainRenderer& renderer, const Camera& cam) {
 	
 	auto& chunks = m_chunkManager.getChunks();
+	/*
+	* Uncomment the code when multithreading is implemented
+			for (auto itr = chunks.begin(); itr != chunks.end();) {
+
+				Chunk& chunk = itr->second;
+
+				int camX = cam.m_position.x;
+				int camZ = cam.m_position.z;
+
+				int minX = (camX / CHUNK_SIZE) - WorldSpace::render_distance;
+				int minZ = (camZ / CHUNK_SIZE) - WorldSpace::render_distance;
+				int maxX = (camX / CHUNK_SIZE) + WorldSpace::render_distance;
+				int maxZ = (camZ / CHUNK_SIZE) + WorldSpace::render_distance;
+
+				auto location = chunk.getChunkLocation();
+				if (location.x > maxX || location.y > maxZ || location.x < minX || location.y < minZ) { // taboo
+					itr = chunks.erase(itr);
+					continue;
+				}
+				else {
+					chunk.drawChunks(renderer, cam);
+					itr++;
+				}
+		
+			}
+	*/
 	for (auto& chunk: chunks) {
-		chunk.second.drawChunks(renderer);
+		chunk.second.drawChunks(renderer, cam);
 	}
 }
 
@@ -53,7 +106,7 @@ ChunkBlock World::getBlock(int x, int y, int z) {
 	return m_chunkManager.getChunk(cP.x, cP.z).getBlock(bP.x, y, bP.z);
 }
 
-const ChunkManager& World::getChunkManager() const {
+ChunkManager& World::getChunkManager() {
 	return m_chunkManager;
 }
 
