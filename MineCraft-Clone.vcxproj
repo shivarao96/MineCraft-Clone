@@ -149,6 +149,7 @@
     <ClCompile Include="src\item\material\Material.cpp" />
     <ClCompile Include="src\math\bilinear-interpolation\BilinearInterpolation.cpp" />
     <ClCompile Include="src\math\frustum\frustum.cpp" />
+    <ClCompile Include="src\utility\array2D\Array2D.cpp" />
     <ClCompile Include="src\world\event\playerDigEvent\playerDigEvent.cpp" />
     <ClCompile Include="src\utility\noiseGenerator\noiseGenerator.cpp" />
     <ClCompile Include="src\utility\randomGenerator\random.cpp" />
@@ -188,6 +189,9 @@
     <ClCompile Include="src\texture\textureHandler.cpp" />
     <ClCompile Include="src\texture\textureAtlas\textureAtlas.cpp" />
     <ClCompile Include="src\world\generation\biome\Biome.cpp" />
+    <ClCompile Include="src\world\generation\desertBiome\DesertBiome.cpp" />
+    <ClCompile Include="src\world\generation\grassLandBiome\GrassLandBiome.cpp" />
+    <ClCompile Include="src\world\generation\lightForestBiome\LightForestBiome.cpp" />
     <ClCompile Include="src\world\generation\TerrainGeneration.cpp" />
     <ClCompile Include="src\world\world.cpp" />
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
@@ -199,6 +203,7 @@
     <ClInclude Include="src\item\material\Material.h" />
     <ClInclude Include="src\math\bilinear-interpolation\BilinearInterpolation.h" />
     <ClInclude Include="src\math\frustum\frustum.h" />
+    <ClInclude Include="src\utility\array2D\Array2D.h" />
     <ClInclude Include="src\world\event\playerDigEvent\playerDigEvent.h" />
     <ClInclude Include="src\utility\noiseGenerator\noiseGenerator.h" />
     <ClInclude Include="src\utility\randomGenerator\random.h" />
@@ -242,6 +247,9 @@
     <ClInclude Include="src\world\Block\BlockId.h" />
     <ClInclude Include="src\world\chunk\iChunk\iChunk.h" />
     <ClInclude Include="src\world\generation\biome\Biome.h" />
+    <ClInclude Include="src\world\generation\desertBiome\DesertBiome.h" />
+    <ClInclude Include="src\world\generation\grassLandBiome\GrassLandBiome.h" />
+    <ClInclude Include="src\world\generation\lightForestBiome\LightForestBiome.h" />
     <ClInclude Include="src\world\generation\TerrainGeneration.h" />
     <ClInclude Include="src\world\generation\treeGeneration\TreeGeneration.h" />
     <ClInclude Include="src\world\worldConstant.h" />

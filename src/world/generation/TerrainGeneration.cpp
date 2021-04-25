@@ -22,7 +22,7 @@ void TerrainGeneration::generateTerrainFor(Chunk& chunk) {
 	m_random.setSeed((location.x + location.y) << 2);
 	getHeightMap();
 	getBiomeMap();
-	int maxHeight = *std::max_element(m_heightMap.begin(), m_heightMap.end());
+	int maxHeight = m_heightMap.getMaxValue();
 	maxHeight = std::max(maxHeight, WATER_LEVEL);
 	setBlocks(maxHeight);
 }
@@ -34,7 +34,7 @@ void TerrainGeneration::setBlocks(int maxHeight)
 	for (int y = 0; y < maxHeight + 1; y++) {
 		for (int x = 0; x < CHUNK_SIZE; x++) {
 			for (int z = 0; z < CHUNK_SIZE; z++) {
-				int height = m_heightMap[x * CHUNK_SIZE + z];
+				int height = m_heightMap.getValAt(x, z);
 				const Biome& biome = getBiomeAt(x, z);
 				if (y > height) {
 					if (y <= WATER_LEVEL)
@@ -92,7 +92,7 @@ void TerrainGeneration::getBiomeMap()
 	auto location = m_pChunk->getChunkLocation();
 	for (int x = 0; x < CHUNK_SIZE + 1; x++) {
 		for (int z = 0; z < CHUNK_SIZE + 1; z++) {
-			m_biomeMap[x * (CHUNK_SIZE+1) + z] = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
+			m_biomeMap.getValAt(x,z) = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
 		}
 	}
 }
@@ -127,18 +127,18 @@ void TerrainGeneration::getHeightln(int xMin, int zMin, int xMax, int zMax)
 				x,
 				z
 			);
-			m_heightMap[x * CHUNK_SIZE + z] = h;
+			m_heightMap.getValAt(x,z) = h;
 		}
 	}
 }
 
 const Biome& TerrainGeneration::getBiomeAt(int x, int z) const
 {
-	int biomeValue = m_biomeMap[x * (CHUNK_SIZE + 1) + z];
+	int biomeValue = m_biomeMap.getValAt(x, z);
 	if (biomeValue > 155) {
 		return m_desertForestBiome;
 	}
-	else if (biomeValue > 135) {
+	else if (biomeValue > 115) {
 		return m_lightForestBiome;
 	}
 	else {

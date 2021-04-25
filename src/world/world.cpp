@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace WorldSpace{
-	constexpr int render_distance = 16;
+	constexpr int render_distance = 8;
 	constexpr int gravity = -3;
 }
 
