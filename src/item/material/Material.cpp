@@ -7,7 +7,7 @@ const Material Material::STONE_BLOCK	(ID::Stone, 99, true, "Stone Block");
 const Material Material::BARK_BLOCK		(ID::Bark, 99, true, "Bark");
 const Material Material::LEAF_BLOCK		(ID::Leaf, 99, true, "Leaf");
 const Material Material::SAND_BLOCK     (ID::Sand, 99, true, "Sand");
-const Material Material::CACTUS_BLOCK     (ID::Sand, 99, true, "Cactus");
+const Material Material::CACTUS_BLOCK     (ID::Cactus, 99, true, "Cactus");
 
 Material::Material(
 	Material::ID materialId,

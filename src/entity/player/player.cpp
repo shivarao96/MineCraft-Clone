@@ -175,7 +175,7 @@ void Player::collide(World& world, const glm::vec3& vel, float dt) {
 		for (int y = m_position.y - m_aabb.m_dimension.y; y < m_position.y + 0.7; y++) {
 			for (int z = m_position.z - m_aabb.m_dimension.z; z < m_position.z + m_aabb.m_dimension.z; z++) {
 				auto block = world.getBlock(x, y, z);
-				if (block != BlockId::AIR) {
+				if (block != BlockId::AIR && block != BlockId::WATER) {
 					// @case for x
 					if (vel.x > 0) {
 						m_position.x = x - m_aabb.m_dimension.x;

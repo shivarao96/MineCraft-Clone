@@ -8,6 +8,12 @@
 #include "../../utility/randomGenerator/random.h"
 #include "./biome/Biome.h"
 #include <string>
+#include "../../utility/array2D/Array2D.h"
+#include "grassLandBiome/GrassLandBiome.h"
+#include "lightForestBiome/LightForestBiome.h"
+#include "desertBiome/DesertBiome.h"
+#include "oceanBiome/OceanBiome.h"
+
 class Chunk;
 
 class TerrainGeneration
@@ -24,8 +30,8 @@ private:
 	void getHeightln(int xMin, int zMin, int xMax, int zMax);
 	const Biome& getBiomeAt(int x, int z) const;
 
-	std::array<int, CHUNK_AREA> m_heightMap;
-	std::array<int, (CHUNK_SIZE + 1)* (CHUNK_SIZE + 1)> m_biomeMap;
+	Array2D<int, CHUNK_SIZE> m_heightMap;
+	Array2D<int, (CHUNK_SIZE + 1)> m_biomeMap;
 
 	Random<std::minstd_rand> m_random;
 
@@ -36,6 +42,7 @@ private:
 	GrassLandBiome m_grassLandBiome;
 	LightForestBiome m_lightForestBiome;
 	DesertBiome m_desertForestBiome;
+	OceanBiome m_oceanBiome;
 };
 #endif // !__TERRAIN_GENERATION__
 

@@ -1,8 +1,11 @@
 #include "application.h"
 #include "../states/playerState/playState.h"
 #include <iostream>
+#include "../world/Block/blockDataBase/blockDataBase.h"
+
 
 Application::Application(const std::string& name) {
+	BlockDataBase::get();
 	pushState<PlayState>(*this);
 }
 void Application::runApp() {

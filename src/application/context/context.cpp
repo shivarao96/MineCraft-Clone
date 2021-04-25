@@ -3,14 +3,14 @@
 
 Context::Context() {
 	sf::ContextSettings setting;
-	setting.antialiasingLevel = 4;
+	setting.antialiasingLevel = 8;
 	setting.majorVersion = 3;
 	setting.minorVersion = 3;
 	setting.depthBits = 24;
 	setting.stencilBits = 8;
 	m_window.create(
 		{ 1280, 768 },
-		"MineCraft",
+		"MineCraft Clone",
 		sf::Style::Close,
 		setting
 	);

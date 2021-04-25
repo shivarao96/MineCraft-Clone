@@ -13,6 +13,7 @@ TerrainGeneration::TerrainGeneration()
 	: m_grassLandBiome(Generation::seed)
 	,m_lightForestBiome(Generation::seed)
 	,m_desertForestBiome(Generation::seed)
+	, m_oceanBiome(Generation::seed)
 {
 	setUpNoise();
 }
@@ -22,7 +23,7 @@ void TerrainGeneration::generateTerrainFor(Chunk& chunk) {
 	m_random.setSeed((location.x + location.y) << 2);
 	getHeightMap();
 	getBiomeMap();
-	int maxHeight = *std::max_element(m_heightMap.begin(), m_heightMap.end());
+	int maxHeight = m_heightMap.getMaxValue();
 	maxHeight = std::max(maxHeight, WATER_LEVEL);
 	setBlocks(maxHeight);
 }
@@ -34,7 +35,7 @@ void TerrainGeneration::setBlocks(int maxHeight)
 	for (int y = 0; y < maxHeight + 1; y++) {
 		for (int x = 0; x < CHUNK_SIZE; x++) {
 			for (int z = 0; z < CHUNK_SIZE; z++) {
-				int height = m_heightMap[x * CHUNK_SIZE + z];
+				int height = m_heightMap.getValAt(x, z);
 				const Biome& biome = getBiomeAt(x, z);
 				if (y > height) {
 					if (y <= WATER_LEVEL)
@@ -92,7 +93,7 @@ void TerrainGeneration::getBiomeMap()
 	auto location = m_pChunk->getChunkLocation();
 	for (int x = 0; x < CHUNK_SIZE + 1; x++) {
 		for (int z = 0; z < CHUNK_SIZE + 1; z++) {
-			m_biomeMap[x * (CHUNK_SIZE+1) + z] = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
+			m_biomeMap.getValAt(x,z) = m_biomeNoiseGen.getHeight(x, z, location.x + 10, location.y + 10);
 		}
 	}
 }
@@ -127,22 +128,33 @@ void TerrainGeneration::getHeightln(int xMin, int zMin, int xMax, int zMax)
 				x,
 				z
 			);
-			m_heightMap[x * CHUNK_SIZE + z] = h;
+			m_heightMap.getValAt(x,z) = h;
 		}
 	}
 }
 
 const Biome& TerrainGeneration::getBiomeAt(int x, int z) const
 {
-	int biomeValue = m_biomeMap[x * (CHUNK_SIZE + 1) + z];
-	if (biomeValue > 155) {
-		return m_desertForestBiome;
+	int biomeValue = m_biomeMap.getValAt(x, z);
+	if (biomeValue > 155)
+	{
+		return m_oceanBiome;
 	}
-	else if (biomeValue > 135) {
+	else if (biomeValue > 145)
+	{
+		return m_grassLandBiome;
+	}
+	else if (biomeValue > 110)
+	{
 		return m_lightForestBiome;
 	}
-	else {
+	else if (biomeValue > 90)
+	{
 		return m_grassLandBiome;
+	}
+	else
+	{
+		return m_desertForestBiome;
 	}
 }
 
@@ -155,9 +167,9 @@ void TerrainGeneration::setUpNoise()
 		NoiseParameters biomeParmams;
 		biomeParmams.octaves = 5;
 		biomeParmams.amplitude = 125;
-		biomeParmams.smoothness = 735;
-		biomeParmams.heightOffset = -5;
-		biomeParmams.roughNess = 0.6;
+		biomeParmams.smoothness = 1035;
+		biomeParmams.heightOffset = 0;
+		biomeParmams.roughNess = 0.7;
 
 		m_biomeNoiseGen.setNoiseParameter(biomeParmams);
 	}

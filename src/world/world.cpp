@@ -4,13 +4,28 @@
 #include "../math/vector2XZ/vector2XZ.h"
 #include "../entity/camera/camera.h"
 #include <iostream>
+#include <mutex>
 
 namespace WorldSpace{
 	constexpr int render_distance = 16;
 	constexpr int gravity = -3;
+	std::mutex m_mutex;
 }
 
-World::World():m_chunkManager(*this) {}
+World::World(const Camera& cam)
+	:m_chunkManager(*this) 
+	//, m_thread([&] {
+	//	while (m_isRunning) {
+	//		loadChunks(cam);
+	//	}
+	//})
+{}
+
+World::~World()
+{
+	//m_isRunning = false;
+	//m_thread.join();
+}
 
 void World::update(const Camera& cam) {
 
@@ -19,33 +34,13 @@ void World::update(const Camera& cam) {
 	}
 	m_events.clear();
 
+
 	updateChunks(); // updating the chunks which are edited by user.
-	/* infinite terrain generation code uncomment this code when multithreading is implemented
-			bool isMeshLoaded = false;
-			int camX = cam.m_position.x / CHUNK_SIZE;
-			int camZ = cam.m_position.z / CHUNK_SIZE;
-			for (int i = 0; i < m_loadDistance; i++) {
-				int minX = std::max(camX - i, 0);
-				int minZ = std::max(camZ - i, 0);
-				int maxX = camX + i;
-				int maxZ = camZ + i;
+	
+	//loadChunks(cam);
 
-				for (int x = minX; x < maxX; ++x) {
-					for (int z = minZ; z < maxZ; ++z) {
-						if (m_chunkManager.makeMesh(x, z)) {
-							isMeshLoaded = true;
-							break;
-						}
-					}
-					if (isMeshLoaded) break;
-				}
-				if (isMeshLoaded) break;
-			}
-
-			if (!isMeshLoaded)m_loadDistance++;
-			if (m_loadDistance >= WorldSpace::render_distance) m_loadDistance = 2;
-	*/
-
+	// !IMPORTANT !IMPORTANT !IMPORTANT
+	// hide below code when loadchunks is uncommented.
 	for (int x = 0; x < WorldSpace::render_distance; x++) { 
 		for (int z = 0; z < WorldSpace::render_distance; z++) {
 			if (m_chunkManager.makeMesh(x, z)) {
@@ -55,11 +50,45 @@ void World::update(const Camera& cam) {
 	}
 }
 
+void World::loadChunks(const Camera& cam)
+{
+	
+	bool isMeshLoaded = false;
+	int camX = cam.m_position.x / CHUNK_SIZE;
+	int camZ = cam.m_position.z / CHUNK_SIZE;
+	for (int i = 0; i < m_loadDistance; i++) {
+		int minX = std::max(camX - i, 0);
+		int minZ = std::max(camZ - i, 0);
+		int maxX = camX + i;
+		int maxZ = camZ + i;
+
+		for (int x = minX; x < maxX; ++x) {
+			for (int z = minZ; z < maxZ; ++z) {
+				WorldSpace::m_mutex.lock();
+				if (m_chunkManager.makeMesh(x, z)) {
+					isMeshLoaded = true;
+					WorldSpace::m_mutex.unlock();
+					break;
+				}
+				WorldSpace::m_mutex.unlock();
+			}
+			if (isMeshLoaded) break;
+		}
+		if (isMeshLoaded) break;
+	}
+
+	if (!isMeshLoaded)m_loadDistance++;
+	if (m_loadDistance >= WorldSpace::render_distance) m_loadDistance = 2;
+}
+
+
 void World::renderWorld(MainRenderer& renderer, const Camera& cam) {
 	
 	auto& chunks = m_chunkManager.getChunks();
 	/*
 	* Uncomment the code when multithreading is implemented
+	* 
+			WorldSpace::m_mutex.lock();
 			for (auto itr = chunks.begin(); itr != chunks.end();) {
 
 				Chunk& chunk = itr->second;
@@ -83,6 +112,7 @@ void World::renderWorld(MainRenderer& renderer, const Camera& cam) {
 				}
 		
 			}
+			WorldSpace::m_mutex.unlock();
 	*/
 	for (auto& chunk: chunks) {
 		chunk.second.drawChunks(renderer, cam);
