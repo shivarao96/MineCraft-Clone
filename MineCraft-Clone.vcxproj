@@ -192,6 +192,8 @@
     <ClCompile Include="src\world\generation\desertBiome\DesertBiome.cpp" />
     <ClCompile Include="src\world\generation\grassLandBiome\GrassLandBiome.cpp" />
     <ClCompile Include="src\world\generation\lightForestBiome\LightForestBiome.cpp" />
+    <ClCompile Include="src\world\generation\oceanBiome\OceanBiome.cpp" />
+    <ClCompile Include="src\world\generation\structureBuilder\StructureBuilder.cpp" />
     <ClCompile Include="src\world\generation\TerrainGeneration.cpp" />
     <ClCompile Include="src\world\world.cpp" />
     <ClCompile Include="src\math\vector2XZ\vector2XZ.cpp" />
@@ -250,6 +252,8 @@
     <ClInclude Include="src\world\generation\desertBiome\DesertBiome.h" />
     <ClInclude Include="src\world\generation\grassLandBiome\GrassLandBiome.h" />
     <ClInclude Include="src\world\generation\lightForestBiome\LightForestBiome.h" />
+    <ClInclude Include="src\world\generation\oceanBiome\OceanBiome.h" />
+    <ClInclude Include="src\world\generation\structureBuilder\StructureBuilder.h" />
     <ClInclude Include="src\world\generation\TerrainGeneration.h" />
     <ClInclude Include="src\world\generation\treeGeneration\TreeGeneration.h" />
     <ClInclude Include="src\world\worldConstant.h" />

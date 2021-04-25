@@ -171,6 +171,12 @@
     <ClCompile Include="src\world\generation\desertBiome\DesertBiome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\world\generation\oceanBiome\OceanBiome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world\generation\structureBuilder\StructureBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -345,6 +351,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\world\generation\desertBiome\DesertBiome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\generation\oceanBiome\OceanBiome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world\generation\structureBuilder\StructureBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,7 +36,8 @@ private:
 		const sf::Vector2i&       texCoords,
 		const sf::Vector3i&       chunkPosition,
 		const sf::Vector3i&       blockPosition,
-		const char* faceType
+		const char* faceType,
+		float cardinalLight
 	);
 	/*
 	* Method(ChunkMeshBuillder): Check for conditional requirements to render some part of the face for a block

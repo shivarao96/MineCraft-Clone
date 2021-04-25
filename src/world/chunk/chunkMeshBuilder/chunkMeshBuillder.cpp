@@ -71,6 +71,11 @@ struct Direction
 	sf::Vector3i back;
 };
 
+constexpr float LIGHT_TOP = 1.0f;
+constexpr float LIGHT_X = 0.8f;
+constexpr float LIGHT_Z = 0.6f;
+constexpr float LIGHT_BOTTOM = 0.4f;
+
 ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection, ChunkMesh& chunkMesh)
 	:m_pChunkSection(&chunkSection)
 	,m_pChunkMesh(&chunkMesh)
@@ -101,42 +106,48 @@ void ChunkMeshBuillder::buildMesh() {
 					texData.texTopCoords,
 					positions,
 					direction.up,
-					"up"
+					"up",
+					LIGHT_TOP
 				);
 				tryAddFaceToMesh(
 					FaceVal::bottomFace,
 					texData.texBottomCoords,
 					positions,
 					direction.down,
-					"down"
+					"down",
+					LIGHT_BOTTOM
 				);
 				tryAddFaceToMesh(
 					FaceVal::leftFace,
 					texData.texSideCoords,
 					positions,
 					direction.left,
-					"left"
+					"left",
+					LIGHT_X
 				);
 				tryAddFaceToMesh(
 					FaceVal::rightFace,
 					texData.texSideCoords,
 					positions,
 					direction.right,
-					"right"
+					"right",
+					LIGHT_X
 				);
 				tryAddFaceToMesh(
 					FaceVal::frontFace,
 					texData.texSideCoords,
 					positions,
 					direction.front,
-					"front"
+					"front",
+					LIGHT_Z
 				);
 				tryAddFaceToMesh(
 					FaceVal::backFace,
 					texData.texSideCoords,
 					positions,
 					direction.back,
-					"back"
+					"back",
+					LIGHT_Z
 				);
 			}
 		}
@@ -148,7 +159,8 @@ void ChunkMeshBuillder::tryAddFaceToMesh(
 	const sf::Vector2i& texCoords,
 	const sf::Vector3i& chunkPosition,
 	const sf::Vector3i& blockPosition,
-	const char* faceType
+	const char* faceType,
+	float cardinalLight
 ) {
 	if (shouldMakeFace(blockPosition, *m_pBlockDataHolder, faceType)) {
 		auto texCoordInfo = BlockDataBase::get().m_textureAtlas.getTextureCoords(texCoords);
@@ -156,7 +168,8 @@ void ChunkMeshBuillder::tryAddFaceToMesh(
 			blockFace,
 			texCoordInfo,
 			m_pChunkSection->getLocation(), // this is chunklocation
-			chunkPosition
+			chunkPosition,
+			cardinalLight
 		);
 	}
 }

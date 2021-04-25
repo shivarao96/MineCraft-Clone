@@ -9,7 +9,7 @@
 #include "../../world/event/playerDigEvent/playerDigEvent.h"
 #include <iostream>
 
-PlayState::PlayState(Application& app): BaseState(app) {
+PlayState::PlayState(Application& app): BaseState(app) ,m_world(app.getCamera()){
 	app.getCamera().hookEntity(m_player); // hooked the player into main camera entity in application
 	
 	// cross hair setup

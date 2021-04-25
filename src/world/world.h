@@ -8,6 +8,9 @@
 #include "./event/IWorldEvent.h"
 #include "../entity/camera/camera.h"
 
+#include <atomic>
+#include <thread>
+
 class MainRenderer;
 class Camera;
 
@@ -17,7 +20,8 @@ public:
 	/*
 	* Initialize the member var : chunkmanager
 	*/
-	World();
+	World(const Camera& cam);
+	~World();
 	/*
 	* Method(World): following function gets the chunks from chunkmanager
 	* and loop through the chunks and draws them.
@@ -63,6 +67,7 @@ public:
 	void updateChunk(int blockX, int blockY, int blockZ);
 
 private:
+	void loadChunks(const Camera& cam);
 	/*
 	* Method(World): Update the edited chunksections
 	*/
@@ -73,5 +78,8 @@ private:
 	std::unordered_set<sf::Vector3i> m_rebuildChunks;
 	std::unordered_map<sf::Vector3i, ChunkSection*> m_chunkSectionUpdates; // these are the chunksection that got updated
 	int m_loadDistance = 2;
+
+	//std::atomic<bool> m_isRunning{ true };
+	//std::thread m_thread;
 };
 

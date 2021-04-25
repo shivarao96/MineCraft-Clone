@@ -22,7 +22,8 @@ public:
 		const std::vector<float>& blockFace,
 		const std::vector<float>& texCoords,
 		const sf::Vector3i&       chunkPosition,
-		const sf::Vector3i&       blockPosition
+		const sf::Vector3i&       blockPosition,
+		float cardinalLight
 	);
 	/*
 	* Method(ChunkMesh): add mesh data into a model
@@ -41,5 +42,6 @@ private:
 	Model m_model;
 	Mesh  m_mesh;
 	unsigned int m_index = 0;
+	std::vector<float> m_lights;
 };
 

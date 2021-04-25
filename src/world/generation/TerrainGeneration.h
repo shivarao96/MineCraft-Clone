@@ -12,6 +12,7 @@
 #include "grassLandBiome/GrassLandBiome.h"
 #include "lightForestBiome/LightForestBiome.h"
 #include "desertBiome/DesertBiome.h"
+#include "oceanBiome/OceanBiome.h"
 
 class Chunk;
 
@@ -41,6 +42,7 @@ private:
 	GrassLandBiome m_grassLandBiome;
 	LightForestBiome m_lightForestBiome;
 	DesertBiome m_desertForestBiome;
+	OceanBiome m_oceanBiome;
 };
 #endif // !__TERRAIN_GENERATION__
 

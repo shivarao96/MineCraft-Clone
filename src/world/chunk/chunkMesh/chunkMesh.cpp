@@ -7,7 +7,8 @@ void ChunkMesh::addFace(
 	const std::vector<float>& blockFace,
 	const std::vector<float>& texCoords,
 	const sf::Vector3i&       chunkPosition,
-	const sf::Vector3i&       blockPosition
+	const sf::Vector3i&       blockPosition,
+	float cardinalLight
 ) {
 	m_faceCount++;
 	auto& vertices           = m_mesh.vertexPositions;
@@ -33,6 +34,7 @@ void ChunkMesh::addFace(
 		vertices.push_back(
 			blockFace[index++] + chunkPosition.z * CHUNK_SIZE + blockPosition.z
 		);// this is for z-axis
+		m_lights.push_back(cardinalLight);
 	} // setting up the vertices
 
 	indices.insert(indices.end(),
@@ -50,15 +52,18 @@ void ChunkMesh::addFace(
 }
 void ChunkMesh::bufferMesh() {
 	m_model.addData(m_mesh);
-	
+	m_model.addVBO(1, m_lights);
+
 	m_mesh.vertexPositions.clear();
 	m_mesh.textureCoordinates.clear();
 	m_mesh.indices.clear();
+	m_lights.clear();
 
 	m_mesh.vertexPositions.shrink_to_fit();
 	m_mesh.textureCoordinates.shrink_to_fit();
 	m_mesh.indices.shrink_to_fit();
 	m_index = 0;
+	m_lights.shrink_to_fit();
 }
 const Model& ChunkMesh::getModel() const {
 	return m_model;
