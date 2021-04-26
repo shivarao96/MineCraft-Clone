@@ -44,14 +44,14 @@ void TextureHandler::loadFromImage(const sf::Image& img) {
 	glTexParameteri(
 		GL_TEXTURE_2D,
 		GL_TEXTURE_MIN_FILTER,
-		GL_LINEAR_MIPMAP_LINEAR
+		GL_NEAREST
 	);
 	glTexParameteri(
 		GL_TEXTURE_2D,
 		GL_TEXTURE_MAG_FILTER,
 		GL_NEAREST
 	);
-	glGenerateMipmap(GL_TEXTURE_2D);
+	//glGenerateMipmap(GL_TEXTURE_2D);
 }
 void TextureHandler::loadFromFile(const std::string& fileName) {
 	sf::Image imgLoader;
@@ -62,6 +62,7 @@ void TextureHandler::loadFromFile(const std::string& fileName) {
 	}
 	loadFromImage(imgLoader);
 }
-void TextureHandler::bindTexture() {
+void TextureHandler::bindTexture(){
+	
 	glBindTexture(GL_TEXTURE_2D, m_textureId);
 }

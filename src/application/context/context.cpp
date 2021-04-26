@@ -2,18 +2,18 @@
 #include <GL/glew.h>
 
 Context::Context() {
-	sf::ContextSettings setting;
-	setting.antialiasingLevel = 4;
-	setting.majorVersion = 3;
-	setting.minorVersion = 3;
-	setting.depthBits = 24;
-	setting.stencilBits = 8;
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 0;
+	settings.majorVersion = 3;
+	settings.minorVersion = 3;
+	settings.depthBits = 24;
+	settings.stencilBits = 8;
 	
 	m_window.create(
 		{ 1280, 768 },
 		"MineCraft Clone",
 		sf::Style::Close,
-		setting
+		settings
 	);
 	glewInit();
 	glewExperimental = GL_TRUE;
