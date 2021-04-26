@@ -3,6 +3,8 @@
 #include "./treeGeneration/TreeGeneration.h"
 #include "../../math/bilinear-interpolation/BilinearInterpolation.h"
 
+#include <iostream>
+
 namespace Generation {
 	int seed = RandomSingleton::get().intInRange(424, 325322);;
 };
@@ -31,6 +33,7 @@ void TerrainGeneration::generateTerrainFor(Chunk& chunk) {
 void TerrainGeneration::setBlocks(int maxHeight)
 {
 	std::vector<sf::Vector3i> trees;
+	std::vector<sf::Vector3i> plants;
 
 	for (int y = 0; y < maxHeight + 1; y++) {
 		for (int x = 0; x < CHUNK_SIZE; x++) {
@@ -46,8 +49,15 @@ void TerrainGeneration::setBlocks(int maxHeight)
 				}
 				else if (y == height) {
 					if (y >= WATER_LEVEL) {
-						if (m_random.intInRange(0, 200) == 99) {
-							trees.emplace_back(x,y,z );
+						if (y < WATER_LEVEL + 5) {
+							m_pChunk->setBlock(x, y, z, BlockId::SAND);
+							continue;
+						}
+						if (m_random.intInRange(0, biome.getTreeFrequency()) == 5) {
+							trees.emplace_back(x,y+1,z );
+						}
+						if (m_random.intInRange(0, biome.getPlantFrequency()) == 5) {
+							plants.emplace_back(x, y+1, z);
 						}
 						setTopBlock(x, y, z);
 					}
@@ -69,6 +79,11 @@ void TerrainGeneration::setBlocks(int maxHeight)
 
 	for (auto& tree: trees) {
 		getBiomeAt(tree.x, tree.z).makeTrees(*m_pChunk, m_random, tree.x, tree.y, tree.z);
+	}
+
+	for (auto& plant : plants) {
+		BlockId id = getBiomeAt(plant.x, plant.z).getPlant(m_random);
+		m_pChunk->setBlock(plant.x, plant.y, plant.z, id);
 	}
 }
 

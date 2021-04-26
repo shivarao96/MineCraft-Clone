@@ -6,6 +6,11 @@
 #include "../../../utility/nonCopyable.h"
 #include "../BlockId.h"
 
+enum class BlockMeshType {
+	Cube = 0,
+	X = 1
+};
+
 /*
 * Inherited From: NonCopyable
 * Following class holds the texture coords(top, side & bottom) of any blockid
@@ -19,6 +24,7 @@ public:
 	sf::Vector2i texBottomCoords;// bottom coords
 	BlockId id;// id (BlockId)
 	bool isOpaque; // opaque param
+	BlockMeshType meshType;
 };
 
 /*

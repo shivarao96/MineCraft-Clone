@@ -10,6 +10,10 @@ public:
 	OceanBiome(int seed);
 	BlockId getTopBlock(Rand& rand)const;
 	void makeTrees(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)const;
+	BlockId getPlant(Rand& rand) const
+	{
+		return rand.intInRange(0, 5) < 3 ? BlockId::ROSE : BlockId::TALLGRASS;
+	}
 private:
 	NoiseParameters getNoiseParam();
 };

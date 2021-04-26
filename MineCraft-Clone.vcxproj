@@ -149,6 +149,7 @@
     <ClCompile Include="src\item\material\Material.cpp" />
     <ClCompile Include="src\math\bilinear-interpolation\BilinearInterpolation.cpp" />
     <ClCompile Include="src\math\frustum\frustum.cpp" />
+    <ClCompile Include="src\renderer\waterRenderer\WaterRenderer.cpp" />
     <ClCompile Include="src\utility\array2D\Array2D.cpp" />
     <ClCompile Include="src\world\event\playerDigEvent\playerDigEvent.cpp" />
     <ClCompile Include="src\utility\noiseGenerator\noiseGenerator.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="src\item\material\Material.h" />
     <ClInclude Include="src\math\bilinear-interpolation\BilinearInterpolation.h" />
     <ClInclude Include="src\math\frustum\frustum.h" />
+    <ClInclude Include="src\renderer\waterRenderer\WaterRenderer.h" />
     <ClInclude Include="src\utility\array2D\Array2D.h" />
     <ClInclude Include="src\world\event\playerDigEvent\playerDigEvent.h" />
     <ClInclude Include="src\utility\noiseGenerator\noiseGenerator.h" />
@@ -265,11 +267,14 @@
   <ItemGroup>
     <None Include="assets\blocks\air.block" />
     <None Include="assets\blocks\cactus.block" />
+    <None Include="assets\blocks\deadPlant.block" />
     <None Include="assets\blocks\dirt.block" />
     <None Include="assets\blocks\grass.block" />
     <None Include="assets\blocks\oakBark.block" />
     <None Include="assets\blocks\oakLeaf.block" />
+    <None Include="assets\blocks\rose.block" />
     <None Include="assets\blocks\stone.block" />
+    <None Include="assets\blocks\tallGrass.block" />
     <None Include="src\shaders\glsl\basicShader.frag" />
     <None Include="src\shaders\glsl\basicShader.vert" />
     <None Include="src\shaders\glsl\chunkShader.frag" />

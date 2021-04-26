@@ -63,7 +63,7 @@ public:
 
 	const Layer& getLayer(int y) const;
 	ChunkSection& getAdjacent(int dx, int dz);
-
+	const ChunkMeshCollection& getMeshes() const { return m_meshes; }
 private:
 	/*
 	* Method(ChunkSection): convert the x,y,z to world position.
@@ -82,12 +82,14 @@ private:
 		ChunkBlock,
 		CHUNK_VOLUME
 	> m_chunkBlocks; // array of chunkblock represented in array(basically hold the info in M x N x L dimensions)
-	ChunkMesh m_chunkMesh; // chunkmesh
+	//ChunkMesh m_chunkMesh; // chunkmesh
 	sf::Vector3i m_location; // current chunksection location
 	World* m_pWorld; // chunk world var for recieving the world reference.
 	bool m_hasMesh = false; // flag to check whether we intitiated the mesh building or not.
 	bool m_hasMeshBuffered = false; // flag to check whether we buffered the mesh or not
 	std::array<Layer, CHUNK_SIZE> m_layers;
 	AABB m_aabb;
+
+	ChunkMeshCollection m_meshes;
 };
 

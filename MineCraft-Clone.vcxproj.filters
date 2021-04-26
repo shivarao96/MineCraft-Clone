@@ -177,6 +177,9 @@
     <ClCompile Include="src\world\generation\structureBuilder\StructureBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\waterRenderer\WaterRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\entity\player\player.h">
@@ -359,6 +362,9 @@
     <ClInclude Include="src\world\generation\structureBuilder\StructureBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer\waterRenderer\WaterRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\glsl\basicShader.vert" />
@@ -373,5 +379,8 @@
     <None Include="assets\blocks\oakLeaf.block" />
     <None Include="assets\blocks\oakBark.block" />
     <None Include="assets\blocks\cactus.block" />
+    <None Include="assets\blocks\deadPlant.block" />
+    <None Include="assets\blocks\tallGrass.block" />
+    <None Include="assets\blocks\rose.block" />
   </ItemGroup>
 </Project>

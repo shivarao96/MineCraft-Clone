@@ -7,7 +7,10 @@ const Material Material::STONE_BLOCK	(ID::Stone, 99, true, "Stone Block");
 const Material Material::BARK_BLOCK		(ID::Bark, 99, true, "Bark");
 const Material Material::LEAF_BLOCK		(ID::Leaf, 99, true, "Leaf");
 const Material Material::SAND_BLOCK     (ID::Sand, 99, true, "Sand");
-const Material Material::CACTUS_BLOCK     (ID::Cactus, 99, true, "Cactus");
+const Material Material::CACTUS_BLOCK   (ID::Cactus, 99, true, "Cactus");
+const Material Material::ROSE			(ID::Rose, 99, true, "Rose");
+const Material Material::TALL_GRASS     (ID::TallGrass, 99, true, "Tall Grass");
+const Material Material::DEAD_PLANT     (ID::DeadPlant, 99, true, "Dead Plant");
 
 Material::Material(
 	Material::ID materialId,
@@ -40,6 +43,12 @@ BlockId Material::toBlockId() const {
 			return BlockId::SAND;
 		case Cactus:
 			return BlockId::CACTUS;
+		case TallGrass:
+			return BlockId::TALLGRASS;
+		case Rose:
+			return BlockId::ROSE;
+		case DeadPlant:
+			return BlockId::DEADPLANT;
 	}
 }
 
@@ -62,6 +71,12 @@ const Material& Material::toMaterial(BlockId block) {
 			return SAND_BLOCK;
 		case BlockId::CACTUS:
 			return CACTUS_BLOCK;
+		case BlockId::ROSE:
+			return ROSE;
+		case BlockId::DEADPLANT:
+			return DEAD_PLANT;
+		case BlockId::TALLGRASS:
+			return TALL_GRASS;
 		default:
 			return NOTHING;
 	}
