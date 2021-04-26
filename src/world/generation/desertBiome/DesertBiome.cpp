@@ -15,7 +15,7 @@ NoiseParameters DesertBiome::getNoiseParam() {
     heightParams.octaves = 9;
     heightParams.amplitude = 80;
     heightParams.smoothness = 335;
-    heightParams.heightOffset = 0;
+    heightParams.heightOffset = -10;
     heightParams.roughNess = 0.53;
 
     return heightParams;

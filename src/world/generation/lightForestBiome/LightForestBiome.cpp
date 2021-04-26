@@ -14,11 +14,11 @@ void LightForestBiome::makeTrees(Chunk& chunk, Random<std::minstd_rand>& rand, i
 }
 NoiseParameters LightForestBiome::getNoiseParam() {
     NoiseParameters heightParams;
-    heightParams.octaves = 9;
+    heightParams.octaves = 5;
     heightParams.amplitude = 100;
     heightParams.smoothness = 195;
-    heightParams.heightOffset = -15;
-    heightParams.roughNess = 0.50;
+    heightParams.heightOffset = -30;
+    heightParams.roughNess = 0.52;
 
     return heightParams;
 }

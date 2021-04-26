@@ -23,9 +23,9 @@ NoiseParameters GrassLandBiome::getNoiseParam()
 {
     NoiseParameters heightParams;
     heightParams.octaves = 9;
-    heightParams.amplitude = 90;
-    heightParams.smoothness = 335;
-    heightParams.heightOffset = -5;
-    heightParams.roughNess = 0.50;
+    heightParams.amplitude = 85;
+    heightParams.smoothness = 235;
+    heightParams.heightOffset = -20;
+    heightParams.roughNess = 0.51;
     return heightParams;
 }
