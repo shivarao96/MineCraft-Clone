@@ -1,7 +1,7 @@
 #include "DesertBiome.h"
 #include "../treeGeneration/TreeGeneration.h"
 
-DesertBiome::DesertBiome(int seed) :Biome(getNoiseParam(), 175, seed) {
+DesertBiome::DesertBiome(int seed) :Biome(getNoiseParam(), 175,50, seed) {
 
 }
 BlockId DesertBiome::getTopBlock(Rand& rand)const {

@@ -42,6 +42,11 @@ BlockData::BlockData(const std::string& blockName) {
 		if (line == "Opaque") {
 			inFile >> m_blockDataHolder.isOpaque;
 		}
+		if (line == "MeshType") {
+			int i;
+			inFile >> i;
+			m_blockDataHolder.meshType = static_cast<BlockMeshType>(i);
+		}
 		
 	}
 

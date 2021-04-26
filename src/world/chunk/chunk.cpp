@@ -132,7 +132,7 @@ void Chunk::drawChunks(MainRenderer& renderer, const Camera& cam) {
 				continue;
 			}
 			if (cam.getFrustum().isBoxInFrustum(chunkSection.m_aabb)) {
-				renderer.drawChunk(chunkSection.m_chunkMesh); // draw the current chunksection
+				renderer.drawChunk(chunkSection); // draw the current chunksection
 			}
 		}
 	}

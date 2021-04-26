@@ -1,7 +1,7 @@
 #include "LightForestBiome.h"
 #include "../treeGeneration/TreeGeneration.h"
 
-LightForestBiome::LightForestBiome(int seed):Biome(getNoiseParam(), 55, seed) {
+LightForestBiome::LightForestBiome(int seed):Biome(getNoiseParam(), 55, 50, seed) {
 
 }
 BlockId LightForestBiome::getTopBlock(Rand& rand)const {

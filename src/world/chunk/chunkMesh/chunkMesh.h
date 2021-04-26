@@ -45,3 +45,8 @@ private:
 	std::vector<float> m_lights;
 };
 
+struct ChunkMeshCollection
+{
+	ChunkMesh solidMesh;
+	ChunkMesh waterMesh;
+};

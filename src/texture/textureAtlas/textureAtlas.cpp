@@ -18,10 +18,10 @@ std::vector<float> TextureAtlas::getTextureCoords(const sf::Vector2i& texCoord) 
 	static const float pixelSize = 1.0f / (float)m_imageSize;
 	float offset = (0.5 * pixelSize);
 
-	float xMin = (texCoord.x * texSize) + offset;
-	float yMin = (texCoord.y * texSize) + offset;
-	float xMax = (xMin + texSize) - offset;
-	float yMax = (yMin + texSize) - offset;
+	float xMin = (texCoord.x * texSize) + 0.5 * pixelSize;
+	float yMin = (texCoord.y * texSize) + 0.5 * pixelSize;
+	float xMax = (xMin + texSize) - 0.5 * pixelSize;
+	float yMax = (yMin + texSize) - 0.5 * pixelSize;
 
 	return {
 		xMax, yMax,

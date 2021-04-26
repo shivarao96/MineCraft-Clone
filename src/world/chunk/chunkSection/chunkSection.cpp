@@ -24,14 +24,15 @@ void ChunkSection::setBlock(int x, int y, int z, ChunkBlock block) {
 
 void ChunkSection::makeMesh() {
 	//-- build the mesh based on the m_chunkBlocks and load that to m_chunkMesh.
-	ChunkMeshBuillder(*this, m_chunkMesh).buildMesh();
+	ChunkMeshBuillder(*this, m_meshes).buildMesh();
 	m_hasMesh = true;
 	m_hasMeshBuffered = false;
 }
 
 void ChunkSection::bufferMesh() {
 	//m_layers;
-	m_chunkMesh.bufferMesh();
+	m_meshes.solidMesh.bufferMesh();
+	m_meshes.waterMesh.bufferMesh();
 	m_hasMeshBuffered = true;
 }
 

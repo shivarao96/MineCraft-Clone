@@ -1,6 +1,8 @@
 #include "mainRenderer.h"
 #include <GL/glew.h>
 #include "../world/chunk/chunkMesh/chunkMesh.h"
+#include "../world/chunk/chunkSection/chunkSection.h"
+#include "../world/chunk/chunkMesh/chunkMesh.h"
 
 void MainRenderer::drawQuads(glm::vec3 pos) {
 	m_quadRenderer.addAt({ 0,0,0 });
@@ -8,9 +10,15 @@ void MainRenderer::drawQuads(glm::vec3 pos) {
 void MainRenderer::drawCubes(const Entity& entity) {
 	m_cubeRenderer.addAt(entity);
 }
-void MainRenderer::drawChunk(const ChunkMesh& mesh) {
-	if (mesh.getFaceCount() > 0) {
-		m_chunkRenderer.add(mesh);
+void MainRenderer::drawChunk(const ChunkSection& mesh) {
+	const ChunkMesh& solidMesh = mesh.getMeshes().solidMesh;
+	const ChunkMesh& waterMesh = mesh.getMeshes().waterMesh;
+
+	if (solidMesh.getFaceCount() > 0) {
+		m_chunkRenderer.add(solidMesh);
+	}
+	if (waterMesh.getFaceCount() > 0) {
+		m_waterRenderer.add(waterMesh);
 	}
 }
 void MainRenderer::drawSky() {
@@ -35,6 +43,7 @@ void MainRenderer::finishRenderer(sf::RenderWindow& window, const Camera& camera
 	//m_quadRenderer.renderQuads(camera);
 	//m_cubeRenderer.renderCubes(camera);
 	m_chunkRenderer.render(camera);
+	m_waterRenderer.render(camera);
 
 	if (m_drawbox) {
 		glDisable(GL_CULL_FACE);

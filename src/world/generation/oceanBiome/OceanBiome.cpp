@@ -1,7 +1,7 @@
 #include "OceanBiome.h"
 #include "../treeGeneration/TreeGeneration.h"
 
-OceanBiome::OceanBiome(int seed) :Biome(getNoiseParam(), 50, seed)
+OceanBiome::OceanBiome(int seed) :Biome(getNoiseParam(), 50,50, seed)
 {}
 
 BlockId OceanBiome::getTopBlock(Rand& rand) const

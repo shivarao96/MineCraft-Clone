@@ -49,7 +49,24 @@ namespace FaceVal {
 		0, 0, 1
 	};
 
+	const std::vector<float> xFace1
+	{
+		0, 0, 0,
+		1, 0, 1,
+		1, 1, 1,
+		0, 1, 0,
+	};
+
+	const std::vector<float> xFace2
+	{
+		0, 0, 1,
+		1, 0, 0,
+		1, 1, 0,
+		0, 1, 1,
+	};
+
 }
+
 
 // direction class for updating there x,y, and z position.
 struct Direction
@@ -76,9 +93,9 @@ constexpr float LIGHT_X = 0.8f;
 constexpr float LIGHT_Z = 0.6f;
 constexpr float LIGHT_BOTTOM = 0.4f;
 
-ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection, ChunkMesh& chunkMesh)
+ChunkMeshBuillder::ChunkMeshBuillder(ChunkSection& chunkSection, ChunkMeshCollection& chunkMesh)
 	:m_pChunkSection(&chunkSection)
-	,m_pChunkMesh(&chunkMesh)
+	,m_chunkMeshCollection(&chunkMesh)
 {}
 
 void ChunkMeshBuillder::buildMesh() {
@@ -91,12 +108,17 @@ void ChunkMeshBuillder::buildMesh() {
 			for (int8_t z = 0; z < CHUNK_SIZE; ++z) { // go through the z-axis
 				sf::Vector3i positions(x,y,z);
 				ChunkBlock block = m_pChunkSection->getBlock(x, y, z); // get the what kind of block is to be rendered at (x,y,z) position.
+				setActiveMesh(block);
 				if (block == BlockId::AIR) { // if it is air then no need to render any face
 					continue;
 				}
 
 				m_pBlockDataHolder = &block.getBlockData();
 				auto& texData = *m_pBlockDataHolder;
+				if (texData.meshType == BlockMeshType::X) {
+					addXInToTheMesh(texData.texTopCoords, positions);
+					continue;
+				}
 				direction.update(x, y, z);
 
 				// now try adding all the faces with there texture coordinates
@@ -151,6 +173,35 @@ void ChunkMeshBuillder::buildMesh() {
 				);
 			}
 		}
+	}
+}
+
+void ChunkMeshBuillder::addXInToTheMesh(const sf::Vector2i& textureCoords, const sf::Vector3i location)
+{
+	auto texCoords = BlockDataBase::get().m_textureAtlas.getTextureCoords(textureCoords);
+	m_pChunkMesh->addFace(
+		FaceVal::xFace1,
+		texCoords,
+		m_pChunkSection->getLocation(),
+		location,
+		LIGHT_X
+	);
+	m_pChunkMesh->addFace(
+		FaceVal::xFace2,
+		texCoords,
+		m_pChunkSection->getLocation(),
+		location,
+		LIGHT_X
+	);
+}
+
+void ChunkMeshBuillder::setActiveMesh(ChunkBlock block)
+{
+	if (block.m_id == (int)BlockId::WATER) {
+		m_pChunkMesh = &m_chunkMeshCollection->waterMesh;
+	}
+	else {
+		m_pChunkMesh = &m_chunkMeshCollection->solidMesh;
 	}
 }
 
